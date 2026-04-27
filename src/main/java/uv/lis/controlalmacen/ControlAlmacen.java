@@ -1,9 +1,9 @@
-package uv.lis;
+package uv.lis.controlalmacen;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-public class ProyectoBD extends Application {
+public class ControlAlmacen extends Application {
 
     // El método start es obligatorio en JavaFX
     @Override
