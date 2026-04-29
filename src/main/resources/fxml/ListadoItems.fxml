@@ -1,14 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="uv.lis.controlalmacen.controladores.ListadoItemsController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.ListadoItemsController">
+   <children>
+      <Button layoutX="1093.0" layoutY="730.0" mnemonicParsing="false" text="Regresar" />
+      <Pane layoutX="103.0" layoutY="222.0" prefHeight="178.0" prefWidth="1060.0" style="-fx-background-color: E8E8E8; -fx-border-color: BFBDBD;">
+         <children>
+            <Label layoutX="41.0" layoutY="28.0" text="Descripcion">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="835.0" layoutY="21.0" text="Partida presupuestal">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="41.0" layoutY="120.0" text="Existencias">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="836.0" layoutY="120.0" text="Stock minimo">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="835.0" layoutY="73.0" text="Stock maximo">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Label layoutX="47.0" layoutY="50.0" prefHeight="38.0" prefWidth="275.0" text="Items en almacen">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <TextField layoutX="888.0" layoutY="164.0" prefHeight="31.0" prefWidth="275.0" promptText="Buscar" />
+      <ComboBox layoutX="674.0" layoutY="164.0" prefHeight="31.0" prefWidth="198.0" promptText="Partida presupuestal" />
+      <ComboBox layoutX="461.0" layoutY="164.0" prefHeight="31.0" prefWidth="198.0" promptText="Stock maximo" />
+      <Pane layoutX="103.0" layoutY="430.0" prefHeight="178.0" prefWidth="1060.0" style="-fx-background-color: E8E8E8; -fx-border-color: BFBDBD;">
+         <children>
+            <Label layoutX="41.0" layoutY="28.0" text="Descripcion">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="835.0" layoutY="21.0" text="Partida presupuestal">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="41.0" layoutY="120.0" text="Existencias">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="836.0" layoutY="120.0" text="Stock minimo">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="835.0" layoutY="73.0" text="Stock maximo">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>

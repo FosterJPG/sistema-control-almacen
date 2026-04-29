@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.CatalagoItemsController">
+   <children>
+      <Label layoutX="40.0" layoutY="41.0" prefHeight="38.0" prefWidth="275.0" text="Catalogo de items">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Button layoutX="1087.0" layoutY="731.0" mnemonicParsing="false" text="Regresar" />
+      <TextField layoutX="878.0" layoutY="154.0" prefHeight="31.0" prefWidth="275.0" promptText="Buscar" />
+      <Pane layoutX="93.0" layoutY="212.0" prefHeight="178.0" prefWidth="1060.0" style="-fx-background-color: E8E8E8; -fx-border-color: BFBDBD;">
+         <children>
+            <Label layoutX="41.0" layoutY="28.0" text="Descripcion">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="835.0" layoutY="28.0" text="Partida presupuestal">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <ComboBox layoutX="654.0" layoutY="154.0" prefHeight="31.0" prefWidth="198.0" promptText="Partida presupuestal" />
+      <Pane layoutX="93.0" layoutY="415.0" prefHeight="178.0" prefWidth="1060.0" style="-fx-background-color: E8E8E8; -fx-border-color: BFBDBD;">
+         <children>
+            <Label layoutX="41.0" layoutY="28.0" text="Descripcion">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="835.0" layoutY="28.0" text="Partida presupuestal">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
