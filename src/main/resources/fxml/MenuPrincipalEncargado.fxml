@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane maxHeight="800.0" maxWidth="1200.0" minHeight="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.MenuPrincipalEncargadoController">
+   <children>
+      <Label layoutX="39.0" layoutY="53.0" prefHeight="38.0" prefWidth="275.0" text="Bienvenido: ">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Label layoutX="39.0" layoutY="93.0" prefHeight="52.0" prefWidth="185.0" text="Nombre sucursal">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Label>
+      <Label layoutX="151.0" layoutY="445.0" text="Ingresos">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+      <Label layoutX="444.0" layoutY="451.0" text="Items">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+      <Label layoutX="686.0" layoutY="451.0" text="Solicitudes">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+      <Label layoutX="950.0" layoutY="451.0" text="Pedidos">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="111.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="383.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="662.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="907.0" layoutY="281.0" pickOnBounds="true" preserveRatio="true" />
+      <Button layoutX="147.0" layoutY="517.0" mnemonicParsing="false" text="Registrar factura" />
+      <Button layoutX="141.0" layoutY="567.0" mnemonicParsing="false" text="Consultar facturas" />
+      <Button layoutX="94.0" layoutY="614.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="234.0" text="Generar reporte de entradas" />
+      <Button layoutX="427.0" layoutY="517.0" mnemonicParsing="false" text="Registrar item" />
+      <Button layoutX="422.0" layoutY="567.0" mnemonicParsing="false" text="Consultar items" />
+      <Button layoutX="684.0" layoutY="517.0" mnemonicParsing="false" text="Consultar solicitudes" />
+      <Button layoutX="645.0" layoutY="567.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="234.0" text="Generar reporte de salidas" />
+      <Button layoutX="929.0" layoutY="517.0" mnemonicParsing="false" text="Consultar bitacora" />
+      <Label layoutX="439.0" layoutY="176.0" text="las imagenes no las pongo por el momento" />
+   </children>
+</AnchorPane>
