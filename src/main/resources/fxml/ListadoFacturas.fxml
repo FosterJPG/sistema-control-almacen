@@ -1,14 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="uv.lis.controlalmacen.controladores.ListadoFacturasController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.ListadoFacturasController">
+   <children>
+      <Label layoutX="59.0" layoutY="57.0" prefHeight="38.0" prefWidth="275.0" text="Listado facturas">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Button layoutX="1072.0" layoutY="728.0" mnemonicParsing="false" text="Regresar" />
+      <Label layoutX="88.0" layoutY="144.0" text="Mostrando: #">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <TextField layoutX="868.0" layoutY="144.0" prefHeight="31.0" prefWidth="275.0" promptText="Buscar" />
+      <Pane layoutX="88.0" layoutY="218.0" prefHeight="178.0" prefWidth="1060.0" style="-fx-background-color: E8E8E8; -fx-border-color: BFBDBD;">
+         <children>
+            <Label layoutX="41.0" layoutY="71.0" text="Proveedor:">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="41.0" layoutY="111.0" text="Fecha:">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Button layoutX="870.0" layoutY="120.0" mnemonicParsing="false" text="Ver detalles de factura" />
+            <Label layoutX="41.0" layoutY="28.0" text="Folio: AAAAA">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane layoutX="88.0" layoutY="416.0" prefHeight="178.0" prefWidth="1060.0" style="-fx-background-color: E8E8E8; -fx-border-color: BFBDBD;">
+         <children>
+            <Label layoutX="41.0" layoutY="31.0" text="Folio: AAAAA">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="41.0" layoutY="71.0" text="Proveedor:">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="41.0" layoutY="111.0" text="Fecha:">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Button layoutX="870.0" layoutY="120.0" mnemonicParsing="false" text="Ver detalles de factura" />
+         </children>
+      </Pane>
+   </children>
 </AnchorPane>

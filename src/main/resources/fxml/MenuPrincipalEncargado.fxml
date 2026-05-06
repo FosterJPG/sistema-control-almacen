@@ -8,7 +8,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <AnchorPane maxHeight="800.0" maxWidth="1200.0" minHeight="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.MenuPrincipalEncargadoController">
    <children>
       <Label layoutX="39.0" layoutY="53.0" prefHeight="38.0" prefWidth="275.0" text="Bienvenido: ">
@@ -41,10 +40,10 @@
             <Font size="32.0" />
          </font>
       </Label>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="111.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="383.0" layoutY="250.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="662.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="907.0" layoutY="281.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="900.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/pedido.png" />
+         </image></ImageView>
       <Button layoutX="147.0" layoutY="517.0" mnemonicParsing="false" text="Registrar factura" />
       <Button layoutX="141.0" layoutY="567.0" mnemonicParsing="false" text="Consultar facturas" />
       <Button layoutX="94.0" layoutY="614.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="234.0" text="Generar reporte de entradas" />
@@ -53,6 +52,20 @@
       <Button layoutX="684.0" layoutY="517.0" mnemonicParsing="false" text="Consultar solicitudes" />
       <Button layoutX="645.0" layoutY="567.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="234.0" text="Generar reporte de salidas" />
       <Button layoutX="929.0" layoutY="517.0" mnemonicParsing="false" text="Consultar bitacora" />
-      <Label layoutX="439.0" layoutY="176.0" text="las imagenes no las pongo por el momento" />
+      <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="662.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/solicitud.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="383.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/items.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="112.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../imagenes/factura.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -1,14 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="uv.lis.controlalmacen.controladores.RegistroItemController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.RegistroItemController">
+   <children>
+      <Label layoutX="52.0" layoutY="59.0" prefHeight="38.0" prefWidth="275.0" text="Registrar item">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Pane layoutX="335.0" layoutY="154.0" prefHeight="546.0" prefWidth="530.0" style="-fx-background-color: E8E8E8; -fx-border-color: BFBDBD;">
+         <children>
+            <Label layoutX="35.0" layoutY="159.0" prefHeight="31.0" prefWidth="171.0" text="Partida presupuestal">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ComboBox layoutX="236.0" layoutY="159.0" prefHeight="31.0" prefWidth="257.0" />
+            <Label layoutX="35.0" layoutY="38.0" prefHeight="27.0" prefWidth="119.0" text="Descripcion">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextArea layoutX="236.0" layoutY="38.0" prefHeight="84.0" prefWidth="257.0" />
+            <Button layoutX="160.0" layoutY="481.0" mnemonicParsing="false" text="Registrar item en el catalogo" />
+         </children>
+      </Pane>
+      <Button layoutX="1067.0" layoutY="735.0" mnemonicParsing="false" text="Regresar" />
+   </children>
 </AnchorPane>
