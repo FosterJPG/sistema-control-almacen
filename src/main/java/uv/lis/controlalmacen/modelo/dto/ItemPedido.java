@@ -1,5 +1,5 @@
 package uv.lis.controlalmacen.modelo.dto;
 
-public class Item {
+public class ItemPedido {
 
 }

@@ -3,7 +3,7 @@ package uv.lis.controlalmacen.modelo.dto;
 import java.util.Date;
 
 public class Usuario {
-    private String idUsuario; // Falta ver si se queda asi
+    private String idUsuario;
     private String contrasenia;
     private Date fechaRegistro;
     private Integer noEmpleado;
