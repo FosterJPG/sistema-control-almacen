@@ -4,10 +4,19 @@ import java.util.Date;
 
 public class DetallesFactura {
 
+    private String idItem;
     private String descripcion;
     private Integer cantidad;
     private Double costoUnitario;
     private String descripcionPartida;
+
+    public String getIdItem() {
+        return idItem;
+    }
+
+    public void setIdItem(String idItem) {
+        this.idItem = idItem;
+    }
 
     public Integer getCantidad() {
         return cantidad;

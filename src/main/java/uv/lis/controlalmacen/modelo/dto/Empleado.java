@@ -8,6 +8,8 @@ public class Empleado {
     private String direccion;
     private String correoElectronico;
     private String telefono;
+    private Puesto puesto;
+    private Departamento departamento;
 
     public String getCorreoElectronico() {
         return correoElectronico;
@@ -63,5 +65,21 @@ public class Empleado {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public Departamento getDepartamento() {
+        return departamento;
+    }
+
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
+    }
+
+    public Puesto getPuesto() {
+        return puesto;
+    }
+
+    public void setPuesto(Puesto puesto) {
+        this.puesto = puesto;
     }
 }
