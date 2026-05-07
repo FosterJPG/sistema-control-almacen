@@ -1,0 +1,18 @@
+/* Aplicar Segoe UI a toda la aplicación */
+.root {
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333; /* Un gris muy oscuro para mejor legibilidad */
+}
+
+/* Estilo específico para los títulos que ya definimos */
+.label-titulo {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+/* Estilo para los campos de texto y botones para que se vean modernos */
+.text-field, .button, .combo-box {
+    -fx-font-family: "Segoe UI";
+}
