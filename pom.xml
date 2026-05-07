@@ -9,30 +9,27 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>24</maven.compiler.release>
-        <exec.mainClass>uv.lis.controlalmacen.ControlAlmacen</exec.mainClass>
+        <exec.mainClass>uv.lis.controlalmacen.AppLauncher</exec.mainClass>
     </properties>
 
     <dependencies>
-        <!-- Elementos de JavaFX -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>21.0.1</version> </dependency>
+            <version>21.0.1</version> 
+        </dependency>
 
-        <!-- Archivos FXML -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>21.0.1</version>
         </dependency>
 
-        <!-- MySQL JDBC -->
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
             <version>8.3.0</version>
         </dependency>
-
     </dependencies>
 
     <build>
@@ -42,7 +39,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>uv.lis.controlalmacen.ControlAlmacen</mainClass>
+                    <mainClass>uv.lis.controlalmacen.AppLauncher</mainClass>
                 </configuration>
             </plugin>
         </plugins>

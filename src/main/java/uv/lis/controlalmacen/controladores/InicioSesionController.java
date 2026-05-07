@@ -1,22 +1,35 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package uv.lis.controlalmacen.controladores;
 
-import javafx.fxml.Initializable;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
+import java.io.IOException;
 
-import java.net.URL;
-import java.util.ResourceBundle;
+public class InicioSesionController {
 
-/**
- *
- * @author neptu
- */
-public class InicioSesionController implements Initializable {
+    @FXML
+    private Button btnIngresar;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    private void iniciarSesion(ActionEvent event) {
+        
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("/fxml/MenuPrincipalCentral.fxml"));
+            
+            Scene nuevaEscena = new Scene(root);
+            
+            Stage ventanaActual = (Stage) btnIngresar.getScene().getWindow();
+            
+            ventanaActual.setScene(nuevaEscena);
+            ventanaActual.show(); // Refrescar la ventana
 
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al cargar la pantalla: " + e.getMessage());
+        }
     }
 }

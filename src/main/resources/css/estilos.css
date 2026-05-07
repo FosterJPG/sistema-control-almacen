@@ -16,3 +16,21 @@
 .text-field, .button, .combo-box {
     -fx-font-family: "Segoe UI";
 }
+
+.button {
+    -fx-background-color: white;
+    -fx-border-color: #d1d1d1;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: #f0f0f0;
+    -fx-cursor: hand;
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.button:focused {
+    -fx-background-insets: 0;
+}
