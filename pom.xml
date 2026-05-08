@@ -8,21 +8,20 @@
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.release>24</maven.compiler.release>
-        <exec.mainClass>uv.lis.controlalmacen.AppLauncher</exec.mainClass>
+        <maven.compiler.release>25</maven.compiler.release>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
-            <version>21.0.1</version> 
+            <version>25.0.3</version>
         </dependency>
 
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>21.0.1</version>
+            <version>25.0.3</version>
         </dependency>
 
         <dependency>
@@ -39,7 +38,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>uv.lis.controlalmacen.AppLauncher</mainClass>
+                    <mainClass>uv.lis.controlalmacen.ControlAlmacen</mainClass>
                 </configuration>
             </plugin>
         </plugins>
