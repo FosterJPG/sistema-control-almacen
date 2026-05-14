@@ -1,14 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="uv.lis.controlalmacen.controladores.BitacoraPedidosController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.BitacoraPedidosController">
+   <children>
+      <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <effect>
+            <DropShadow color="#0000003c" height="31.0" offsetX="-3.0" offsetY="5.0" radius="15.0" width="31.0" />
+         </effect>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <children>
+            
+            <Label styleClass="label-titulo" text="Bitácora de Pedidos (Reabastecimiento)">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label text="Gestione los artículos que han alcanzado su stock mínimo y requieren ser ordenados." textFill="#666666" />
 
+            <Separator prefWidth="200.0" />
+
+            <HBox alignment="CENTER_LEFT" spacing="15.0">
+               <children>
+                  <Label text="Filtrar por Estado:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="cbEstadoPedido" prefWidth="180.0" promptText="Pendientes" />
+                  
+                  <Region HBox.hgrow="ALWAYS" /> <TextField fx:id="txtBuscar" prefWidth="250.0" promptText="Buscar por ID o Sucursal..." />
+               </children>
+            </HBox>
+
+            <TableView fx:id="tvBitacora" prefHeight="250.0" VBox.vgrow="ALWAYS">
+              <columns>
+                <TableColumn fx:id="colIdPedido" prefWidth="73.0" text="No. Pedido" />
+                <TableColumn fx:id="colSucursal" prefWidth="234.0" text="Sucursal" />
+                <TableColumn fx:id="colArticulo" prefWidth="237.0" text="Artículo Agotado" />
+                <TableColumn fx:id="colFechaAgotado" prefWidth="112.0" text="Fecha de Aviso" />
+                <TableColumn fx:id="colEstado" prefWidth="111.0" text="Estado" />
+              </columns>
+               <effect>
+                  <DropShadow color="#0000002e" height="28.42" offsetX="-3.0" offsetY="3.0" radius="15.5625" width="35.83" />
+               </effect>
+               </TableView>
+
+            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+               <children>
+                  <Button fx:id="btnExportarExcel" mnemonicParsing="false" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Exportar a Excel">
+                     <effect>
+                        <InnerShadow choke="0.34" color="#ffffff9c" height="31.13" offsetY="8.0" radius="9.504999999999999" width="8.89" />
+                     </effect></Button>
+                  <Button fx:id="btnAtenderPedido" mnemonicParsing="false" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Marcar como Atendido">
+                     <effect>
+                        <InnerShadow choke="0.34" color="#ffffff9c" height="31.13" offsetY="8.0" radius="9.504999999999999" width="8.89" />
+                     </effect></Button>
+                  <Button fx:id="btnBorrarRegistro" mnemonicParsing="false" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Borrar Registro">
+                     <effect>
+                        <InnerShadow choke="0.34" color="#ffffff9c" height="31.13" offsetY="8.0" radius="9.504999999999999" width="8.89" />
+                     </effect></Button>
+               </children>
+               <effect>
+                  <DropShadow color="#00000039" height="40.83" offsetX="-3.0" offsetY="3.0" radius="21.5675" spread="0.19" width="47.44" />
+               </effect>
+            </HBox>
+
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

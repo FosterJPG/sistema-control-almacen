@@ -1,71 +1,179 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="800.0" maxWidth="1200.0" minHeight="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.MenuPrincipalEncargadoController">
+<AnchorPane prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.MenuPrincipalCentralController">
    <children>
-      <Label layoutX="39.0" layoutY="53.0" prefHeight="38.0" prefWidth="275.0" text="Bienvenido: ">
-         <font>
-            <Font size="28.0" />
-         </font>
-      </Label>
-      <Label layoutX="39.0" layoutY="93.0" prefHeight="52.0" prefWidth="185.0" text="Nombre sucursal">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-      <Label layoutX="151.0" layoutY="445.0" text="Ingresos">
-         <font>
-            <Font size="32.0" />
-         </font>
-      </Label>
-      <Label layoutX="444.0" layoutY="451.0" text="Items">
-         <font>
-            <Font size="32.0" />
-         </font>
-      </Label>
-      <Label layoutX="686.0" layoutY="451.0" text="Solicitudes">
-         <font>
-            <Font size="32.0" />
-         </font>
-      </Label>
-      <Label layoutX="950.0" layoutY="451.0" text="Pedidos">
-         <font>
-            <Font size="32.0" />
-         </font>
-      </Label>
-      <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="900.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../imagenes/pedido.png" />
-         </image></ImageView>
-      <Button layoutX="147.0" layoutY="517.0" mnemonicParsing="false" text="Registrar factura" />
-      <Button layoutX="141.0" layoutY="567.0" mnemonicParsing="false" text="Consultar facturas" />
-      <Button layoutX="94.0" layoutY="614.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="234.0" text="Generar reporte de entradas" />
-      <Button layoutX="427.0" layoutY="517.0" mnemonicParsing="false" text="Registrar item" />
-      <Button layoutX="422.0" layoutY="567.0" mnemonicParsing="false" text="Consultar items" />
-      <Button layoutX="684.0" layoutY="517.0" mnemonicParsing="false" text="Consultar solicitudes" />
-      <Button layoutX="645.0" layoutY="567.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="234.0" text="Generar reporte de salidas" />
-      <Button layoutX="929.0" layoutY="517.0" mnemonicParsing="false" text="Consultar bitacora" />
-      <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="662.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../imagenes/solicitud.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="383.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../imagenes/items.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="200.0" fitWidth="200.0" layoutX="112.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../imagenes/factura.png" />
-         </image>
-      </ImageView>
+      
+      <VBox spacing="5.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="25.0">
+         <children>
+            <Label text="Bienvenido:" textFill="#495057">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label text="Nombre sucursal" textFill="#007bff">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Separator AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="90.0" />
+
+      <HBox alignment="CENTER" spacing="25.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="110.0">
+         <children>
+            
+            <VBox alignment="TOP_CENTER" prefWidth="200.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" HBox.hgrow="ALWAYS">
+               <effect>
+                  <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
+               </effect>
+               <padding>
+                  <Insets bottom="20.0" left="15.0" right="15.0" top="20.0" />
+               </padding>
+               <children>
+                  <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/factura.png" />
+                     </image>
+                     <effect>
+                        <DropShadow color="#00000043" />
+                     </effect>
+                  </ImageView>
+                  <Label text="Ingresos">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="150.0" />
+                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Registrar factura">
+                     <effect>
+                        <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
+                     </effect></Button>
+                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #f8f9fa; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar facturas">
+                     <effect>
+                        <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
+                     </effect></Button>
+                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Generar reporte de entradas">
+                     <effect>
+                        <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
+                     </effect></Button>
+               </children>
+            </VBox>
+            
+            <VBox alignment="TOP_CENTER" prefWidth="200.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" HBox.hgrow="ALWAYS">
+               <effect>
+                  <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
+               </effect>
+               <padding>
+                  <Insets bottom="20.0" left="15.0" right="15.0" top="20.0" />
+               </padding>
+               <children>
+                  <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/items.png" />
+                     </image>
+                     <effect>
+                        <DropShadow color="#00000043" />
+                     </effect>
+                  </ImageView>
+                  <Label text="Items">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="150.0" />
+                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Registrar item">
+                     <effect>
+                        <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
+                     </effect></Button>
+                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #f8f9fa; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar items">
+                     <effect>
+                        <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
+                     </effect></Button>
+               </children>
+            </VBox>
+            
+            <VBox alignment="TOP_CENTER" prefWidth="200.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" HBox.hgrow="ALWAYS">
+               <effect>
+                  <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
+               </effect>
+               <padding>
+                  <Insets bottom="20.0" left="15.0" right="15.0" top="20.0" />
+               </padding>
+               <children>
+                  <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/solicitud.png" />
+                     </image>
+                     <effect>
+                        <DropShadow color="#00000043" />
+                     </effect>
+                  </ImageView>
+                  <Label text="Solicitudes">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="150.0" />
+                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #f8f9fa; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar solicitudes">
+                     <effect>
+                        <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
+                     </effect></Button>
+                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Generar reporte de salidas">
+                     <effect>
+                        <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
+                     </effect></Button>
+               </children>
+            </VBox>
+            
+            <VBox alignment="TOP_CENTER" prefWidth="200.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" HBox.hgrow="ALWAYS">
+               <effect>
+                  <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
+               </effect>
+               <padding>
+                  <Insets bottom="20.0" left="15.0" right="15.0" top="20.0" />
+               </padding>
+               <children>
+                  <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/pedido.png" />
+                     </image>
+                     <effect>
+                        <DropShadow color="#00000043" />
+                     </effect>
+                  </ImageView>
+                  <Label text="Pedidos">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="150.0" />
+                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #f8f9fa; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar bitacora">
+                     <effect>
+                        <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
+                     </effect></Button>
+               </children>
+            </VBox>
+
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

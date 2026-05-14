@@ -1,14 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="uv.lis.controlalmacen.controladores.KardexController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.KardexController">
+   <children>
+      <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <effect>
+            <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
+         </effect>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <children>
+            
+            <Label styleClass="label-titulo" text="Kardex de Artículo">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label text="Consulte el historial de costos y los movimientos asociados a facturas." textFill="#666666" />
 
+            <Separator prefWidth="200.0" />
+
+            <HBox alignment="CENTER_LEFT" spacing="15.0">
+               <children>
+                  <Label text="Seleccionar Artículo:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="cbArticulo" prefWidth="300.0" promptText="Elija un producto del catálogo..." />
+                  <Button fx:id="btnConsultar" mnemonicParsing="false" styleClass="button" text="Generar Kardex" />
+               </children>
+            </HBox>
+
+            <GridPane hgap="20.0" style="-fx-background-color: #f8f9fa; -fx-padding: 15; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" vgap="10.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="NEVER" minWidth="100.0" />
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+                <ColumnConstraints hgrow="NEVER" minWidth="120.0" />
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="ID Ítem:" textFill="#495057">
+                     <font><Font name="System Bold" size="13.0" /></font>
+                  </Label>
+                  <Label fx:id="lblIdItem" text="-" GridPane.columnIndex="1" />
+                  
+                  <Label text="Descripción:" textFill="#495057" GridPane.columnIndex="2">
+                     <font><Font name="System Bold" size="13.0" /></font>
+                  </Label>
+                  <Label fx:id="lblDescripcion" text="-" GridPane.columnIndex="3" />
+                  
+                  <Label text="Costo Prom. Actual:" textFill="#495057" GridPane.rowIndex="1">
+                     <font><Font name="System Bold" size="13.0" /></font>
+                  </Label>
+                  <Label fx:id="lblCostoPromedioActual" text="\$ 0.00" textFill="#28a745" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font><Font name="System Bold" size="13.0" /></font>
+                  </Label>
+               </children>
+            </GridPane>
+
+            <TableView fx:id="tvKardex" prefHeight="250.0" VBox.vgrow="ALWAYS">
+              <columns>
+                <TableColumn fx:id="colIdKardex" prefWidth="91.0" text="ID Movimiento" />
+                <TableColumn fx:id="colFolioFactura" prefWidth="268.0" text="Folio de Factura" />
+                <TableColumn fx:id="colCostoUnitario" prefWidth="199.0" text="Costo Unitario ($)" />
+                <TableColumn fx:id="colCostoPromedio" prefWidth="209.0" text="Costo Promedio ($)" />
+              </columns>
+            </TableView>
+
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

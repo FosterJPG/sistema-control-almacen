@@ -1,37 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.RegistroItemController">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.RegistrarItemController">
    <children>
-      <Label layoutX="52.0" layoutY="59.0" prefHeight="38.0" prefWidth="275.0" text="Registrar item">
-         <font>
-            <Font size="28.0" />
-         </font>
-      </Label>
-      <Pane layoutX="335.0" layoutY="154.0" prefHeight="546.0" prefWidth="530.0" style="-fx-background-color: E8E8E8; -fx-border-color: BFBDBD;">
+      <VBox spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <effect>
+            <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
+         </effect>
+         <padding>
+            <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
+         </padding>
          <children>
-            <Label layoutX="35.0" layoutY="159.0" prefHeight="31.0" prefWidth="171.0" text="Partida presupuestal">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <ComboBox layoutX="236.0" layoutY="159.0" prefHeight="31.0" prefWidth="257.0" />
-            <Label layoutX="35.0" layoutY="38.0" prefHeight="27.0" prefWidth="119.0" text="Descripcion">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <TextArea layoutX="236.0" layoutY="38.0" prefHeight="84.0" prefWidth="257.0" />
-            <Button layoutX="160.0" layoutY="481.0" mnemonicParsing="false" text="Registrar item en el catalogo" />
+            
+            <VBox spacing="5.0">
+               <children>
+                  <Label styleClass="label-titulo" text="Registro de Nuevo Ítem">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label text="Llene los campos a continuación para dar de alta un producto en el catálogo general." textFill="#666666">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Separator prefWidth="200.0" />
+
+            <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+               <children>
+                  <GridPane hgap="15.0" maxWidth="550.0" style="-fx-background-color: #f8f9fa; -fx-padding: 30; -fx-background-radius: 8; -fx-border-color: #dee2e6; -fx-border-radius: 8;" vgap="25.0">
+                    <columnConstraints>
+                      <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="140.0" />
+                      <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Label text="Descripción:" textFill="#495057">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="txtDescripcion" promptText="Ej. Resma de papel bond tamaño carta" GridPane.columnIndex="1" />
+                        
+                        <Label text="Partida Presupuestal:" textFill="#495057" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="cbPartidaPresupuestal" prefWidth="300.0" promptText="Seleccione una partida..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                     </children>
+                  </GridPane>
+               </children>
+            </VBox>
+
+            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+               <children>
+                  <Button fx:id="btnRegresar" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" />
+                  <Button fx:id="btnRegistrar" mnemonicParsing="false" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Registrar Ítem en Catálogo">
+                     <effect>
+                        <InnerShadow color="#ffffff6d" offsetY="10.0" />
+                     </effect></Button>
+               </children>
+               <effect>
+                  <DropShadow color="#00000079" offsetX="-3.0" offsetY="3.0" />
+               </effect>
+            </HBox>
+
          </children>
-      </Pane>
-      <Button layoutX="1067.0" layoutY="735.0" mnemonicParsing="false" text="Regresar" />
+      </VBox>
    </children>
 </AnchorPane>

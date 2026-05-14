@@ -1,14 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.ListadoSolicitudesController">
+   <children>
+      <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <effect>
+            <DropShadow color="#00000041" height="31.0" offsetX="-3.0" offsetY="5.0" radius="15.0" width="31.0" />
+         </effect>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <children>
+            
+            <Label styleClass="label-titulo" text="Historial de Solicitudes (Salidas)">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label text="Consulte el registro histórico de los materiales entregados a los empleados de las sucursales." textFill="#666666" />
 
+            <Separator prefWidth="200.0" />
+
+            <HBox alignment="CENTER_LEFT" spacing="15.0">
+               <children>
+                  <Label text="Filtrar por Fecha:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="dpFechaFiltro" promptText="Seleccione una fecha" />
+                  
+                  <Region HBox.hgrow="ALWAYS" /> <TextField fx:id="txtBuscar" prefWidth="250.0" promptText="Buscar por empleado o ítem..." />
+               </children>
+            </HBox>
+
+            <TableView fx:id="tvSolicitudes" prefHeight="250.0" VBox.vgrow="ALWAYS">
+              <columns>
+                <TableColumn fx:id="colFecha" prefWidth="100.0" text="Fecha" />
+                <TableColumn fx:id="colEmpleado" prefWidth="150.0" text="No. Empleado" />
+                <TableColumn fx:id="colArticulo" prefWidth="150.0" text="Artículo Solicitado" />
+                <TableColumn fx:id="colCantidad" prefWidth="80.0" text="Cantidad" />
+                <TableColumn fx:id="colUso" prefWidth="200.0" text="Uso / Justificación" />
+              </columns>
+               <effect>
+                  <DropShadow color="#00000039" offsetX="-3.0" offsetY="3.0" />
+               </effect>
+            </TableView>
+
+            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+               <children>
+                  <Button fx:id="btnExportarPDF" mnemonicParsing="false" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Exportar a PDF">
+                     <effect>
+                        <InnerShadow color="#ffffff70" offsetY="6.0" />
+                     </effect></Button>
+               </children>
+               <effect>
+                  <DropShadow color="#0000004a" offsetX="-3.0" offsetY="3.0" />
+               </effect>
+            </HBox>
+
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

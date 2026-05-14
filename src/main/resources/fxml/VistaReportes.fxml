@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.ReporteEgresosController">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.ReporteIngresosController">
    <children>
       <VBox spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <padding>
@@ -28,12 +28,12 @@
          <children>
             <VBox spacing="5.0">
                <children>
-                  <Label styleClass="label-titulo" text="Generador de Reportes de Egresos (Salidas)">
+                  <Label styleClass="label-titulo" text="Generador de Reportes de Ingreso">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="Seleccione el rango de fechas para generar el informe de los materiales entregados a las sucursales." textFill="#666666">
+                  <Label text="Seleccione el rango de fechas para generar el informe de los materiales que entraron al almacén." textFill="#666666">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -72,13 +72,13 @@
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
                   <Button fx:id="btnRegresar" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" />
-                  <Button fx:id="btnGenerarReporte" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Generar Reporte">
+                  <Button fx:id="btnGenerarReporte" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Generar Reporte">
                      <effect>
-                        <InnerShadow color="#ffffff73" offsetY="10.0" />
+                        <InnerShadow color="#ffffff61" height="11.0" offsetY="10.0" radius="7.5" />
                      </effect></Button>
                </children>
                <effect>
-                  <DropShadow color="#00000058" offsetX="-3.0" offsetY="3.0" />
+                  <DropShadow color="#0000007d" offsetX="-3.0" offsetY="3.0" />
                </effect>
             </HBox>
          </children>

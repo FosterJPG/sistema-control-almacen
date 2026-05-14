@@ -1,13 +1,20 @@
 package uv.lis.controlalmacen.controladores;
 
-import javafx.fxml.Initializable;
-
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TableView;
 
 public class KardexController implements Initializable {
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    @FXML
+    private TableView<?> tvKardex; 
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        
+        tvKardex.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        
     }
 }

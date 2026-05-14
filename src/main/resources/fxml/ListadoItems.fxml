@@ -1,81 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
 <?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.ListadoItemsController">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.ItemsEnAlmacenController">
    <children>
-      <Button layoutX="1093.0" layoutY="730.0" mnemonicParsing="false" text="Regresar" />
-      <Pane layoutX="103.0" layoutY="222.0" prefHeight="178.0" prefWidth="1060.0" style="-fx-background-color: E8E8E8; -fx-border-color: BFBDBD;">
+      <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <effect>
+            <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
+         </effect>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
          <children>
-            <Label layoutX="41.0" layoutY="28.0" text="Descripcion">
+            
+            <Label styleClass="label-titulo" text="Inventario en Almacén">
                <font>
-                  <Font size="22.0" />
+                  <Font name="System Bold" size="22.0" />
                </font>
             </Label>
-            <Label layoutX="835.0" layoutY="21.0" text="Partida presupuestal">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <Label layoutX="41.0" layoutY="120.0" text="Existencias">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <Label layoutX="836.0" layoutY="120.0" text="Stock minimo">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <Label layoutX="835.0" layoutY="73.0" text="Stock maximo">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
+            <Label text="Gestione las existencias físicas y los límites de stock para cada artículo." textFill="#666666" />
+
+            <Separator prefWidth="200.0" />
+
+            <HBox alignment="CENTER_LEFT" spacing="15.0">
+               <children>
+                  <Label text="Filtros:">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <ComboBox fx:id="cbPartidaPresupuestal" prefWidth="180.0" promptText="Partida Presupuestal..." />
+                  <ComboBox fx:id="cbFiltroStock" prefWidth="180.0" promptText="Nivel de Stock..." />
+                  
+                  <Region HBox.hgrow="ALWAYS" /> <TextField fx:id="txtBuscar" prefWidth="250.0" promptText="Buscar producto..." />
+               </children>
+            </HBox>
+
+            <TableView fx:id="tvInventario" prefHeight="250.0" VBox.vgrow="ALWAYS">
+              <columns>
+                <TableColumn fx:id="colIdItem" prefWidth="59.0" text="ID Ítem" />
+                <TableColumn fx:id="colDescripcion" prefWidth="341.0" text="Descripción del Producto" />
+                <TableColumn fx:id="colExistencias" prefWidth="122.0" text="Existencias" />
+                <TableColumn fx:id="colStockMin" prefWidth="115.0" text="Stock Mínimo" />
+                <TableColumn fx:id="colStockMax" prefWidth="130.0" text="Stock Máximo" />
+              </columns>
+            </TableView>
+
+            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+               <children>
+                  <Button fx:id="btnRegresar" mnemonicParsing="false" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar" />
+               </children>
+            </HBox>
+
          </children>
-      </Pane>
-      <Label layoutX="47.0" layoutY="50.0" prefHeight="38.0" prefWidth="275.0" text="Items en almacen">
-         <font>
-            <Font size="28.0" />
-         </font>
-      </Label>
-      <TextField layoutX="888.0" layoutY="164.0" prefHeight="31.0" prefWidth="275.0" promptText="Buscar" />
-      <ComboBox layoutX="674.0" layoutY="164.0" prefHeight="31.0" prefWidth="198.0" promptText="Partida presupuestal" />
-      <ComboBox layoutX="461.0" layoutY="164.0" prefHeight="31.0" prefWidth="198.0" promptText="Stock maximo" />
-      <Pane layoutX="103.0" layoutY="430.0" prefHeight="178.0" prefWidth="1060.0" style="-fx-background-color: E8E8E8; -fx-border-color: BFBDBD;">
-         <children>
-            <Label layoutX="41.0" layoutY="28.0" text="Descripcion">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <Label layoutX="835.0" layoutY="21.0" text="Partida presupuestal">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <Label layoutX="41.0" layoutY="120.0" text="Existencias">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <Label layoutX="836.0" layoutY="120.0" text="Stock minimo">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-            <Label layoutX="835.0" layoutY="73.0" text="Stock maximo">
-               <font>
-                  <Font size="22.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
+      </VBox>
    </children>
 </AnchorPane>
