@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -7,12 +8,12 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.MenuPrincipalCentralController">
+<AnchorPane prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.MenuPrincipalCentralController">
    <children>
       
       <VBox spacing="5.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="25.0">
          <children>
-            <Label text="Bienvenido:" textFill="#495057">
+            <Label fx:id="lbNombreEmpleado" text="Bienvenido:" textFill="#495057">
                <font>
                   <Font size="16.0" />
                </font>
@@ -163,5 +164,6 @@
 
          </children>
       </HBox>
+      <Button layoutX="761.0" layoutY="41.0" mnemonicParsing="false" onAction="#btnCerrarSesion" style="-fx-background-color: #f8f9fa; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Cerrar sesión" />
    </children>
 </AnchorPane>

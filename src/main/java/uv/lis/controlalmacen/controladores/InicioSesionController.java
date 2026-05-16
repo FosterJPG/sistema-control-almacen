@@ -88,11 +88,12 @@ public class InicioSesionController implements Initializable {
             Parent vista = FXMLLoader.load(getClass().getResource(rutaMenu));
             Scene escena = new Scene(vista);
 
-            // Stage escenario = (Stage) tf_personal.getScene().getWindow();
             Stage stage = (Stage) tfPassword.getScene().getWindow();
             stage.setScene(escena);
             stage.setTitle("Menu principal");
             stage.show();
+            stage.setResizable(false);
+            stage.centerOnScreen();
 
         } catch (IOException e) {
             throw new RuntimeException(e);

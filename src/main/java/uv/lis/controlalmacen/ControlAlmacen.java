@@ -19,7 +19,9 @@ public class ControlAlmacen extends Application {
 
         primaryStage.setTitle("Control de Almacén - GLOBAL FINANCE");
         primaryStage.setScene(scene);
+        primaryStage.centerOnScreen();
         primaryStage.show();
+        primaryStage.setResizable(false);
     }
 
     public static void main(String[] args) {
