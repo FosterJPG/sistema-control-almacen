@@ -10,15 +10,15 @@ public class ControlAlmacen extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/InicioSesion.fxml"));
-        
+        Parent root = FXMLLoader.load(getClass().getResource("../../../fxml/InicioSesion.fxml"));
+
         Scene scene = new Scene(root, 600, 400);
 
         String css = this.getClass().getResource("/css/estilos.css").toExternalForm();
         scene.getStylesheets().add(css);
-        
+
         primaryStage.setTitle("Control de Almacén - GLOBAL FINANCE");
-        primaryStage.setScene(scene); // ¡Esta línea es crucial para que se vea el contenido!
+        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
