@@ -14,7 +14,7 @@ public class CargadorEscenas {
             rutaMenu = "/fxml/MenuPrincipalEncargado.fxml";
         }
         if (rolUsuario == Rol.SALIDAS) {
-            rutaMenu = "/fxml/MenuPrincipalSalida.fxml";
+            rutaMenu = "/fxml/MenuPrincipalSalidas.fxml";
         }
         if (rolUsuario == Rol.SOLICITUDES) {
             rutaMenu = "/fxml/MenuPrincipalSolicitudes.fxml";
