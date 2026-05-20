@@ -10,9 +10,9 @@ public class ControlAlmacen extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("../../../fxml/InicioSesion.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/InicioSesion.fxml"));
 
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root);
 
         String css = this.getClass().getResource("/css/estilos.css").toExternalForm();
         scene.getStylesheets().add(css);

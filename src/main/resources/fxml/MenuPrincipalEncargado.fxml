@@ -126,7 +126,7 @@
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect></Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="159.0" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Generar reporte de salidas" textAlignment="CENTER" wrapText="true">
+                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="159.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Generar reporte de salidas" textAlignment="CENTER" wrapText="true">
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect></Button>
