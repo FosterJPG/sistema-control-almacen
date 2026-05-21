@@ -8,8 +8,32 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.BitacoraPedidosController">
+
    <children>
-      <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+
+      <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="Ingresos">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Registrar factura" />
+                  <MenuItem mnemonicParsing="false" text="Consultar facturas" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Items">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Registrar item" />
+                  <MenuItem mnemonicParsing="false" text="Consultar items" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Pedidos">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Consultar bitácora" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+
+      <VBox layoutY="38.0" prefHeight="542.0" prefWidth="810.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="38.0">
          <effect>
             <DropShadow color="#0000003c" height="31.0" offsetX="-3.0" offsetY="5.0" radius="15.0" width="31.0" />
          </effect>
