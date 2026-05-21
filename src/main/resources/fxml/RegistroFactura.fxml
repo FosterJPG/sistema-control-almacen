@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -7,7 +8,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.RegistroFacturaController">
+<AnchorPane prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.RegistroFacturaController">
     <children>
 
         <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -16,19 +17,12 @@
                     <items>
                         <MenuItem mnemonicParsing="false" text="Registrar factura" />
                         <MenuItem mnemonicParsing="false" text="Consultar facturas" />
-                        <MenuItem mnemonicParsing="false" text="Generar reporte de entradas" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Items">
                     <items>
                         <MenuItem mnemonicParsing="false" text="Registrar item" />
                         <MenuItem mnemonicParsing="false" text="Consultar items" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Solicitudes">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Consultar solicitudes" />
-                        <MenuItem mnemonicParsing="false" text="Generar reporte de salidas" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Pedidos">
@@ -53,11 +47,6 @@
                         <Label styleClass="label-titulo" text="Registro de Nueva Factura">
                             <font>
                                 <Font name="System Bold" size="24.0" />
-                            </font>
-                        </Label>
-                        <Label text="Capture los datos del comprobante y agregue los materiales recibidos." textFill="#666666">
-                            <font>
-                                <Font size="14.0" />
                             </font>
                         </Label>
                     </children>
@@ -146,13 +135,13 @@
                                     </children>
                                 </GridPane>
 
-                                <HBox alignment="CENTER_RIGHT" prefHeight="34.0" prefWidth="559.0" spacing="10.0">
+                                <HBox alignment="CENTER_RIGHT" prefHeight="56.0" prefWidth="578.0" spacing="10.0">
                                     <children>
                                         <Button fx:id="btnEliminarMaterial" mnemonicParsing="false" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Quitar de la lista">
                                  <effect>
                                     <InnerShadow offsetY="9.0">
                                        <color>
-                                          <Color red="1.0" green="1.0" blue="1.0" opacity="0.44155845046043396" />
+                                          <Color blue="1.0" green="1.0" opacity="0.44155845046043396" red="1.0" />
                                        </color>
                                     </InnerShadow>
                                  </effect></Button>
@@ -160,7 +149,7 @@
                                  <effect>
                                     <InnerShadow offsetY="9.0">
                                        <color>
-                                          <Color red="1.0" green="1.0" blue="1.0" opacity="0.44155845046043396" />
+                                          <Color blue="1.0" green="1.0" opacity="0.44155845046043396" red="1.0" />
                                        </color>
                                     </InnerShadow>
                                  </effect></Button>
@@ -174,7 +163,7 @@
                            </effect>
                                 </HBox>
 
-                                <TableView fx:id="tvMaterialesFactura" prefHeight="156.0" prefWidth="559.0" VBox.vgrow="ALWAYS">
+                                <TableView fx:id="tvMaterialesFactura" prefHeight="252.0" prefWidth="578.0" VBox.vgrow="ALWAYS">
                                     <columns>
                                         <TableColumn fx:id="colMaterial" prefWidth="250.0" text="Material" />
                                         <TableColumn fx:id="colPartida" prefWidth="120.0" text="Partida" />
@@ -191,7 +180,7 @@
                 <HBox alignment="CENTER_RIGHT" spacing="15.0">
                     <children>
                         <Button fx:id="btnRegresar" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" />
-                        <Button fx:id="btnCargarFactura" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Guardar Factura Completa">
+                        <Button fx:id="btnCargarFactura" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Guardar factura">
                             <effect>
                                 <InnerShadow color="#ffffff4d" offsetY="10.0" />
                             </effect></Button>

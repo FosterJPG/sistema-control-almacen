@@ -7,9 +7,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.ListadoFacturasController">
+<AnchorPane prefHeight="700.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.ListadoFacturasController">
    <children>
-      <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <VBox layoutX="19.0" layoutY="40.0" prefHeight="637.0" prefWidth="813.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="40.0">
          <effect>
             <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
          </effect>
@@ -52,11 +52,16 @@
 
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
-                  <Button fx:id="btnRegresar" mnemonicParsing="false" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar" />
                   <Button fx:id="btnVerDetalles" mnemonicParsing="false" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Ver Detalles de Factura">
                      <effect>
                         <InnerShadow color="#ffffff5c" offsetY="9.0" />
                      </effect></Button>
+                  <Button mnemonicParsing="false" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Generar reporte">
+                     <effect>
+                        <InnerShadow color="#00000021" height="11.0" offsetY="-8.0" radius="7.5" />
+                     </effect>
+                  </Button>
+                  <Button fx:id="btnRegresar" mnemonicParsing="false" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar" />
                </children>
                <effect>
                   <DropShadow color="#0000006f" offsetX="-3.0" offsetY="3.0" />
@@ -65,5 +70,26 @@
 
          </children>
       </VBox>
+      <MenuBar layoutY="-2.0" prefHeight="32.0" prefWidth="850.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Ingresos">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Registrar factura" />
+                  <MenuItem mnemonicParsing="false" text="Consultar facturas" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Items">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Registrar item" />
+                  <MenuItem mnemonicParsing="false" text="Consultar items" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Pedidos">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Consultar bitácora" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
    </children>
 </AnchorPane>

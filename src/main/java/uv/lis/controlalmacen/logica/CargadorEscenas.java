@@ -8,19 +8,22 @@ public class CargadorEscenas {
         String rutaMenu = null;
 
         if (rolUsuario == Rol.CENTRAL) {
-            rutaMenu = "/fxml/MenuPrincipalCentral.fxml";
+            //rutaMenu = "/fxml/MenuPrincipalCentral.fxml";
+            rutaMenu = "MenuPrincipalCentral";
         }
         if (rolUsuario == Rol.ENCARGADO) {
-            rutaMenu = "/fxml/MenuPrincipalEncargado.fxml";
+            //rutaMenu = "/fxml/MenuPrincipalEncargado.fxml";
+            rutaMenu = "MenuPrincipalEncargado";
         }
         if (rolUsuario == Rol.SALIDAS) {
-            rutaMenu = "/fxml/MenuPrincipalSalidas.fxml";
+            //rutaMenu = "/fxml/MenuPrincipalSalidas.fxml";
+            rutaMenu = "MenuPrincipalSalidas";
         }
         if (rolUsuario == Rol.SOLICITUDES) {
-            rutaMenu = "/fxml/MenuPrincipalSolicitudes.fxml";
+            //rutaMenu = "/fxml/MenuPrincipalSolicitudes.fxml";
+            rutaMenu = "MenuPrincipalSolicitudes";
         }
 
-        System.out.println(rutaMenu);
         return rutaMenu;
     }
 }

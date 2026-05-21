@@ -11,14 +11,14 @@
 <AnchorPane prefHeight="650.0" prefWidth="900.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.MenuPrincipalCentralController">
    <children>
       
-      <VBox spacing="5.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="25.0">
+            <VBox spacing="5.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="25.0">
          <children>
-            <Label fx:id="lbNombreEmpleado" text="Bienvenido:" textFill="#495057">
+            <Label fx:id="lb_nombreEmpleado" text="Bienvenido:" textFill="#495057">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label text="Nombre sucursal" textFill="#007bff">
+            <Label fx:id="lb_nombreSucursal" text="Nombre sucursal" textFill="#007bff">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -52,15 +52,11 @@
                      </font>
                   </Label>
                   <Separator prefWidth="150.0" />
-                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Registrar factura">
+                  <Button mnemonicParsing="false" onAction="#btnRegistrarFactura" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Registrar factura">
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect></Button>
-                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #f8f9fa; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar facturas">
-                     <effect>
-                        <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
-                     </effect></Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="159.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Generar reporte de entradas" textAlignment="CENTER" wrapText="true">
+                  <Button mnemonicParsing="false" onAction="#btnConsultarFacturas" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #f8f9fa; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar facturas">
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect></Button>
@@ -110,39 +106,6 @@
                <children>
                   <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../imagenes/solicitud.png" />
-                     </image>
-                     <effect>
-                        <DropShadow color="#00000043" />
-                     </effect>
-                  </ImageView>
-                  <Label text="Solicitudes">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
-                  <Separator prefWidth="150.0" />
-                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #f8f9fa; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar solicitudes">
-                     <effect>
-                        <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
-                     </effect></Button>
-                  <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="159.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Generar reporte de salidas" textAlignment="CENTER" wrapText="true">
-                     <effect>
-                        <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
-                     </effect></Button>
-               </children>
-            </VBox>
-            
-            <VBox alignment="TOP_CENTER" prefWidth="200.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" HBox.hgrow="ALWAYS">
-               <effect>
-                  <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
-               </effect>
-               <padding>
-                  <Insets bottom="20.0" left="15.0" right="15.0" top="20.0" />
-               </padding>
-               <children>
-                  <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
                         <Image url="@../imagenes/pedido.png" />
                      </image>
                      <effect>
@@ -165,5 +128,6 @@
          </children>
       </HBox>
       <Button layoutX="761.0" layoutY="41.0" mnemonicParsing="false" onAction="#btnCerrarSesion" style="-fx-background-color: #f8f9fa; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Cerrar sesión" />
+      <HBox layoutX="267.0" prefHeight="100.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

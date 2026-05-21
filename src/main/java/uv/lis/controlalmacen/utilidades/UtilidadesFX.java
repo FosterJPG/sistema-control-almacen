@@ -1,6 +1,11 @@
 package uv.lis.controlalmacen.utilidades;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Alert;
+import uv.lis.controlalmacen.ControlAlmacen;
+
+import java.io.IOException;
 
 public class UtilidadesFX {
 
@@ -16,5 +21,16 @@ public class UtilidadesFX {
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+
+    /**
+     * Metodo que retorna un el archivo FXML cargado. Este metodo se encarga de manejar la ruta.
+     * @param fxml nombre del archivo a cargar
+     * @return
+     * @throws IOException
+     */
+    public static Parent cargarFXML(String fxml) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(ControlAlmacen.class.getResource("/fxml/"+ fxml + ".fxml"));
+        return fxmlLoader.load();
     }
 }

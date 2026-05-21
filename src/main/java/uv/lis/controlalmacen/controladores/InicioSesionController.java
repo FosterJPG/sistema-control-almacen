@@ -27,13 +27,13 @@ import java.util.ResourceBundle;
 public class InicioSesionController implements Initializable {
 
     @FXML
-    private TextField tfUsuario;
+    private TextField tf_usuario;
     @FXML
-    private TextField tfPassword;
+    private TextField tf_password;
     @FXML
-    private Label lbErrorUsuario;
+    private Label lb_errorUsuario;
     @FXML
-    private Label lbErrorPassword;
+    private Label lb_errorPassword;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -42,8 +42,8 @@ public class InicioSesionController implements Initializable {
 
     @FXML
     private void btnIniciarSesion(ActionEvent event) {
-        String usuario = tfUsuario.getText();
-        String password = tfPassword.getText();
+        String usuario = tf_usuario.getText();
+        String password = tf_password.getText();
         if (!validarCampos(usuario, password)) {
             return;
         }
@@ -55,7 +55,6 @@ public class InicioSesionController implements Initializable {
             UtilidadesFX.mostrarAlertaSimple("Bienvenido(a)", "Bienvenido al sistema: " + usuarioLogin.getNombreEmpleado()
                     , Alert.AlertType.INFORMATION);
             String rutaMenu = CargadorEscenas.cargarEscenarSegunRol(usuarioLogin.getRol());
-            System.out.println(rutaMenu);
             cargarEscena(rutaMenu);
         } catch (NoSuchAlgorithmException | SQLException | IOException | ClassNotFoundException ex) {
             UtilidadesFX.mostrarAlertaSimple("Error", "Ocurrió un error al intentar iniciar sesion. " +
@@ -66,17 +65,17 @@ public class InicioSesionController implements Initializable {
     }
 
     private boolean validarCampos(String usuario, String password) {
-        lbErrorUsuario.setText("");
-        lbErrorPassword.setText("");
+        lb_errorUsuario.setText("");
+        lb_errorPassword.setText("");
 
         boolean valido = true;
         if (usuario.trim().isEmpty()) {
-            lbErrorUsuario.setText("Falta insertar usuario");
+            lb_errorUsuario.setText("Falta insertar usuario");
             valido = false;
         }
 
         if (password.trim().isEmpty()) {
-            lbErrorPassword.setText("Falta insertar contraseña");
+            lb_errorPassword.setText("Falta insertar contraseña");
             valido = false;
         }
 
@@ -85,10 +84,10 @@ public class InicioSesionController implements Initializable {
 
     private void cargarEscena(String rutaMenu) {
         try {
-            Parent vista = FXMLLoader.load(getClass().getResource(rutaMenu));
+            Parent vista = UtilidadesFX.cargarFXML(rutaMenu);
             Scene escena = new Scene(vista);
 
-            Stage stage = (Stage) tfPassword.getScene().getWindow();
+            Stage stage = (Stage) tf_password.getScene().getWindow();
             stage.setScene(escena);
             stage.setTitle("Menu principal");
             stage.show();

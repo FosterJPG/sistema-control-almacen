@@ -24,11 +24,11 @@
                </font>
             </Label>
             <Label alignment="BOTTOM_CENTER" prefHeight="51.0" prefWidth="67.0" text="Usuario:" />
-            <TextField fx:id="tfUsuario" promptText="Ingresa tu usuario" />
-            <Label fx:id="lbErrorUsuario" alignment="TOP_CENTER" textFill="RED" />
+            <TextField fx:id="tf_usuario" promptText="Ingresa tu usuario" />
+            <Label fx:id="lb_errorUsuario" alignment="TOP_CENTER" textFill="RED" />
             <Label alignment="BOTTOM_CENTER" prefHeight="35.0" prefWidth="126.0" text="Contraseña:" />
-            <PasswordField fx:id="tfPassword" promptText="Ingresa tu contraseña" />
-            <Label fx:id="lbErrorPassword" alignment="TOP_CENTER" textFill="RED" />
+            <PasswordField fx:id="tf_password" promptText="Ingresa tu contraseña" />
+            <Label fx:id="lb_errorPassword" alignment="TOP_CENTER" textFill="RED" />
             <Button mnemonicParsing="false" onAction="#btnIniciarSesion" text="Iniciar Sesion">
                <VBox.margin>
                   <Insets top="20.0" />
