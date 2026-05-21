@@ -1,14 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.MenuPrincipalSolicitudesController">
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="242.0" layoutY="179.0" text="menu solicitudes (es prueba)" />
+
+      <VBox spacing="5.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="30.0">
+         <children>
+            <Label text="Bienvenido, solicitante:" textFill="#495057">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label text="Nombre del Empleado - Departamento" textFill="#007bff">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <Separator AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="100.0" />
+
+      <HBox alignment="CENTER" spacing="40.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="140.0">
+         <children>
+
+            <VBox alignment="TOP_CENTER" maxWidth="280.0" prefWidth="250.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" HBox.hgrow="ALWAYS">
+               <effect>
+                  <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
+               </effect>
+               <padding>
+                  <Insets bottom="30.0" left="20.0" right="20.0" top="30.0" />
+               </padding>
+               <children>
+                  <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/solicitud.png" />
+                     </image>
+                  </ImageView>
+                  <VBox alignment="CENTER" spacing="5.0">
+                     <children>
+                        <Label text="Nueva Solicitud">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" text="Pedir materiales al almacén" textAlignment="CENTER" textFill="#666666" wrapText="true" />
+                     </children>
+                  </VBox>
+                  <Separator prefWidth="150.0" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Crear Solicitud" />
+               </children>
+            </VBox>
+
+            <VBox alignment="TOP_CENTER" maxWidth="280.0" prefWidth="250.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" HBox.hgrow="ALWAYS">
+               <effect>
+                  <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
+               </effect>
+               <padding>
+                  <Insets bottom="30.0" left="20.0" right="20.0" top="30.0" />
+               </padding>
+               <children>
+                  <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/items.png" />
+                     </image>
+                  </ImageView>
+                  <VBox alignment="CENTER" spacing="5.0">
+                     <children>
+                        <Label text="Historial">
+                           <font>
+                              <Font name="System Bold" size="22.0" />
+                           </font>
+                        </Label>
+                        <Label alignment="CENTER" text="Revisar el estado de pedidos anteriores" textAlignment="CENTER" textFill="#666666" wrapText="true" />
+                     </children>
+                  </VBox>
+                  <Separator prefWidth="150.0" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #f8f9fa; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar Historial" />
+               </children>
+            </VBox>
+
+         </children>
+      </HBox>
+
+      <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #dc3545; -fx-border-color: #dc3545; -fx-border-radius: 5;" text="Cerrar Sesión" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="30.0">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Button>
+
    </children>
 </AnchorPane>
