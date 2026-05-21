@@ -41,7 +41,7 @@ public class InicioSesionController implements Initializable {
     }
 
     @FXML
-    private void btnIniciarSesion(ActionEvent event) {
+    private void clicIniciarSesion(ActionEvent event) {
         String usuario = tf_usuario.getText();
         String password = tf_password.getText();
         if (!validarCampos(usuario, password)) {

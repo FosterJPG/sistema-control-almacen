@@ -1,5 +1,6 @@
 package uv.lis.controlalmacen.controladores;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -9,5 +10,8 @@ public class RegistroFacturaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+    }
+
+    public void clicCancelar(ActionEvent actionEvent) {
     }
 }
