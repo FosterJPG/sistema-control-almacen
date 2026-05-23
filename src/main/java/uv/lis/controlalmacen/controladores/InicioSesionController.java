@@ -93,7 +93,6 @@ public class InicioSesionController implements Initializable {
             stage.show();
             stage.setResizable(false);
             stage.centerOnScreen();
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

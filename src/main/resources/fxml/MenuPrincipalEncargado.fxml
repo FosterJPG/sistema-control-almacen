@@ -85,11 +85,11 @@
                      </font>
                   </Label>
                   <Separator prefWidth="150.0" />
-                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Registrar item">
+                  <Button mnemonicParsing="false" onAction="#clicRegistrarItem" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Registrar item">
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect></Button>
-                  <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #f8f9fa; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar items">
+                  <Button mnemonicParsing="false" onAction="#clicConsultarItems" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #f8f9fa; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar items">
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect></Button>
