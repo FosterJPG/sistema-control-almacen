@@ -52,9 +52,12 @@ public class InicioSesionController implements Initializable {
 
         try {
             usuarioLogin = Autenticador.iniciarSesion(usuario, password);
+
             UtilidadesFX.mostrarAlertaSimple("Bienvenido(a)", "Bienvenido al sistema: " + usuarioLogin.getNombreEmpleado()
                     , Alert.AlertType.INFORMATION);
+
             String rutaMenu = CargadorEscenas.cargarEscenarSegunRol(usuarioLogin.getRol());
+
             cargarEscena(rutaMenu);
         } catch (NoSuchAlgorithmException | SQLException | IOException | ClassNotFoundException ex) {
             UtilidadesFX.mostrarAlertaSimple("Error", "Ocurrió un error al intentar iniciar sesion. " +
