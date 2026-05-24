@@ -5,8 +5,8 @@ public class Item {
     private String idItem;
     private String descripcionItem;
     private String descripcionPartida;
-    private int codigoPartidaPresupuestal;
-
+    private Integer codigoPartidaPresupuestal;
+   
     public String getDescripcionItem() {
         return descripcionItem;
     }

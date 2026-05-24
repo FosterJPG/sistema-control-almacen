@@ -13,10 +13,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import uv.lis.controlalmacen.modelo.dao.ItemAlmacenadoDAO;
+import uv.lis.controlalmacen.modelo.dto.ItemAlmacenado;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
@@ -34,7 +37,7 @@ public class ListadoItemsController implements Initializable {
     @FXML
     private TextField txt_buscarIdProducto;
     @FXML
-    private TableView tv_inventario;
+    private TableView<ItemAlmacenado> tv_inventario;
     @FXML
     private TableColumn col_idItem;
     @FXML
@@ -46,6 +49,10 @@ public class ListadoItemsController implements Initializable {
     @FXML
     private TableColumn col_stockMax;
 
+    private ObservableList<ItemAlmacenado> itemsAlmacenados;
+
+    ItemAlmacenadoDAO itemAlmacenadoDAO 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cb_filtroStock.setItems(listaOpcionesStock);
@@ -53,7 +60,15 @@ public class ListadoItemsController implements Initializable {
     
     private void configurarTabla(){
         col_idItem.setCellValueFactory(new PropertyValueFactory("idItem"));
+        col_descripcion.setCellValueFactory(new PropertyValueFactory("descripcionItem"));
+        col_existencias.setCellValueFactory(new PropertyValueFactory("existencias"));
+        col_stockMin.setCellValueFactory(new PropertyValueFactory("stockMin"));
+        col_stockMax.setCellValueFactory(new PropertyValueFactory("stockMax"));
+    }
 
+    private void cargarInformacionItems(){
+        itemsAlmacenados = FXCollections.observableArrayList();
+        List<ItemAlmacenado> itemsAlmacenadosBD =
     }
 
     @FXML
