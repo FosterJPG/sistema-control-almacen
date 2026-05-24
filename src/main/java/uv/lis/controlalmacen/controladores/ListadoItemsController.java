@@ -15,6 +15,8 @@ import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 
 public class ListadoItemsController implements Initializable {
 
@@ -26,12 +28,27 @@ public class ListadoItemsController implements Initializable {
 
     private ObservableList<String> listaOpcionesStock = FXCollections.observableArrayList(
                                             "Sobre el máximo", "Menor que el mínimo");
+    @FXML
+    private TextField txt_buscarIdProducto;
+    @FXML
+    private TableView<?> tv_inventario;
+    @FXML
+    private TableColumn<?, ?> col_idItem;
+    @FXML
+    private TableColumn<?, ?> col_descripcion;
+    @FXML
+    private TableColumn<?, ?> col_existencias;
+    @FXML
+    private TableColumn<?, ?> col_stockMin;
+    @FXML
+    private TableColumn<?, ?> col_stockMax;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cb_filtroStock.setItems(listaOpcionesStock);
     }
 
+    @FXML
     public void clicRegresar(ActionEvent actionEvent) {
         try {
             Parent vista = UtilidadesFX.cargarFXML("MenuPrincipalEncargado");
@@ -49,6 +66,7 @@ public class ListadoItemsController implements Initializable {
         }
     }
 
+    @FXML
     public void clicRegistrarFactura(ActionEvent actionEvent) {
         try{
             Parent vista = UtilidadesFX.cargarFXML("RegistroFactura");
@@ -65,6 +83,7 @@ public class ListadoItemsController implements Initializable {
         }
     }
 
+    @FXML
     public void clicConsultarFacturas(ActionEvent actionEvent) {
         try{
             Parent vista = UtilidadesFX.cargarFXML("ListadoFacturas");
@@ -81,6 +100,7 @@ public class ListadoItemsController implements Initializable {
         }
     }
 
+    @FXML
     public void clicRegistrarItem(ActionEvent actionEvent) {
         try{
             Parent vista = UtilidadesFX.cargarFXML("RegistroItem");
@@ -97,10 +117,12 @@ public class ListadoItemsController implements Initializable {
         }
     }
 
+    @FXML
     public void clicConsultarItems(ActionEvent actionEvent) {
         //
     }
 
+    @FXML
     public void clicConsultarBitacora(ActionEvent actionEvent) {
         try{
             Parent vista = UtilidadesFX.cargarFXML("BitacoraPedidos");

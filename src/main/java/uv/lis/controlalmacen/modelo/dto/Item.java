@@ -5,6 +5,7 @@ public class Item {
     private String idItem;
     private String descripcionItem;
     private String descripcionPartida;
+    private int codigoPartidaPresupuestal;
 
     public String getDescripcionItem() {
         return descripcionItem;
@@ -29,4 +30,13 @@ public class Item {
     public void setIdItem(String idItem) {
         this.idItem = idItem;
     }
+
+    public int getCodigoPartidaPresupuestal() {
+        return codigoPartidaPresupuestal;
+    }
+
+    public void setCodigoPartidaPresupuestal(int idPartidaPresupuestal) {
+        this.codigoPartidaPresupuestal = idPartidaPresupuestal;
+    }
+    
 }

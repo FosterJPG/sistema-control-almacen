@@ -1,31 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.RegistroItemController">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.RegistroItemController">
    <children>
 
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <menus>
             <Menu mnemonicParsing="false" text="Ingresos">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Registrar factura" />
-                  <MenuItem mnemonicParsing="false" text="Consultar facturas" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicRegistrarFactura" text="Registrar factura" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicConsultarFacturas" text="Consultar facturas" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Items">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Registrar item" />
-                  <MenuItem mnemonicParsing="false" text="Consultar items" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicRegistrarItem" text="Registrar item" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicConsultarItems" text="Consultar items" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Pedidos">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Consultar bitácora" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicConsultarBitcora" text="Consultar bitácora" />
                </items>
             </Menu>
          </menus>
@@ -73,14 +74,14 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txtDescripcion" promptText="Ej. Resma de papel bond tamaño carta" GridPane.columnIndex="1" />
+                        <TextField fx:id="txt_descripcion" promptText="Ej. Resma de papel bond tamaño carta" GridPane.columnIndex="1" />
                         
                         <Label text="Partida Presupuestal:" textFill="#495057" GridPane.rowIndex="1">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="cbPartidaPresupuestal" prefWidth="300.0" promptText="Seleccione una partida..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="cb_partidaPresupuestal" prefWidth="300.0" promptText="Seleccione una partida..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>
@@ -88,8 +89,8 @@
 
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
-                  <Button fx:id="btnRegresar" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" />
-                  <Button fx:id="btnRegistrar" mnemonicParsing="false" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Registrar Ítem en Catálogo">
+                  <Button mnemonicParsing="false" onAction="#clicCancelar" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" />
+                  <Button mnemonicParsing="false" onAction="#clicRegistrar" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Registrar Ítem en Catálogo">
                      <effect>
                         <InnerShadow color="#ffffff6d" offsetY="10.0" />
                      </effect></Button>
