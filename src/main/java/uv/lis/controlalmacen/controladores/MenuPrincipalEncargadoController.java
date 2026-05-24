@@ -2,7 +2,6 @@ package uv.lis.controlalmacen.controladores;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -38,12 +37,12 @@ public class MenuPrincipalEncargadoController implements Initializable {
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
-            stage.setScene(escena);
             stage.setTitle("Control de Almacén - GLOBAL FINANCE");
-            stage.show();
             stage.setResizable(false);
             stage.centerOnScreen();
 
+            stage.setScene(escena);
+            stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -56,12 +55,12 @@ public class MenuPrincipalEncargadoController implements Initializable {
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
-            stage.setScene(escena);
             stage.setTitle("Registro de facturas");
-            stage.show();
             stage.setResizable(false);
             stage.centerOnScreen();
 
+            stage.setScene(escena);
+            stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -74,14 +73,36 @@ public class MenuPrincipalEncargadoController implements Initializable {
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
-            stage.setScene(escena);
             stage.setTitle("Listado de facturas");
-            stage.show();
             stage.setResizable(false);
             stage.centerOnScreen();
 
+            stage.setScene(escena);
+            stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @FXML
+    public void clicRegistrarItem(ActionEvent actionEvent) {
+        try {
+            Parent vista = UtilidadesFX.cargarFXML("ListadoItems");
+            Scene escena = new Scene(vista);
+
+            Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
+            stage.setTitle("Listado de items almacenados");
+            stage.setResizable(false);
+            stage.centerOnScreen();
+
+            stage.setScene(escena);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void clicConsultarItems(ActionEvent actionEvent) {
     }
 }

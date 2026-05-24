@@ -38,12 +38,12 @@ public class ListadoItemsController implements Initializable {
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) cb_filtroStock.getScene().getWindow();
-            stage.setScene(escena);
             stage.setTitle("Menu principal");
-            stage.show();
             stage.setResizable(false);
             stage.centerOnScreen();
 
+            stage.setScene(escena);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -55,10 +55,11 @@ public class ListadoItemsController implements Initializable {
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) cb_filtroStock.getScene().getWindow();
-            stage.setScene(escena);
             stage.setTitle("Registrar Factura");
             stage.setResizable(false);
             stage.centerOnScreen();
+
+            stage.setScene(escena);
             stage.show();
         }catch(IOException e){
             e.printStackTrace();
@@ -71,10 +72,11 @@ public class ListadoItemsController implements Initializable {
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) cb_filtroStock.getScene().getWindow();
-            stage.setScene(escena);
             stage.setTitle("Consultar Factura");
             stage.setResizable(false);
             stage.centerOnScreen();
+
+            stage.setScene(escena);
             stage.show();
         }catch(IOException e){
             e.printStackTrace();
@@ -87,10 +89,11 @@ public class ListadoItemsController implements Initializable {
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) cb_filtroStock.getScene().getWindow();
-            stage.setScene(escena);
             stage.setTitle("Registrar Item");
             stage.setResizable(false);
             stage.centerOnScreen();
+
+            stage.setScene(escena);
             stage.show();
         }catch(IOException e){
             e.printStackTrace();
@@ -98,7 +101,20 @@ public class ListadoItemsController implements Initializable {
     }
 
     public void clicConsultarItems(ActionEvent actionEvent) {
-        //
+        try {
+            Parent vista = UtilidadesFX.cargarFXML("ListadoItems");
+            Scene escena = new Scene(vista);
+
+            Stage stage = (Stage) cb_filtroPartida.getScene().getWindow();
+            stage.setTitle("Consultar Items");
+            stage.setResizable(false);
+            stage.centerOnScreen();
+
+            stage.setScene(escena);
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void clicConsultarBitacora(ActionEvent actionEvent) {
@@ -107,13 +123,14 @@ public class ListadoItemsController implements Initializable {
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) cb_filtroStock.getScene().getWindow();
-            stage.setScene(escena);
             stage.setTitle("Consultar Bitacora");
             stage.setResizable(false);
             stage.centerOnScreen();
+
+            stage.setScene(escena);
             stage.show();
-        }catch(IOException e){
-            e.printStackTrace();
+        }catch(IOException ex){
+            ex.printStackTrace();
         }
     }
 
