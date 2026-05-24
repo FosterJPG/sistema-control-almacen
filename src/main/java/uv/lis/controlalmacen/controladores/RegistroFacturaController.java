@@ -24,10 +24,13 @@ public class RegistroFacturaController implements Initializable {
 
     }
 
+    @FXML
     public void clicCancelar(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = UtilidadesFX.cargarFXML("MenuPrincipalEncargado");
             Parent vista =  loader.load();
+            MenuController controller = loader.getController();
+            controller.cargarDatos();
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) txt_folio.getScene().getWindow();

@@ -9,13 +9,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import uv.lis.controlalmacen.modelo.dto.Empleado;
+import uv.lis.controlalmacen.modelo.dto.Sesion;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MenuPrincipalEncargadoController extends MenuController implements Initializable {
+public class MenuPrincipalEncargadoController implements Initializable, MenuController {
 
     @FXML
     private Label lb_nombreEmpleado;
@@ -30,7 +31,7 @@ public class MenuPrincipalEncargadoController extends MenuController implements 
 
     @Override
     public void cargarDatos(){
-        lb_nombreEmpleado.setText(empleado.getNombre());
+        lb_nombreEmpleado.setText("Bienvenido: " + Sesion.getUsuarioActual().getEmpleado().getNombre());
     }
 
     @FXML
@@ -45,6 +46,7 @@ public class MenuPrincipalEncargadoController extends MenuController implements 
             stage.setResizable(false);
             stage.centerOnScreen();
 
+            Sesion.cerrarSesion();
             stage.setScene(escena);
             stage.show();
         } catch (IOException e) {

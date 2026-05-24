@@ -15,6 +15,7 @@ import uv.lis.controlalmacen.excepciones.UsuarioNoEncontradoException;
 import uv.lis.controlalmacen.logica.Autenticador;
 import uv.lis.controlalmacen.logica.CargadorEscenas;
 import uv.lis.controlalmacen.modelo.dto.Empleado;
+import uv.lis.controlalmacen.modelo.dto.Sesion;
 import uv.lis.controlalmacen.modelo.dto.Usuario;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
@@ -60,10 +61,12 @@ public class InicioSesionController implements Initializable {
 
             String rutaMenu = CargadorEscenas.cargarEscenarSegunRol(usuarioLogin.getRol());
 
-            cargarEscena(rutaMenu, usuarioLogin.getEmpleado());
+            Sesion.setUsuarioActual(usuarioLogin);
+            cargarEscena(rutaMenu);
         } catch (NoSuchAlgorithmException | SQLException | IOException | ClassNotFoundException ex) {
             UtilidadesFX.mostrarAlertaSimple("Error", "Ocurrió un error al intentar iniciar sesion. " +
                     "Causa (Para el dev.): " + ex.getMessage(), Alert.AlertType.ERROR);
+            // ESTO DE CAUSA PARA EL DEV SE VA A QUITAR, ES DE MIENTRAS POR SI NOS SALE UN ERROR Y SABER
         } catch (UsuarioNoEncontradoException ex) {
             UtilidadesFX.mostrarAlertaSimple("Error", ex.getMessage(), Alert.AlertType.ERROR);
         }
@@ -87,12 +90,11 @@ public class InicioSesionController implements Initializable {
         return valido;
     }
 
-    private void cargarEscena(String rutaMenu, Empleado empleado) {
+    private void cargarEscena(String rutaMenu) {
         try {
             FXMLLoader loader = UtilidadesFX.cargarFXML(rutaMenu);
             Parent vista = loader.load();
             MenuController controller = loader.getController();
-            controller.setEmpleado(empleado);
             controller.cargarDatos();
 
             Scene escena = new Scene(vista);
@@ -103,7 +105,6 @@ public class InicioSesionController implements Initializable {
 
             stage.setScene(escena);
             stage.show();
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
