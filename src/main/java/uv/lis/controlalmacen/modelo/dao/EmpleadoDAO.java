@@ -71,7 +71,7 @@ public class EmpleadoDAO implements OperacionesCatalogoDAO<Empleado, Integer>{
                     empleado.setPaterno(rs.getString("paterno"));
                     empleado.setMaterno(rs.getString("materno"));
                     empleado.setDireccion(rs.getString("direccion"));
-                    empleado.setCorreoElectronico(rs.getString("Correo Electrónico"));
+                    empleado.setCorreoElectronico(rs.getString("correo_electronico"));
                     empleado.setTelefono(rs.getString("telefono"));
 
                     empleado.setPuesto(puesto);

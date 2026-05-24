@@ -1,35 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="350.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10;; -fx-border-color: #e0e0e0; -fx-border-radius: 10;;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="400.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #dee2e6; -fx-border-radius: 12;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.MensajeExitoController">
    <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+      <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
    </padding>
+   <effect>
+      <DropShadow color="#00000026" offsetX="0.0" offsetY="5.0" radius="15.0" />
+   </effect>
    <children>
-      <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="65.0" fitWidth="65.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../imagenes/comprobado.png" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" prefHeight="18.0" prefWidth="201.0" text="¡Operación Exitosa!" textAlignment="CENTER">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER" prefHeight="40.0" prefWidth="308.0" text="El registro se ha guardado correctamente en la base de datos." textAlignment="CENTER" wrapText="true" />
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+      <VBox alignment="CENTER" spacing="5.0">
          <children>
-            <Button mnemonicParsing="false" text="Aceptar" />
+            <Label fx:id="lblTitulo" alignment="CENTER" text="¡Operación Exitosa!" textFill="#28a745">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblMensaje" alignment="CENTER" prefWidth="320.0" text="El registro se ha guardado correctamente en la base de datos." textAlignment="CENTER" textFill="#666666" wrapText="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
+      </VBox>
+      <HBox alignment="CENTER" spacing="15.0">
+         <children>
+            <Button fx:id="btnAceptar" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Aceptar">
+               <effect>
+                  <InnerShadow offsetY="8.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" opacity="0.4848484992980957" />
+                     </color>
+                  </InnerShadow>
+               </effect></Button>
+         </children>
+         <VBox.margin>
+            <Insets top="10.0" />
+         </VBox.margin>
+         <effect>
+            <DropShadow offsetX="-3.0" offsetY="3.0">
+               <color>
+                  <Color opacity="0.4545454680919647" />
+               </color>
+            </DropShadow>
+         </effect>
       </HBox>
    </children>
 </VBox>
