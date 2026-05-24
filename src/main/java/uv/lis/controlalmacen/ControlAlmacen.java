@@ -15,7 +15,8 @@ public class ControlAlmacen extends Application {
     @Override
     public void start(Stage primaryStage){
         try {
-            Parent root = UtilidadesFX.cargarFXML("InicioSesion");
+            FXMLLoader loader = UtilidadesFX.cargarFXML("InicioSesion");
+            Parent root = loader.load();
             Scene scene = new Scene(root);
 
             primaryStage.setTitle("Control de Almacén - GLOBAL FINANCE");

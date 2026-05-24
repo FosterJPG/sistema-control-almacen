@@ -25,7 +25,7 @@ public class Autenticador {
      * @throws ClassNotFoundException
      */
     public static Usuario iniciarSesion(String usuario, String password) throws NoSuchAlgorithmException,
-            SQLException, IOException, ClassNotFoundException {
+            SQLException, IOException, ClassNotFoundException, NullPointerException {
 
         try {
             byte[] passwordHashed = hashearPassword(password);
