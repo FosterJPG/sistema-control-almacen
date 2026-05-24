@@ -4,9 +4,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.ListadoSolicitudesController">
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <children>
 
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -15,12 +16,20 @@
                <items>
                   <MenuItem mnemonicParsing="false" text="Registrar factura" />
                   <MenuItem mnemonicParsing="false" text="Consultar facturas" />
+                  <MenuItem mnemonicParsing="false" text="Generar reporte de entradas" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Items">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Registrar item" />
+                  <MenuItem mnemonicParsing="false" text="Registrar item (Catálogo)" />
+                  <MenuItem mnemonicParsing="false" text="Configurar stock en sucursal" />
                   <MenuItem mnemonicParsing="false" text="Consultar items" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Solicitudes">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Consultar solicitudes" />
+                  <MenuItem mnemonicParsing="false" text="Generar reporte de salidas" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Pedidos">
@@ -31,59 +40,100 @@
          </menus>
       </MenuBar>
 
-      <VBox layoutY="42.0" prefHeight="538.0" prefWidth="810.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="42.0">
+      <VBox spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="60.0">
          <effect>
-            <DropShadow color="#00000041" height="31.0" offsetX="-3.0" offsetY="5.0" radius="15.0" width="31.0" />
+            <DropShadow color="#00000026" offsetX="0.0" offsetY="5.0" radius="15.0" />
          </effect>
          <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
          </padding>
          <children>
-            
-            <Label styleClass="label-titulo" text="Historial de Solicitudes (Salidas)">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-            </Label>
-            <Label text="Consulte el registro histórico de los materiales entregados a los empleados de las sucursales." textFill="#666666" />
+
+            <VBox spacing="5.0">
+               <children>
+                  <Label text="Configuración de Stock en Almacén" textFill="#007bff">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label text="Asigne un producto del catálogo general a esta sucursal y defina sus umbrales." textFill="#666666">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <Separator prefWidth="200.0" />
+
+            <GridPane hgap="20.0" vgap="25.0" VBox.vgrow="ALWAYS">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="160.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+
+                  <Label text="ID del Artículo:" textFill="#495057">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1">
+                     <children>
+                        <TextField fx:id="txtIdItem" maxWidth="301.0" prefHeight="25.0" prefWidth="301.0" promptText="Ingrese ID..." />
+                        <Button fx:id="btnBuscarItem" mnemonicParsing="false" style="-fx-background-color: #17a2b8; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4;" text="Buscar en Catálogo" />
+                     </children>
+                  </HBox>
+
+                  <Label text="Descripción:" textFill="#495057" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtDescripcionItem" editable="false" promptText="Se autocompletará al buscar..." style="-fx-background-color: #e9ecef;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                  <Label text="Stock Mínimo (Alerta):" textFill="#495057" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtStockMinimo" maxWidth="150.0" prefHeight="25.0" prefWidth="67.0" promptText="Ej: 10" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                  <Label text="Stock Máximo (Límite):" textFill="#495057" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtStockMaximo" maxWidth="150.0" promptText="Ej: 200" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+               </children>
+            </GridPane>
 
             <Separator prefWidth="200.0" />
 
-            <HBox alignment="CENTER_LEFT" spacing="15.0">
-               <children>
-                  <Label text="Filtrar por Fecha:">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
-                  </Label>
-                  <DatePicker fx:id="dpFechaFiltro" promptText="Seleccione una fecha" />
-                  
-                  <Region HBox.hgrow="ALWAYS" /> <TextField fx:id="txtBuscar" prefWidth="250.0" promptText="Buscar por empleado o ítem..." />
-               </children>
-            </HBox>
-
-            <TableView fx:id="tvSolicitudes" prefHeight="250.0" VBox.vgrow="ALWAYS">
-              <columns>
-                <TableColumn fx:id="colFecha" prefWidth="100.0" text="Fecha" />
-                <TableColumn fx:id="colEmpleado" prefWidth="150.0" text="No. Empleado" />
-                <TableColumn fx:id="colArticulo" prefWidth="150.0" text="Artículo Solicitado" />
-                <TableColumn fx:id="colCantidad" prefWidth="80.0" text="Cantidad" />
-                <TableColumn fx:id="colUso" prefWidth="200.0" text="Uso / Justificación" />
-              </columns>
-               <effect>
-                  <DropShadow color="#00000039" offsetX="-3.0" offsetY="3.0" />
-               </effect>
-            </TableView>
-
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
-                  <Button fx:id="btnExportarPDF" mnemonicParsing="false" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Exportar a PDF">
+                  <Button fx:id="btnCancelar" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" />
+                  <Button fx:id="btnGuardarStock" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Guardar Configuración">
                      <effect>
-                        <InnerShadow color="#ffffff70" offsetY="6.0" />
+                        <InnerShadow offsetY="8.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" opacity="0.5974025726318359" />
+                           </color>
+                        </InnerShadow>
                      </effect></Button>
                </children>
                <effect>
-                  <DropShadow color="#0000004a" offsetX="-3.0" offsetY="3.0" />
+                  <DropShadow offsetX="-3.0" offsetY="3.0">
+                     <color>
+                        <Color opacity="0.38999998569488525" />
+                     </color>
+                  </DropShadow>
                </effect>
             </HBox>
 

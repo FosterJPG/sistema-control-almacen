@@ -5,6 +5,7 @@
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
@@ -53,7 +54,14 @@
                      </children>
                   </VBox>
                   <Separator prefWidth="150.0" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Crear Solicitud" />
+                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Crear Solicitud">
+                     <effect>
+                        <InnerShadow offsetY="10.0">
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" opacity="0.4458874464035034" />
+                           </color>
+                        </InnerShadow>
+                     </effect></Button>
                </children>
             </VBox>
 
