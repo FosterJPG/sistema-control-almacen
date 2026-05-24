@@ -32,8 +32,36 @@ public class ConnectionFactory {
     }
 
     // TODO conexion para roles
-    public static Connection crearParaRol(Rol rol) {
+    public static Connection crearParaRol(Rol rol) throws IOException, SQLException, ClassNotFoundException{
+        String rutaProperties = determinarRutaProperties(rol);
 
-        return null;
+        Properties prop = CargadorCredenciales.cargarCredenciales(rutaProperties);
+
+        Class.forName(ConfiguracionBD.getDriver());
+
+        String user = prop.getProperty("db.user");
+        String password = prop.getProperty("db.password");
+        String url = ConfiguracionBD.getUrl();
+
+        return DriverManager.getConnection(url, user, password);
+    }
+
+    private static String determinarRutaProperties(Rol rolUsuario) {
+        String rutaProperties = null;
+
+        if (rolUsuario == Rol.CENTRAL) {
+            rutaProperties = "/config/user_central.properties";
+        }
+        if (rolUsuario == Rol.ENCARGADO) {
+            rutaProperties = "/config/user_sucursal.properties";
+        }
+        if (rolUsuario == Rol.SALIDAS) {
+            rutaProperties = "/config/user_salidas.properties";
+        }
+        if (rolUsuario == Rol.SOLICITUDES) {
+            rutaProperties = "/config/user_solicitudes.properties";
+        }
+
+        return rutaProperties;
     }
 }

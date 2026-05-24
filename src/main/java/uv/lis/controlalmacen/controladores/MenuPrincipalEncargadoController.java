@@ -95,7 +95,7 @@ public class MenuPrincipalEncargadoController implements Initializable, MenuCont
     @FXML
     public void clicRegistrarItem(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = UtilidadesFX.cargarFXML("RegistroItem");
+            FXMLLoader loader = UtilidadesFX.cargarFXML("ConfigurarStock");
             Parent vista = loader.load();
             Scene escena = new Scene(vista);
 
