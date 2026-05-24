@@ -2,18 +2,21 @@ package uv.lis.controlalmacen.controladores;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import uv.lis.controlalmacen.modelo.dto.Empleado;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MenuPrincipalEncargadoController implements Initializable {
+public class MenuPrincipalEncargadoController extends MenuController implements Initializable {
+
     @FXML
     private Label lb_nombreEmpleado;
 
@@ -25,15 +28,16 @@ public class MenuPrincipalEncargadoController implements Initializable {
 
     }
 
-    // TODO implementacion para mostrar
-    private void cargarDatos(){
-
+    @Override
+    public void cargarDatos(){
+        lb_nombreEmpleado.setText(empleado.getNombre());
     }
 
     @FXML
     public void clicCerrarSesion(ActionEvent actionEvent) {
         try {
-            Parent vista = UtilidadesFX.cargarFXML("InicioSesion");
+            FXMLLoader loader = UtilidadesFX.cargarFXML("InicioSesion");
+            Parent vista = loader.load();
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
@@ -51,7 +55,8 @@ public class MenuPrincipalEncargadoController implements Initializable {
     @FXML
     public void clicRegistrarFactura(ActionEvent actionEvent) {
         try {
-            Parent vista = UtilidadesFX.cargarFXML("RegistroFactura");
+            FXMLLoader loader = UtilidadesFX.cargarFXML("RegistroFactura");
+            Parent vista = loader.load();
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
@@ -69,7 +74,8 @@ public class MenuPrincipalEncargadoController implements Initializable {
     @FXML
     public void clicConsultarFacturas(ActionEvent actionEvent) {
         try {
-            Parent vista = UtilidadesFX.cargarFXML("ListadoFacturas");
+            FXMLLoader loader = UtilidadesFX.cargarFXML("ListadoFacturas");
+            Parent vista = loader.load();
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
@@ -87,7 +93,8 @@ public class MenuPrincipalEncargadoController implements Initializable {
     @FXML
     public void clicRegistrarItem(ActionEvent actionEvent) {
         try {
-            Parent vista = UtilidadesFX.cargarFXML("RegistroItem");
+            FXMLLoader loader = UtilidadesFX.cargarFXML("RegistroItem");
+            Parent vista = loader.load();
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
@@ -105,7 +112,8 @@ public class MenuPrincipalEncargadoController implements Initializable {
     @FXML
     public void clicConsultarItems(ActionEvent actionEvent) {
         try {
-            Parent vista = UtilidadesFX.cargarFXML("ListadoItems");
+            FXMLLoader loader = UtilidadesFX.cargarFXML("ListadoItems");
+            Parent vista = loader.load();
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
@@ -123,7 +131,8 @@ public class MenuPrincipalEncargadoController implements Initializable {
     @FXML
     public void clicConsultarBitacora(ActionEvent actionEvent) {
         try {
-            Parent vista = UtilidadesFX.cargarFXML("BitacoraPedidos");
+            FXMLLoader loader = UtilidadesFX.cargarFXML("BitacoraPedidos");
+            Parent vista = loader.load();
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();

@@ -1,6 +1,8 @@
 package uv.lis.controlalmacen.controladores;
 
 import java.io.IOException;
+
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
@@ -109,7 +111,8 @@ public class RegistroItemController implements Initializable {
     @FXML
     private void clicCancelar(ActionEvent event) {
         try{
-            Parent vista = UtilidadesFX.cargarFXML("MenuPrincipalCentral");
+            FXMLLoader loader = UtilidadesFX.cargarFXML("MenuPrincipalEncargado");
+            Parent vista = loader.load();
             Scene escena = new Scene(vista);
             
             Stage stage = (Stage) txt_descripcion.getScene().getWindow();
@@ -126,7 +129,8 @@ public class RegistroItemController implements Initializable {
     @FXML
     public void clicRegistrarFactura(ActionEvent actionEvent) {
         try{
-            Parent vista = UtilidadesFX.cargarFXML("RegistroFactura");
+            FXMLLoader loader = UtilidadesFX.cargarFXML("RegistroFactura");
+            Parent vista = loader.load();
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) txt_descripcion.getScene().getWindow();
@@ -144,7 +148,8 @@ public class RegistroItemController implements Initializable {
     @FXML
     public void clicConsultarFacturas(ActionEvent actionEvent) {
         try{
-            Parent vista = UtilidadesFX.cargarFXML("ListadoFacturas");
+            FXMLLoader loader = UtilidadesFX.cargarFXML("ListadoFacturas");
+            Parent vista = loader.load();
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) txt_descripcion.getScene().getWindow();
@@ -162,7 +167,8 @@ public class RegistroItemController implements Initializable {
     @FXML
     public void clicRegistrarItem(ActionEvent actionEvent) {
         try{
-            Parent vista = UtilidadesFX.cargarFXML("RegistroItem");
+            FXMLLoader loader = UtilidadesFX.cargarFXML("RegistroItem");
+            Parent vista = loader.load();
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) txt_descripcion.getScene().getWindow();
@@ -185,7 +191,8 @@ public class RegistroItemController implements Initializable {
     @FXML
     public void clicConsultarBitacora(ActionEvent actionEvent) {
         try{
-            Parent vista = UtilidadesFX.cargarFXML("BitacoraPedidos");
+            FXMLLoader loader = UtilidadesFX.cargarFXML("BitacoraPedidos");
+            Parent vista = loader.load();
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) txt_descripcion.getScene().getWindow();

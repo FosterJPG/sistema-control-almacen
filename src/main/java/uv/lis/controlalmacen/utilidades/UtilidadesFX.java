@@ -29,8 +29,8 @@ public class UtilidadesFX {
      * @return
      * @throws IOException
      */
-    public static Parent cargarFXML(String fxml) throws IOException {
+    public static FXMLLoader cargarFXML(String fxml) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ControlAlmacen.class.getResource("/fxml/"+ fxml + ".fxml"));
-        return fxmlLoader.load();
+        return fxmlLoader;
     }
 }

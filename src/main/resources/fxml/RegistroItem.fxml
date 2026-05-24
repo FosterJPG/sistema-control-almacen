@@ -26,7 +26,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Pedidos">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#clicConsultarBitcora" text="Consultar bitácora" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicConsultarBitacora" text="Consultar bitácora" />
                </items>
             </Menu>
          </menus>

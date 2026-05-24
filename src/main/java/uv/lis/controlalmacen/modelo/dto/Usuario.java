@@ -6,10 +6,7 @@ public class Usuario {
     private String idUsuario;
     private byte[] password;
     private Date fechaRegistro;
-    private Integer noEmpleado;
-
-    private String nombreEmpleado;
-    private String apellidoEmpleado;
+    private Empleado empleado;
     private Integer idRol;
     private Rol rol;
 
@@ -29,36 +26,12 @@ public class Usuario {
         this.idUsuario = idUsuario;
     }
 
-    public Integer getNoEmpleado() {
-        return noEmpleado;
-    }
-
-    public void setNoEmpleado(Integer noEmpleado) {
-        this.noEmpleado = noEmpleado;
-    }
-
-    public String getApellidoEmpleado() {
-        return apellidoEmpleado;
-    }
-
-    public void setApellidoEmpleado(String apellidoEmpleado) {
-        this.apellidoEmpleado = apellidoEmpleado;
-    }
-
     public Integer getIdRol() {
         return idRol;
     }
 
     public void setIdRol(Integer idRol) {
         this.idRol = idRol;
-    }
-
-    public String getNombreEmpleado() {
-        return nombreEmpleado;
-    }
-
-    public void setNombreEmpleado(String nombreEmpleado) {
-        this.nombreEmpleado = nombreEmpleado;
     }
 
     public byte[] getPassword() {
@@ -75,5 +48,13 @@ public class Usuario {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
     }
 }

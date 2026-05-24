@@ -14,6 +14,7 @@ import uv.lis.controlalmacen.ControlAlmacen;
 import uv.lis.controlalmacen.excepciones.UsuarioNoEncontradoException;
 import uv.lis.controlalmacen.logica.Autenticador;
 import uv.lis.controlalmacen.logica.CargadorEscenas;
+import uv.lis.controlalmacen.modelo.dto.Empleado;
 import uv.lis.controlalmacen.modelo.dto.Usuario;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
@@ -53,12 +54,13 @@ public class InicioSesionController implements Initializable {
         try {
             usuarioLogin = Autenticador.iniciarSesion(usuario, password);
 
-            UtilidadesFX.mostrarAlertaSimple("Bienvenido(a)", "Bienvenido al sistema: " + usuarioLogin.getNombreEmpleado()
+            UtilidadesFX.mostrarAlertaSimple("Bienvenido(a)", "Bienvenido al sistema: "
+                    + usuarioLogin.getEmpleado().getNombre()
                     , Alert.AlertType.INFORMATION);
 
             String rutaMenu = CargadorEscenas.cargarEscenarSegunRol(usuarioLogin.getRol());
 
-            cargarEscena(rutaMenu);
+            cargarEscena(rutaMenu, usuarioLogin.getEmpleado());
         } catch (NoSuchAlgorithmException | SQLException | IOException | ClassNotFoundException ex) {
             UtilidadesFX.mostrarAlertaSimple("Error", "Ocurrió un error al intentar iniciar sesion. " +
                     "Causa (Para el dev.): " + ex.getMessage(), Alert.AlertType.ERROR);
@@ -85,11 +87,15 @@ public class InicioSesionController implements Initializable {
         return valido;
     }
 
-    private void cargarEscena(String rutaMenu) {
+    private void cargarEscena(String rutaMenu, Empleado empleado) {
         try {
-            Parent vista = UtilidadesFX.cargarFXML(rutaMenu);
-            Scene escena = new Scene(vista);
+            FXMLLoader loader = UtilidadesFX.cargarFXML(rutaMenu);
+            Parent vista = loader.load();
+            MenuController controller = loader.getController();
+            controller.setEmpleado(empleado);
+            controller.cargarDatos();
 
+            Scene escena = new Scene(vista);
             Stage stage = (Stage) tf_password.getScene().getWindow();
             stage.setTitle("Menu principal");
             stage.setResizable(false);

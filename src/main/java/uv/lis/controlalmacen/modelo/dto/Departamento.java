@@ -2,15 +2,15 @@ package uv.lis.controlalmacen.modelo.dto;
 
 public class Departamento {
     private Integer idDepto;
-    private String direccion;
+    private String descripcion;
     private Integer noSucursal;
 
-    public String getDireccion() {
-        return direccion;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     public Integer getIdDepto() {
