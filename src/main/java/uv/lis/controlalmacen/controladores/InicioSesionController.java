@@ -90,6 +90,7 @@ public class InicioSesionController implements Initializable {
             Parent vista = UtilidadesFX.cargarFXML(rutaMenu);
             Scene escena = new Scene(vista);
 
+
             Stage stage = (Stage) tf_password.getScene().getWindow();
             stage.setTitle("Menu principal");
             stage.setResizable(false);

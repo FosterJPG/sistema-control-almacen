@@ -22,12 +22,11 @@ public class MenuPrincipalEncargadoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
     }
 
     // TODO implementacion para mostrar
-    private void cargarDatos(){
-
+    public void cargarDatos(String nombreEmpleado){
+        lb_nombreEmpleado.setText(nombreEmpleado);
     }
 
     @FXML
