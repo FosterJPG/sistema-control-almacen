@@ -1,5 +1,6 @@
 package uv.lis.controlalmacen.controladores;
 
+import com.mysql.cj.conf.PropertyDefinition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,11 +11,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import uv.lis.controlalmacen.modelo.dao.ItemAlmacenadoDAO;
+import uv.lis.controlalmacen.modelo.dto.ItemAlmacenado;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
@@ -32,21 +37,38 @@ public class ListadoItemsController implements Initializable {
     @FXML
     private TextField txt_buscarIdProducto;
     @FXML
-    private TableView<?> tv_inventario;
+    private TableView<ItemAlmacenado> tv_inventario;
     @FXML
-    private TableColumn<?, ?> col_idItem;
+    private TableColumn col_idItem;
     @FXML
-    private TableColumn<?, ?> col_descripcion;
+    private TableColumn col_descripcion;
     @FXML
-    private TableColumn<?, ?> col_existencias;
+    private TableColumn col_existencias;
     @FXML
-    private TableColumn<?, ?> col_stockMin;
+    private TableColumn col_stockMin;
     @FXML
-    private TableColumn<?, ?> col_stockMax;
+    private TableColumn col_stockMax;
+
+    private ObservableList<ItemAlmacenado> itemsAlmacenados;
+
+    ItemAlmacenadoDAO itemAlmacenadoDAO 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cb_filtroStock.setItems(listaOpcionesStock);
+    }
+    
+    private void configurarTabla(){
+        col_idItem.setCellValueFactory(new PropertyValueFactory("idItem"));
+        col_descripcion.setCellValueFactory(new PropertyValueFactory("descripcionItem"));
+        col_existencias.setCellValueFactory(new PropertyValueFactory("existencias"));
+        col_stockMin.setCellValueFactory(new PropertyValueFactory("stockMin"));
+        col_stockMax.setCellValueFactory(new PropertyValueFactory("stockMax"));
+    }
+
+    private void cargarInformacionItems(){
+        itemsAlmacenados = FXCollections.observableArrayList();
+        List<ItemAlmacenado> itemsAlmacenadosBD =
     }
 
     @FXML
