@@ -91,11 +91,12 @@ public class InicioSesionController implements Initializable {
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) tf_password.getScene().getWindow();
-            stage.setScene(escena);
             stage.setTitle("Menu principal");
-            stage.show();
             stage.setResizable(false);
             stage.centerOnScreen();
+
+            stage.setScene(escena);
+            stage.show();
 
         } catch (IOException e) {
             throw new RuntimeException(e);

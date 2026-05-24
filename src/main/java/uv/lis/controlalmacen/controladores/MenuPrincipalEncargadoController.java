@@ -2,7 +2,6 @@ package uv.lis.controlalmacen.controladores;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -26,22 +25,27 @@ public class MenuPrincipalEncargadoController implements Initializable {
 
     }
 
+    // TODO implementacion para mostrar
+    private void cargarDatos(){
+
+    }
+
     @FXML
     public void clicCerrarSesion(ActionEvent actionEvent) {
-        Parent vista = null;
         try {
-            vista = FXMLLoader.load(getClass().getResource("/fxml/InicioSesion.fxml"));
+            Parent vista = UtilidadesFX.cargarFXML("InicioSesion");
+            Scene escena = new Scene(vista);
+
+            Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
+            stage.setTitle("Control de Almacén - GLOBAL FINANCE");
+            stage.setResizable(false);
+            stage.centerOnScreen();
+
+            stage.setScene(escena);
+            stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        Scene escena = new Scene(vista);
-
-        Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
-        stage.setScene(escena);
-        stage.setTitle("Menu principal");
-        stage.show();
-        stage.setResizable(false);
-        stage.centerOnScreen();
     }
 
     @FXML
@@ -51,12 +55,12 @@ public class MenuPrincipalEncargadoController implements Initializable {
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
-            stage.setScene(escena);
             stage.setTitle("Registro de facturas");
-            stage.show();
             stage.setResizable(false);
             stage.centerOnScreen();
 
+            stage.setScene(escena);
+            stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -64,5 +68,73 @@ public class MenuPrincipalEncargadoController implements Initializable {
 
     @FXML
     public void clicConsultarFacturas(ActionEvent actionEvent) {
+        try {
+            Parent vista = UtilidadesFX.cargarFXML("ListadoFacturas");
+            Scene escena = new Scene(vista);
+
+            Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
+            stage.setTitle("Listado de facturas");
+            stage.setResizable(false);
+            stage.centerOnScreen();
+
+            stage.setScene(escena);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void clicRegistrarItem(ActionEvent actionEvent) {
+        try {
+            Parent vista = UtilidadesFX.cargarFXML("RegistroItem");
+            Scene escena = new Scene(vista);
+
+            Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
+            stage.setTitle("Registro de items para la sucursal");
+            stage.setResizable(false);
+            stage.centerOnScreen();
+
+            stage.setScene(escena);
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void clicConsultarItems(ActionEvent actionEvent) {
+        try {
+            Parent vista = UtilidadesFX.cargarFXML("ListadoItems");
+            Scene escena = new Scene(vista);
+
+            Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
+            stage.setTitle("Listado de items almacenados");
+            stage.setResizable(false);
+            stage.centerOnScreen();
+
+            stage.setScene(escena);
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void clicConsultarBitacora(ActionEvent actionEvent) {
+        try {
+            Parent vista = UtilidadesFX.cargarFXML("BitacoraPedidos");
+            Scene escena = new Scene(vista);
+
+            Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
+            stage.setTitle("Bitacora de pedidos");
+            stage.setResizable(false);
+            stage.centerOnScreen();
+
+            stage.setScene(escena);
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

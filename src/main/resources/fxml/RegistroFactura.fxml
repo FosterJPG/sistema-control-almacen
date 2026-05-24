@@ -79,7 +79,7 @@
                                     </rowConstraints>
                                     <children>
                                         <Label text="Folio:" textFill="#495057"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                        <TextField fx:id="txtFolio" promptText="5 caracteres" GridPane.columnIndex="1" />
+                                        <TextField fx:id="txt_folio" promptText="5 caracteres" GridPane.columnIndex="1" />
 
                                         <Label text="Fecha:" textFill="#495057" GridPane.rowIndex="1"><font><Font name="System Bold" size="13.0" /></font></Label>
                                         <DatePicker fx:id="dpFecha" prefWidth="300.0" promptText="Seleccione fecha..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
