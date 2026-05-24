@@ -1,5 +1,6 @@
 package uv.lis.controlalmacen.controladores;
 
+import com.mysql.cj.conf.PropertyDefinition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,6 +10,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
@@ -31,21 +33,26 @@ public class ListadoItemsController implements Initializable {
     @FXML
     private TextField txt_buscarIdProducto;
     @FXML
-    private TableView<?> tv_inventario;
+    private TableView tv_inventario;
     @FXML
-    private TableColumn<?, ?> col_idItem;
+    private TableColumn col_idItem;
     @FXML
-    private TableColumn<?, ?> col_descripcion;
+    private TableColumn col_descripcion;
     @FXML
-    private TableColumn<?, ?> col_existencias;
+    private TableColumn col_existencias;
     @FXML
-    private TableColumn<?, ?> col_stockMin;
+    private TableColumn col_stockMin;
     @FXML
-    private TableColumn<?, ?> col_stockMax;
+    private TableColumn col_stockMax;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cb_filtroStock.setItems(listaOpcionesStock);
+    }
+    
+    private void configurarTabla(){
+        col_idItem.setCellValueFactory(new PropertyValueFactory("idItem"));
+
     }
 
     @FXML

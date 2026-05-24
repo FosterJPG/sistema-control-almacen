@@ -16,7 +16,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -68,10 +67,14 @@ public class RegistroItemController implements Initializable {
     private void clicRegistrar(ActionEvent event) {
         Item item = new Item();
         item.setDescripcionItem(txt_descripcion.getText());
+        configurarSeleccionPartidaPresupuestal(item);
         
         try{
             if(itemDAO.registrar(item)){
-            
+            UtilidadesFX.mostrarAlertaSimple("Registro existoso", 
+                                            "El item se ha registrado en"
+                                            + " el catálogo correctamente", 
+                                            Alert.AlertType.INFORMATION);
             }
         }catch(SQLException ex){
             UtilidadesFX.mostrarAlertaSimple("Error al registrar", 
