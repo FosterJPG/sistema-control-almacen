@@ -59,6 +59,7 @@ public class ListadoItemsController implements Initializable {
         cb_filtroStock.setItems(listaOpcionesStock);
         configurarTabla();
         cargarInformacionItems();
+        configurarSeleccionStock();
     }
 
     private void configurarTabla(){

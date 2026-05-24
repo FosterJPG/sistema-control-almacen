@@ -79,9 +79,35 @@ public class ItemAlmacenadoDAO implements OperacionesCatalogoDAO<ItemAlmacenado,
         // vista_stock_maximo
 
         // PARA OBTENER EL NUMERO DE SUCURSAL     ps.setInt(1, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
+        List<ItemAlmacenado> lista = new ArrayList<>();
+        String consulta;
 
-        List<ItemAlmacenado> itemsAlmacenados = new ArrayList<>();
+        if("Sobre el máximo".equals(stock)){
+            consulta = "SELECT id_item, item, existencias, stock_min, stock_max " +
+                    "FROM vista_stock_maximo WHERE no_sucursal = ?;";
+        }else{
+            consulta = "SELECT id_item, item, existencias, stock_min, stock_max " +
+                    "FROM vista_stock_minimo WHERE no_sucursal = ?;";
+        }
 
-        return itemsAlmacenados;
+        try(Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())){
+            if(conn != null) {
+                PreparedStatement sentencia = conn.prepareStatement(consulta);
+                sentencia.setInt(1, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
+
+                ResultSet resultado = sentencia.executeQuery();
+                while (resultado.next()) {
+                    ItemAlmacenado itemAlmacenado = new ItemAlmacenado();
+                    itemAlmacenado.setIdItem(resultado.getString("id_item"));
+                    itemAlmacenado.setDescripcionItem(resultado.getString("item"));
+                    itemAlmacenado.setExistencias(resultado.getInt("existencias"));
+                    itemAlmacenado.setStockMax(resultado.getInt("stock_max"));
+                    itemAlmacenado.setStockMin(resultado.getInt("stock_min"));
+                    lista.add(itemAlmacenado);
+                }
+                return lista;
+            }
+            throw new SQLException("No hay conexión con el almacenamiento de información");
+        }
     }
 }
