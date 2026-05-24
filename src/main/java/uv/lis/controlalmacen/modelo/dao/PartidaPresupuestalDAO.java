@@ -43,9 +43,4 @@ public class PartidaPresupuestalDAO implements OperacionesCatalogoDAO<PartidaPre
         
         return partidaPresupuestal;
     }
-
- 
-
-
-    
 }

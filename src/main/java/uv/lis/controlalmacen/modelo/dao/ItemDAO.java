@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import uv.lis.controlalmacen.modelo.dto.Item;
 
-public class ItemDAO implements OperacionesCatalogoDAO<Item, Integer>{
+public class ItemDAO implements OperacionesCatalogoDAO<Item, String>{
 
     @Override
     public boolean registrar(Item item) throws SQLException, NullPointerException {
@@ -31,7 +31,7 @@ public class ItemDAO implements OperacionesCatalogoDAO<Item, Integer>{
     }
 
     @Override
-    public Item buscarUno(Integer id) throws SQLException, NullPointerException {
+    public Item buscarUno(String id) throws SQLException, NullPointerException {
         Item item = new Item();
         
         return item;
