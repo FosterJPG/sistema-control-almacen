@@ -67,18 +67,33 @@ public class ItemAlmacenadoDAO implements OperacionesCatalogoDAO<ItemAlmacenado,
 
     @Override
     public ItemAlmacenado buscarUno(String id) throws SQLException, NullPointerException, IOException, ClassNotFoundException {
-        // PARA OBTENER EL NUMERO DE SUCURSAL     ps.setInt(1, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
+        ItemAlmacenado itemBuscado = new ItemAlmacenado();
 
-        return null;
+        try(Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())){
+            if(conn != null) {
+                String consulta = "SELECT id_item, descripcion, existencias, stock_max, stock_min "
+                        + "FROM vista_items_almacenados WHERE no_sucursal = ? AND id_item = ?;";
+
+                PreparedStatement sentencia = conn.prepareStatement(consulta);
+                sentencia.setInt(1, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
+                sentencia.setString(2,id);
+
+                ResultSet resultado = sentencia.executeQuery();
+                if(resultado.next()) {
+                    itemBuscado.setIdItem(resultado.getString("id_item"));
+                    itemBuscado.setDescripcionItem(resultado.getString("descripcion"));
+                    itemBuscado.setExistencias(resultado.getInt("existencias"));
+                    itemBuscado.setStockMax(resultado.getInt("stock_max"));
+                    itemBuscado.setStockMin(resultado.getInt("stock_min"));
+                }
+                return itemBuscado;
+            }
+            throw new SQLException("No hay conexión con el almacenamiento de información");
+        }
     }
 
 
     public List<ItemAlmacenado> buscarPorStock(String stock) throws SQLException, NullPointerException, IOException, ClassNotFoundException {
-        //Pregunta si fue "Sobre el máximo" o "Menor que el mínimo" para saber a que vista llamar
-        // vista_stock_minimo
-        // vista_stock_maximo
-
-        // PARA OBTENER EL NUMERO DE SUCURSAL     ps.setInt(1, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
         List<ItemAlmacenado> lista = new ArrayList<>();
         String consulta;
 
