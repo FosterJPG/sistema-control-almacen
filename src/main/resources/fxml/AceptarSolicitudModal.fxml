@@ -4,10 +4,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="550.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.AceptarSolicitudModalController">
+<AnchorPane prefHeight="550.0" prefWidth="850.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.AceptarSolicitudModalController">
     <children>
         <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-border-color: #dee2e6; -fx-border-radius: 8;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
             <padding>
@@ -20,109 +19,90 @@
 
                 <VBox spacing="5.0">
                     <children>
-                        <Label text="Validación y Aprobación de Solicitud" textFill="#007bff">
-                            <font>
-                                <Font name="System Bold" size="18.0" />
-                            </font>
-                        </Label>
-                        <Label text="Verifique las existencias antes de autorizar la salida de materiales." textFill="#666666" />
+                        <HBox alignment="CENTER_LEFT" spacing="15.0">
+                            <children>
+                                <Label text="Detalles de Solicitud:" textFill="#007bff">
+                                    <font>
+                                        <Font name="System Bold" size="20.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lblFolioSolicitud" text="#1045" textFill="#495057">
+                                    <font>
+                                        <Font name="System Bold" size="20.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <Label text="Ajuste las cantidades a entregar dependiendo del stock disponible en almacén." textFill="#666666" />
                     </children>
                 </VBox>
                 <Separator prefWidth="200.0" />
 
-                <GridPane hgap="15.0" vgap="12.0" VBox.vgrow="ALWAYS">
+                <GridPane hgap="15.0" vgap="10.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="NEVER" minWidth="140.0" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="100.0" />
+                        <ColumnConstraints hgrow="ALWAYS" />
+                        <ColumnConstraints hgrow="NEVER" minWidth="60.0" />
                         <ColumnConstraints hgrow="ALWAYS" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Label text="Artículo Solicitado:" textFill="#495057">
+                        <Label text="Solicitante:" textFill="#495057">
                             <font>
                                 <Font name="System Bold" size="13.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="txtArticulo" editable="false" style="-fx-background-color: #e9ecef;" GridPane.columnIndex="1">
-                     <effect>
-                        <InnerShadow>
-                           <color>
-                              <Color opacity="0.08225107938051224" />
-                           </color>
-                        </InnerShadow>
-                     </effect></TextField>
+                        <Label fx:id="lblNombreEmpleado" text="Cargando nombre..." GridPane.columnIndex="1" />
 
-                        <Label text="Cantidad Solicitada:" textFill="#495057" GridPane.rowIndex="1">
+                        <Label text="Fecha:" textFill="#495057" GridPane.columnIndex="2">
                             <font>
                                 <Font name="System Bold" size="13.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="txtCantidadSolicitada" editable="false" maxWidth="120.0" style="-fx-background-color: #e9ecef;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <effect>
-                        <InnerShadow>
-                           <color>
-                              <Color opacity="0.08225107938051224" />
-                           </color>
-                        </InnerShadow>
-                     </effect></TextField>
+                        <Label fx:id="lblFecha" text="dd/mm/aaaa" GridPane.columnIndex="3" />
 
-                        <Label text="Stock Actual en Almacén:" textFill="#495057" GridPane.rowIndex="2">
+                        <Label text="No. Empleado:" textFill="#495057" GridPane.rowIndex="1">
                             <font>
                                 <Font name="System Bold" size="13.0" />
                             </font>
                         </Label>
-                        <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                            <children>
-                                <TextField fx:id="txtStockActual" editable="false" maxWidth="120.0" style="-fx-background-color: #e9ecef;">
-                           <effect>
-                              <InnerShadow>
-                                 <color>
-                                    <Color opacity="0.08225107938051224" />
-                                 </color>
-                              </InnerShadow>
-                           </effect></TextField>
-                                <Label fx:id="lblAlertaStock" text="Sin stock suficiente" textFill="#dc3545" visible="false">
-                                    <font>
-                                        <Font name="System Bold" size="12.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </HBox>
-
-                        <Label text="Firma Digital (ID Usuario):" textFill="#495057" GridPane.rowIndex="3">
-                            <font>
-                                <Font name="System Bold" size="13.0" />
-                            </font>
-                        </Label>
-                        <TextField fx:id="txtFirmaEncargado" maxWidth="200.0" promptText="Ingrese su ID para firmar" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label fx:id="lblNoEmpleado" text="000" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                     </children>
                 </GridPane>
 
+                <TableView fx:id="tvDetallesSolicitud" prefHeight="200.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colIdItem" prefWidth="52.0" text="ID Ítem" />
+                        <TableColumn fx:id="colDescripcion" prefWidth="340.0" text="Descripción del Artículo" />
+                        <TableColumn fx:id="colStockActual" prefWidth="124.0" text="Stock Actual" />
+                        <TableColumn fx:id="colCantSolicitada" prefWidth="123.0" text="Cant. Solicitada" />
+                        <TableColumn fx:id="colCantEntregar" prefWidth="128.0" style="-fx-font-weight: bold; -fx-background-color: #e8f4f8;" text="Cant. a Entregar" />
+                    </columns>
+                    <placeholder>
+                        <Label text="Cargando artículos de la solicitud..." textFill="#999999" />
+                    </placeholder>
+                </TableView>
+
                 <Separator prefWidth="200.0" />
 
-                <HBox alignment="CENTER_RIGHT" spacing="12.0">
+                <HBox alignment="CENTER_RIGHT" spacing="15.0">
                     <children>
+                        <Label text="Firma de Autorización (Su ID):" textFill="#495057">
+                            <font>
+                                <Font name="System Bold" size="13.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="txtFirmaEncargado" prefWidth="150.0" promptText="Ingrese su ID" />
+
+                        <HBox HBox.hgrow="ALWAYS" />
+
+                        <Button fx:id="btnRechazar" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4;" text="Rechazar Todo" />
                         <Button fx:id="btnCancelar" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4;" text="Cancelar" />
-                        <Button fx:id="btnAprobar" mnemonicParsing="false" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4;" text="Aprobar y Descontar Stock">
-                     <effect>
-                        <InnerShadow offsetY="10.0">
-                           <color>
-                              <Color red="1.0" green="1.0" blue="1.0" opacity="0.38298702239990234" />
-                           </color>
-                        </InnerShadow>
-                     </effect></Button>
+                        <Button fx:id="btnProcesarEntrega" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4;" text="Procesar Entrega" />
                     </children>
-               <effect>
-                  <DropShadow offsetX="-3.0" offsetY="3.0">
-                     <color>
-                        <Color opacity="0.4025973975658417" />
-                     </color>
-                  </DropShadow>
-               </effect>
                 </HBox>
 
             </children>
