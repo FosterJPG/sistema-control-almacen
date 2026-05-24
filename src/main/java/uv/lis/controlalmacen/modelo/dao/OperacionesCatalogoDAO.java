@@ -11,7 +11,7 @@ public interface OperacionesCatalogoDAO <T,Y>{
 
     boolean actualizar(T entidad) throws SQLException, NullPointerException, ClassNotFoundException;
 
-    List<T> buscarTodos() throws SQLException, NullPointerException, ClassNotFoundException;
+    List<T> buscarTodos() throws SQLException, NullPointerException, ClassNotFoundException, IOException;
 
     T buscarUno(Y id) throws SQLException, NullPointerException, IOException, ClassNotFoundException;
 }

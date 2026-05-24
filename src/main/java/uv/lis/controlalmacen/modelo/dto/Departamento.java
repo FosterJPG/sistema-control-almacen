@@ -3,7 +3,7 @@ package uv.lis.controlalmacen.modelo.dto;
 public class Departamento {
     private Integer idDepto;
     private String descripcion;
-    private Integer noSucursal;
+    private Sucursal sucursal;
 
     public String getDescripcion() {
         return descripcion;
@@ -21,11 +21,11 @@ public class Departamento {
         this.idDepto = idDepto;
     }
 
-    public Integer getNoSucursal() {
-        return noSucursal;
+    public Sucursal getSucursal() {
+        return sucursal;
     }
 
-    public void setNoSucursal(Integer noSucursal) {
-        this.noSucursal = noSucursal;
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
     }
 }
