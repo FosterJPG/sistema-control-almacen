@@ -1,11 +1,16 @@
 package uv.lis.controlalmacen.modelo.dao;
 
-public interface OperacionesCatalogoDAO <T>{
-    boolean registrar(T entidad);
+import java.sql.SQLException;
+import java.util.List;
 
-    boolean eliminar(T entidad);
+public interface OperacionesCatalogoDAO <T,Y>{
+    boolean registrar(T entidad) throws SQLException, NullPointerException;
 
-    boolean actualizar(T entidad);
+    boolean eliminar(T entidad) throws SQLException, NullPointerException;
 
-    T buscar();
+    boolean actualizar(T entidad) throws SQLException, NullPointerException;
+
+    List<T> buscarTodos() throws SQLException, NullPointerException;
+    
+    T buscarUno(Y id) throws SQLException, NullPointerException;
 }

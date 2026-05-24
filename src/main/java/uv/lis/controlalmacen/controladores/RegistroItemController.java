@@ -4,18 +4,24 @@ import java.io.IOException;
 import javafx.fxml.Initializable;
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import uv.lis.controlalmacen.modelo.dao.ItemDAO;
+import uv.lis.controlalmacen.modelo.dao.PartidaPresupuestalDAO;
 import uv.lis.controlalmacen.modelo.dto.Item;
 import uv.lis.controlalmacen.modelo.dto.PartidaPresupuestal;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
@@ -29,23 +35,55 @@ public class RegistroItemController implements Initializable {
     
     private ObservableList<PartidaPresupuestal> partidasPresupuestales;
     
+    ItemDAO itemDAO = new ItemDAO();
+    PartidaPresupuestalDAO partidaPresupuestalDAO = new PartidaPresupuestalDAO();
+    
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        cargarInformacionPartidasPresupuestales();
     }
 
+
+        
+    private void cargarInformacionPartidasPresupuestales(){
+        try{
+            partidasPresupuestales = FXCollections.observableArrayList();
+            List<PartidaPresupuestal> partidasPresupuestalesDB = partidaPresupuestalDAO.buscarTodos();
+            partidasPresupuestales.addAll(partidasPresupuestalesDB);
+            cb_partidaPresupuestal.setItems(partidasPresupuestales);
+        }catch(SQLException ex){
+            UtilidadesFX.mostrarAlertaSimple("Error al consultar", 
+                                            ex.getMessage(), 
+                                            Alert.AlertType.ERROR);
+        }catch(NullPointerException n){
+            UtilidadesFX.mostrarAlertaSimple("Error al cargar", 
+                            "Lo sentimos, las partidas presupuestales "
+                            + "no pueden ser cargada en este momento,"
+                            + "porfavor inténtelo más tade", 
+                    Alert.AlertType.WARNING);
+        }
+    }
 
     @FXML
     private void clicRegistrar(ActionEvent event) {
         Item item = new Item();
         item.setDescripcionItem(txt_descripcion.getText());
-
-        //obtener datos de la vista: Descripcion y Partida Presupuestal
-        // enviar al ItemDAO
-        // devuelve true/false
-        //if(ItemDao.registrar(item)){
+        
+        try{
+            if(itemDAO.registrar(item)){
             
-        //}
+            }
+        }catch(SQLException ex){
+            UtilidadesFX.mostrarAlertaSimple("Error al registrar", 
+                                            ex.getMessage(), 
+                                            Alert.AlertType.ERROR);
+        }catch(NullPointerException n){
+            UtilidadesFX.mostrarAlertaSimple("Error al cargar", 
+                            "Lo sentimos, las partidas presupuestales "
+                            + "no pueden ser cargada en este momento,"
+                            + "porfavor inténtelo más tade", 
+                    Alert.AlertType.WARNING);
+        }
         
     }
     
