@@ -77,17 +77,17 @@
                   <ComboBox fx:id="cb_filtroStock" prefWidth="180.0" promptText="Nivel de Stock" visibleRowCount="2" />
                   
                   <Region HBox.hgrow="ALWAYS" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clicBuscarItemAlmacenado" prefHeight="13.0" prefWidth="59.0" style="-fx-background-color: #6A7C9E; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar" /> <TextField fx:id="txt_buscarIdProducto" prefWidth="250.0" promptText="Buscar producto por ID" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clicBuscarItemAlmacenado" prefHeight="13.0" prefWidth="59.0" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar" /> <TextField fx:id="txt_buscarIdProducto" prefWidth="250.0" promptText="Buscar producto por ID" />
                </children>
             </HBox>
 
             <TableView fx:id="tv_inventario" prefHeight="250.0" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn fx:id="col_idItem" prefWidth="59.0" text="ID Ítem" />
-                <TableColumn fx:id="col_descripcion" prefWidth="341.0" text="Descripción del Producto" />
-                <TableColumn fx:id="col_existencias" prefWidth="122.0" text="Existencias" />
-                <TableColumn fx:id="col_stockMin" prefWidth="115.0" text="Stock Mínimo" />
-                <TableColumn fx:id="col_stockMax" prefWidth="130.0" text="Stock Máximo" />
+                <TableColumn fx:id="col_idItem" prefWidth="112.0" text="Código del Item" />
+                <TableColumn fx:id="col_descripcion" prefWidth="319.0" text="Descripción" />
+                <TableColumn fx:id="col_existencias" prefWidth="103.0" text="Existencias" />
+                <TableColumn fx:id="col_stockMin" prefWidth="127.0" text="Stock Mínimo" />
+                <TableColumn fx:id="col_stockMax" prefWidth="106.0" text="Stock Máximo" />
               </columns>
             </TableView>
 

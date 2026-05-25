@@ -15,19 +15,19 @@
          <menus>
             <Menu mnemonicParsing="false" text="Ingresos">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Registrar factura" />
-                  <MenuItem mnemonicParsing="false" text="Consultar facturas" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicRegistrarFactura" text="Registrar factura" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicConsultarFacturas" text="Consultar facturas" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Items">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Registrar item" />
-                  <MenuItem mnemonicParsing="false" text="Consultar items" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicRegistrarItem" text="Registrar item" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicConsultarItems" text="Consultar items" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Pedidos">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Consultar bitácora" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicConsultarBitacora" text="Consultar bitácora" />
                </items>
             </Menu>
          </menus>
@@ -53,24 +53,18 @@
 
             <HBox alignment="CENTER_LEFT" spacing="15.0">
                <children>
-                  <Label text="Filtrar por Estado:">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
-                  </Label>
-                  <ComboBox fx:id="cbEstadoPedido" prefWidth="180.0" promptText="Pendientes" />
                   
-                  <Region HBox.hgrow="ALWAYS" /> <TextField fx:id="txtBuscar" prefWidth="250.0" promptText="Buscar por ID o Sucursal..." />
+                  <Region HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
 
-            <TableView fx:id="tvBitacora" prefHeight="250.0" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tv_bitacora" prefHeight="250.0" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn fx:id="colIdPedido" prefWidth="73.0" text="No. Pedido" />
-                <TableColumn fx:id="colSucursal" prefWidth="234.0" text="Sucursal" />
-                <TableColumn fx:id="colArticulo" prefWidth="237.0" text="Artículo Agotado" />
-                <TableColumn fx:id="colFechaAgotado" prefWidth="112.0" text="Fecha de Aviso" />
-                <TableColumn fx:id="colEstado" prefWidth="111.0" text="Estado" />
+                <TableColumn fx:id="col_idItem" prefWidth="117.0" text="Código del Item" />
+                <TableColumn fx:id="col_descripcion" prefWidth="335.0" text="Descripción" />
+                <TableColumn fx:id="col_existencias" prefWidth="97.0" text="Existencias" />
+                <TableColumn fx:id="col_stockMin" prefWidth="99.0" text="Stock Mínimo" />
+                <TableColumn fx:id="col_fecha" prefWidth="119.0" text="Fecha" />
               </columns>
                <effect>
                   <DropShadow color="#0000002e" height="28.42" offsetX="-3.0" offsetY="3.0" radius="15.5625" width="35.83" />
@@ -79,18 +73,8 @@
 
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
-                  <Button fx:id="btnExportarExcel" mnemonicParsing="false" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Exportar a Excel">
-                     <effect>
-                        <InnerShadow choke="0.34" color="#ffffff9c" height="31.13" offsetY="8.0" radius="9.504999999999999" width="8.89" />
-                     </effect></Button>
-                  <Button fx:id="btnAtenderPedido" mnemonicParsing="false" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Marcar como Atendido">
-                     <effect>
-                        <InnerShadow choke="0.34" color="#ffffff9c" height="31.13" offsetY="8.0" radius="9.504999999999999" width="8.89" />
-                     </effect></Button>
-                  <Button fx:id="btnBorrarRegistro" mnemonicParsing="false" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Borrar Registro">
-                     <effect>
-                        <InnerShadow choke="0.34" color="#ffffff9c" height="31.13" offsetY="8.0" radius="9.504999999999999" width="8.89" />
-                     </effect></Button>
+                  <Button mnemonicParsing="false" onAction="#clicExportarExcel" style="-fx-background-color: #1E71A9; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Exportar a Excel" />
+                  <Button mnemonicParsing="false" onAction="#clicRegresar" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar" />
                </children>
                <effect>
                   <DropShadow color="#00000039" height="40.83" offsetX="-3.0" offsetY="3.0" radius="21.5675" spread="0.19" width="47.44" />

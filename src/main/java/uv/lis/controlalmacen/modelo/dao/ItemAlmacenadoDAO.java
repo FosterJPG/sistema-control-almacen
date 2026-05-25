@@ -6,7 +6,6 @@ package uv.lis.controlalmacen.modelo.dao;
 
 import uv.lis.controlalmacen.db.ConnectionFactory;
 import uv.lis.controlalmacen.modelo.dto.ItemAlmacenado;
-import uv.lis.controlalmacen.modelo.dto.PartidaPresupuestal;
 import uv.lis.controlalmacen.modelo.dto.Sesion;
 
 import java.io.IOException;
