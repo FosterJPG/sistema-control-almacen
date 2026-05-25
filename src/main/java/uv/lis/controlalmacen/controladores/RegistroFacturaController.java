@@ -13,11 +13,40 @@ import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 public class RegistroFacturaController implements Initializable {
 
     @FXML
     private TextField txt_folio;
+    @FXML
+    private DatePicker dp_fecha;
+    @FXML
+    private TextField txt_razonSocial;
+    @FXML
+    private TextField txt_domicilio;
+    @FXML
+    private TextField txt_telefono;
+    @FXML
+    private TextField txt_rfc;
+    @FXML
+    private TextField txt_cantidad;
+    @FXML
+    private TextField txt_costoUnitario;
+    @FXML
+    private TextField txt_idItem;
+    @FXML
+    private TableView<?> tv_detalleFactura;
+    @FXML
+    private TableColumn<?, ?> col_idItem;
+    @FXML
+    private TableColumn<?, ?> col_descripcion;
+    @FXML
+    private TableColumn<?, ?> col_cantidad;
+    @FXML
+    private TableColumn<?, ?> col_costoUnitario;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -119,5 +148,17 @@ public class RegistroFacturaController implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    @FXML
+    private void clicEliminarItem(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicAgregarItem(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicGuardarFactura(ActionEvent event) {
     }
 }

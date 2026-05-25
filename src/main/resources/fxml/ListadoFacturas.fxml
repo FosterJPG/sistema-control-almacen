@@ -43,7 +43,7 @@
             <TableView fx:id="tv_facturas" prefHeight="250.0" VBox.vgrow="ALWAYS">
               <columns>
                 <TableColumn fx:id="col_folio" prefWidth="109.0" text="Folio" />
-                <TableColumn fx:id="col_fecha" prefWidth="112.0" text="Fecha Factura" />
+                <TableColumn fx:id="col_fecha" prefWidth="112.0" text="Fecha" />
                 <TableColumn fx:id="col_rfc" prefWidth="175.0" text="RFC Proveedor" />
                   <TableColumn fx:id="col_razonSocial" prefWidth="201.0" text="Razón social" />
                   <TableColumn fx:id="col_telefono" prefWidth="173.0" text="Teléfono" />

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -8,17 +9,17 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.MenuPrincipalDepartamentoController">
    <children>
 
       <VBox spacing="5.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="30.0">
          <children>
-            <Label text="Bienvenido, solicitante:" textFill="#495057">
+            <Label fx:id="lb_nombreEmpleado" text="Bienvenido:" textFill="#495057">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label text="Nombre del Empleado - Departamento" textFill="#007bff">
+            <Label fx:id="lb_nombreSucursal" text="Nombre Sucursal" textFill="#044c87">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -54,49 +55,21 @@
                      </children>
                   </VBox>
                   <Separator prefWidth="150.0" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Crear Solicitud">
+                  <Button mnemonicParsing="false" onAction="#clicCrearSolicitud" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Crear Solicitud">
                      <effect>
                         <InnerShadow offsetY="10.0">
                            <color>
-                              <Color red="1.0" green="1.0" blue="1.0" opacity="0.4458874464035034" />
+                              <Color blue="1.0" green="1.0" opacity="0.4458874464035034" red="1.0" />
                            </color>
                         </InnerShadow>
                      </effect></Button>
                </children>
             </VBox>
 
-            <VBox alignment="TOP_CENTER" maxWidth="280.0" prefWidth="250.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" HBox.hgrow="ALWAYS">
-               <effect>
-                  <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
-               </effect>
-               <padding>
-                  <Insets bottom="30.0" left="20.0" right="20.0" top="30.0" />
-               </padding>
-               <children>
-                  <ImageView fitHeight="90.0" fitWidth="90.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../imagenes/items.png" />
-                     </image>
-                  </ImageView>
-                  <VBox alignment="CENTER" spacing="5.0">
-                     <children>
-                        <Label text="Historial">
-                           <font>
-                              <Font name="System Bold" size="22.0" />
-                           </font>
-                        </Label>
-                        <Label alignment="CENTER" text="Revisar el estado de pedidos anteriores" textAlignment="CENTER" textFill="#666666" wrapText="true" />
-                     </children>
-                  </VBox>
-                  <Separator prefWidth="150.0" />
-                  <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: #f8f9fa; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar Historial" />
-               </children>
-            </VBox>
-
          </children>
       </HBox>
 
-      <Button mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #dc3545; -fx-border-color: #dc3545; -fx-border-radius: 5;" text="Cerrar Sesión" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="30.0">
+      <Button mnemonicParsing="false" onAction="#clicCerrarSesion" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #dc3545; -fx-border-color: #dc3545; -fx-border-radius: 5;" text="Cerrar Sesión" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="30.0">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

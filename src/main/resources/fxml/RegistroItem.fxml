@@ -59,7 +59,7 @@
 
             <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
                <children>
-                  <GridPane hgap="15.0" maxWidth="550.0" style="-fx-background-color: #f8f9fa; -fx-padding: 30; -fx-background-radius: 8; -fx-border-color: #dee2e6; -fx-border-radius: 8;" vgap="25.0">
+                  <GridPane hgap="15.0" maxWidth="550.0" prefHeight="161.0" prefWidth="550.0" style="-fx-background-color: #f8f9fa; -fx-padding: 30; -fx-background-radius: 8; -fx-border-color: #dee2e6; -fx-border-radius: 8;" vgap="25.0">
                     <columnConstraints>
                       <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="140.0" />
                       <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
@@ -74,14 +74,14 @@
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txt_descripcion" promptText="Ej. Resma de papel bond tamaño carta" GridPane.columnIndex="1" />
+                        <TextField fx:id="txt_descripcion" prefHeight="36.0" prefWidth="333.0" promptText="Ej. Resma de papel bond tamaño carta" GridPane.columnIndex="1" />
                         
                         <Label text="Partida Presupuestal:" textFill="#495057" GridPane.rowIndex="1">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="cb_partidaPresupuestal" prefWidth="300.0" promptText="Seleccione una partida..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <ComboBox fx:id="cb_partidaPresupuestal" prefHeight="35.0" prefWidth="300.0" promptText="Seleccione una partida..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>
@@ -90,7 +90,7 @@
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#clicCancelar" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" />
-                  <Button mnemonicParsing="false" onAction="#clicRegistrar" prefHeight="35.0" prefWidth="220.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Registrar Ítem en Catálogo">
+                  <Button mnemonicParsing="false" onAction="#clicRegistrar" prefHeight="35.0" prefWidth="128.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Registrar Ítem">
                      <effect>
                         <InnerShadow color="#ffffff6d" offsetY="10.0" />
                      </effect></Button>

@@ -44,7 +44,7 @@
 
                 <VBox spacing="5.0">
                     <children>
-                        <Label text="Registrar Items al Almacén de la Sucursal" textFill="#007bff">
+                        <Label text="Registrar Items al Almacén de la Sucursal" textFill="#044c87">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>
@@ -107,7 +107,7 @@
                 <HBox alignment="CENTER_RIGHT" spacing="15.0">
                     <children>
                         <Button mnemonicParsing="false" onAction="#clicCancelar" prefHeight="35.0" prefWidth="87.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" />
-                        <Button mnemonicParsing="false" onAction="#clicGuardar" prefHeight="35.0" prefWidth="115.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Guardar">
+                        <Button mnemonicParsing="false" onAction="#clicGuardar" prefHeight="35.0" prefWidth="115.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Guardar">
                      <effect>
                         <InnerShadow offsetY="8.0">
                            <color>

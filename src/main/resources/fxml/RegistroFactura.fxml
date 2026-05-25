@@ -58,7 +58,7 @@
 
                         <VBox prefWidth="380.0" spacing="15.0" style="-fx-background-color: #f8f9fa; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #dee2e6; -fx-border-radius: 8;">
                             <children>
-                                <Label text="1. Información de Factura" textFill="#007bff">
+                                <Label text="1. Información de Factura" textFill="#044c87">
                                     <font>
                                         <Font name="System Bold" size="16.0" />
                                     </font>
@@ -79,22 +79,22 @@
                                     </rowConstraints>
                                     <children>
                                         <Label text="Folio:" textFill="#495057"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                        <TextField fx:id="txt_folio" promptText="5 caracteres" GridPane.columnIndex="1" />
+                                        <TextField fx:id="txt_folio" GridPane.columnIndex="1" />
 
                                         <Label text="Fecha:" textFill="#495057" GridPane.rowIndex="1"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                        <DatePicker fx:id="dpFecha" prefWidth="300.0" promptText="Seleccione fecha..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <DatePicker fx:id="dp_fecha" prefWidth="300.0" promptText="Seleccione fecha..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
                                         <Label text="Proveedor:" textFill="#495057" GridPane.rowIndex="2"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                        <ComboBox fx:id="cbProveedor" prefWidth="300.0" promptText="Seleccione RFC..." GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
                                         <Label text="Razón Social:" textFill="#495057" GridPane.rowIndex="3"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                        <TextField fx:id="txtRazonSocial" editable="false" promptText="Autocompletado..." style="-fx-background-color: #e9ecef;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        <TextField fx:id="txt_razonSocial" editable="false" promptText="Autocompletado" style="-fx-background-color: #e9ecef;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
                                         <Label text="Domicilio:" textFill="#495057" GridPane.rowIndex="4"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                        <TextField fx:id="txtDomicilio" editable="false" promptText="Autocompletado..." style="-fx-background-color: #e9ecef;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                        <TextField fx:id="txt_domicilio" editable="false" promptText="Autocompletado" style="-fx-background-color: #e9ecef;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
                                         <Label text="Teléfono:" textFill="#495057" GridPane.rowIndex="5"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                        <TextField fx:id="txtTelefono" editable="false" promptText="Autocompletado..." style="-fx-background-color: #e9ecef;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                        <TextField fx:id="txt_telefono" editable="false" promptText="Autocompletado" style="-fx-background-color: #e9ecef;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <TextField fx:id="txt_rfc" promptText="RFC" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                     </children>
                                 </GridPane>
                             </children>
@@ -102,7 +102,7 @@
 
                         <VBox spacing="15.0" HBox.hgrow="ALWAYS">
                             <children>
-                                <Label text="2. Materiales Adquiridos" textFill="#007bff">
+                                <Label text="2. Materiales Adquiridos" textFill="#044c87">
                                     <font>
                                         <Font name="System Bold" size="16.0" />
                                     </font>
@@ -119,41 +119,38 @@
                                     <rowConstraints>
                                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                         <RowConstraints minHeight="10.0" percentHeight="100.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="100.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Label text="Material:"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                        <ComboBox fx:id="cbMaterial" prefWidth="300.0" promptText="Ítems en existencia..." GridPane.columnIndex="1" />
+                                        <Label text="Item:"><font><Font name="System Bold" size="13.0" /></font></Label>
 
-                                        <Label text="Partida:" GridPane.rowIndex="1"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                        <ComboBox fx:id="cbPartida" prefWidth="300.0" promptText="Partida presupuestal..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Label text="Cantidad:" GridPane.rowIndex="1"><font><Font name="System Bold" size="13.0" /></font></Label>
+                                        <TextField fx:id="txt_cantidad" promptText="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                                        <Label text="Cantidad:" GridPane.columnIndex="2"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                        <TextField fx:id="txtCantidad" promptText="0" GridPane.columnIndex="3" />
-
-                                        <Label text="Costo U.:" GridPane.columnIndex="2" GridPane.rowIndex="1"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                        <TextField fx:id="txtCostoUnitario" promptText="0.00" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                        <Label prefHeight="19.0" prefWidth="116.0" text="Costo Unitario:" GridPane.rowIndex="2"><font><Font name="System Bold" size="13.0" /></font></Label>
+                                        <TextField fx:id="txt_costoUnitario" promptText="0.00" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Button mnemonicParsing="false" onAction="#clicEliminarItem" prefHeight="25.0" prefWidth="62.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Quitar" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                 <effect>
+                                    <InnerShadow offsetY="9.0">
+                                       <color>
+                                          <Color blue="1.0" green="1.0" opacity="0.44155845046043396" red="1.0" />
+                                       </color>
+                                    </InnerShadow>
+                                 </effect>
+                              </Button>
+                                        <Button mnemonicParsing="false" onAction="#clicAgregarItem" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Agregar" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <effect>
+                                    <InnerShadow offsetY="9.0">
+                                       <color>
+                                          <Color blue="1.0" green="1.0" opacity="0.44155845046043396" red="1.0" />
+                                       </color>
+                                    </InnerShadow>
+                                 </effect></Button>
+                              <TextField fx:id="txt_idItem" promptText="Código" GridPane.columnIndex="1" />
                                     </children>
                                 </GridPane>
 
-                                <HBox alignment="CENTER_RIGHT" prefHeight="56.0" prefWidth="578.0" spacing="10.0">
-                                    <children>
-                                        <Button fx:id="btnEliminarMaterial" mnemonicParsing="false" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Quitar de la lista">
-                                 <effect>
-                                    <InnerShadow offsetY="9.0">
-                                       <color>
-                                          <Color blue="1.0" green="1.0" opacity="0.44155845046043396" red="1.0" />
-                                       </color>
-                                    </InnerShadow>
-                                 </effect></Button>
-                                        <Button fx:id="btnAgregarMaterial" mnemonicParsing="false" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Agregar a la lista">
-                                 <effect>
-                                    <InnerShadow offsetY="9.0">
-                                       <color>
-                                          <Color blue="1.0" green="1.0" opacity="0.44155845046043396" red="1.0" />
-                                       </color>
-                                    </InnerShadow>
-                                 </effect></Button>
-                                    </children>
+                                <HBox alignment="CENTER_RIGHT" prefHeight="21.0" prefWidth="541.0" spacing="10.0">
                            <effect>
                               <DropShadow offsetX="-3.0" offsetY="3.0">
                                  <color>
@@ -163,12 +160,12 @@
                            </effect>
                                 </HBox>
 
-                                <TableView fx:id="tvMaterialesFactura" prefHeight="252.0" prefWidth="578.0" VBox.vgrow="ALWAYS">
+                                <TableView fx:id="tv_detalleFactura" prefHeight="252.0" prefWidth="578.0" VBox.vgrow="ALWAYS">
                                     <columns>
-                                        <TableColumn fx:id="colMaterial" prefWidth="250.0" text="Material" />
-                                        <TableColumn fx:id="colPartida" prefWidth="120.0" text="Partida" />
-                                        <TableColumn fx:id="colCantidad" prefWidth="80.0" text="Cantidad" />
-                                        <TableColumn fx:id="colCosto" prefWidth="100.0" text="Costo Unitario" />
+                              <TableColumn fx:id="col_idItem" prefWidth="85.0" text="Código" />
+                                        <TableColumn fx:id="col_descripcion" prefWidth="217.0" text="Descripción" />
+                                        <TableColumn fx:id="col_cantidad" prefWidth="83.0" text="Cantidad" />
+                                        <TableColumn fx:id="col_costoUnitario" prefWidth="116.0" text="Costo Unitario" />
                                     </columns>
                                 </TableView>
                             </children>
@@ -180,7 +177,7 @@
                 <HBox alignment="CENTER_RIGHT" spacing="15.0">
                     <children>
                         <Button mnemonicParsing="false" onAction="#clicCancelar" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" />
-                        <Button fx:id="btnCargarFactura" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Guardar factura">
+                        <Button mnemonicParsing="false" onAction="#clicGuardarFactura" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Guardar factura">
                             <effect>
                                 <InnerShadow color="#ffffff4d" offsetY="10.0" />
                             </effect></Button>

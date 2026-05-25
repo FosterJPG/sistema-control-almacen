@@ -18,7 +18,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="lb_nombreSucursal" text="Nombre sucursal" textFill="#007bff">
+            <Label fx:id="lb_nombreSucursal" text="Nombre sucursal" textFill="#044c87">
                <font>
                   <Font name="System Bold" size="24.0" />
                </font>
@@ -52,11 +52,11 @@
                      </font>
                   </Label>
                   <Separator prefWidth="150.0" />
-                  <Button mnemonicParsing="false" onAction="#clicRegistrarFactura" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Registrar factura">
+                  <Button mnemonicParsing="false" onAction="#clicRegistrarFactura" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Registrar factura">
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect></Button>
-                  <Button mnemonicParsing="false" onAction="#clicConsultarFacturas" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #f8f9fa; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar facturas">
+                  <Button mnemonicParsing="false" onAction="#clicConsultarFacturas" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: ##6c757d; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar facturas">
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect></Button>
@@ -85,11 +85,11 @@
                      </font>
                   </Label>
                   <Separator prefWidth="150.0" />
-                  <Button mnemonicParsing="false" onAction="#clicRegistrarItem" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Registrar item">
+                  <Button mnemonicParsing="false" onAction="#clicRegistrarItem" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Registrar item">
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect></Button>
-                  <Button mnemonicParsing="false" onAction="#clicConsultarItems" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #f8f9fa; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar items">
+                  <Button mnemonicParsing="false" onAction="#clicConsultarItems" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: ##6c757d; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar items">
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect></Button>
@@ -118,7 +118,7 @@
                      </font>
                   </Label>
                   <Separator prefWidth="150.0" />
-                  <Button mnemonicParsing="false" onAction="#clicConsultarBitacora" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #f8f9fa; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar bitacora">
+                  <Button mnemonicParsing="false" onAction="#clicConsultarBitacora" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: ##6c757d; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar bitacora">
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect></Button>
@@ -127,7 +127,7 @@
 
          </children>
       </HBox>
-      <Button layoutX="761.0" layoutY="41.0" mnemonicParsing="false" onAction="#clicCerrarSesion" style="-fx-background-color: #f8f9fa; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Cerrar sesión" />
+      <Button layoutX="730.0" layoutY="33.0" mnemonicParsing="false" onAction="#clicCerrarSesion" prefHeight="35.0" prefWidth="123.0" style="-fx-background-color: transparet; -fx-border-color: #dc3545; -fx-border-radius: 5; -fx-text-fill: #dc3545; -fx-font-weight: bold;" text="Cerrar Sesión" />
       <HBox layoutX="267.0" prefHeight="100.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

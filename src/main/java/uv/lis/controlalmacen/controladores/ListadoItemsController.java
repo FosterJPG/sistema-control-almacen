@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import uv.lis.controlalmacen.modelo.dao.ItemAlmacenadoDAO;
 import uv.lis.controlalmacen.modelo.dao.PartidaPresupuestalDAO;
@@ -31,7 +32,6 @@ public class ListadoItemsController implements Initializable {
 
     @FXML
     private ComboBox<String> cb_filtroStock;
-    @FXML
     private ComboBox<PartidaPresupuestal> cb_filtroPartida;
     @FXML
     private TextField txt_buscarIdProducto;
@@ -136,7 +136,25 @@ public class ListadoItemsController implements Initializable {
         }
     }
 
+    @FXML
+    private void clicVerKardex(ActionEvent event) {
+        try {
+            FXMLLoader loader = UtilidadesFX.cargarFXML("Kardex");
+            Parent vista = loader.load();
+            Scene escena = new Scene(vista);
 
+            Stage stage = new Stage();
+            stage.setTitle("Kárdex");
+            stage.setResizable(false);
+            stage.setScene(escena);
+
+            stage.centerOnScreen();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     
     // NAVEGABILIDAD //

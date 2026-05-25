@@ -93,6 +93,7 @@
 
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clicVerKardex" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Ver Kardex" />
                   <Button mnemonicParsing="false" onAction="#clicRegresar" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar" />
                </children>
             </HBox>
