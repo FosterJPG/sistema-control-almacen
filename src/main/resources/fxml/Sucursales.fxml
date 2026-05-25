@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<fx:root id="AnchorPane" prefHeight="400.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.SucursalesController">
+<fx:root id="AnchorPane" prefHeight="400.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.SucursalesController">
    <children>
 
        <MenuBar prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -49,19 +50,19 @@
                   <Label text="Consulte la ubicación y datos de contacto de las sedes registradas." />
                   <HBox prefHeight="21.0" prefWidth="520.0">
                      <children>
-                        <TextField text="Buscar por nombre o dirección..." HBox.hgrow="ALWAYS" />
+                        <TextField fx:id="txt_nombreSucursal" text="Buscar por nombre" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
                </children>
             </VBox>
          </top>
          <center>
-            <TableView prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="tv_sedes" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
               <columns>
-                <TableColumn prefWidth="75.0" text="No. Sucursal" />
-                <TableColumn prefWidth="75.0" text="Nombre de Sede" />
-                  <TableColumn prefWidth="75.0" text="Dirrección" />
-                  <TableColumn prefWidth="75.0" text="Teléfono de Contacto" />
+                <TableColumn fx:id="col_NoSucursal" prefWidth="75.0" text="No. Sucursal" />
+                <TableColumn fx:id="col_nombreSede" prefWidth="75.0" text="Nombre de Sede" />
+                  <TableColumn fx:id="col_direccion" prefWidth="75.0" text="Dirrección" />
+                  <TableColumn fx:id="col_telefono" prefWidth="75.0" text="Teléfono de Contacto" />
               </columns>
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

@@ -12,16 +12,19 @@
 
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <menus>
-            <Menu mnemonicParsing="false" text="Ingresos">
+            <Menu mnemonicParsing="false" text="Registros">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#clicRegistrarFactura" text="Registrar factura" />
-                  <MenuItem mnemonicParsing="false" onAction="#clicConsultarFacturas" text="Consultar facturas" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicRegistrarFactura" text="Items" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicConsultarFacturas" text="Partidas presupuestales" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Items">
+            <Menu mnemonicParsing="false" text="Catalogos">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#clicRegistrarItem" text="Registrar item" />
-                  <MenuItem mnemonicParsing="false" onAction="#clicConsultarItems" text="Consultar items" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicRegistrarItem" text="Items" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicConsultarItems" text="Partidas presupuestales" />
+                  <MenuItem mnemonicParsing="false" text="Sucursales" />
+                  <MenuItem mnemonicParsing="false" text="Puestos" />
+                  <MenuItem mnemonicParsing="false" text="Encargados" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Pedidos">

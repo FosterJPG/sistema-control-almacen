@@ -159,15 +159,20 @@
                               </DropShadow>
                            </effect>
                                 </HBox>
-
-                                <TableView fx:id="tv_detalleFactura" prefHeight="252.0" prefWidth="578.0" VBox.vgrow="ALWAYS">
-                                    <columns>
-                              <TableColumn fx:id="col_idItem" prefWidth="85.0" text="Código" />
-                                        <TableColumn fx:id="col_descripcion" prefWidth="217.0" text="Descripción" />
-                                        <TableColumn fx:id="col_cantidad" prefWidth="83.0" text="Cantidad" />
-                                        <TableColumn fx:id="col_costoUnitario" prefWidth="116.0" text="Costo Unitario" />
-                                    </columns>
-                                </TableView>
+                        <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                           <children>
+                              <TableView prefHeight="252.0" prefWidth="522.0">
+                                <columns>
+                                  <TableColumn prefWidth="75.0" text="Código" />
+                                  <TableColumn prefWidth="131.0" text="Partida Presupuestal" />
+                                    <TableColumn prefWidth="175.0" text="Descripción" />
+                                    <TableColumn prefWidth="64.0" text="Cantidad" />
+                                    <TableColumn prefWidth="76.0" text="Costo Unitario" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </AnchorPane>
+                        <ScrollBar prefHeight="3.0" prefWidth="522.0" />
                             </children>
                         </VBox>
 
