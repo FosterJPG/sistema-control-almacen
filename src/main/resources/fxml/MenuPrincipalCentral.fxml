@@ -1,84 +1,203 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.MenuPrincipalCentralController">
    <children>
 
-      <Button fx:id="btnCerrarSesion" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0" style="-fx-background-color: transparent; -fx-text-fill: #dc3545; -fx-border-color: #dc3545; -fx-border-radius: 5;" text="Cerrar Sesión" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="30.0">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
+      <!-- Botón cerrar sesión -->
+      <Button fx:id="btnCerrarSesion" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0"
+              style="-fx-background-color: transparent; -fx-text-fill: #dc3545; -fx-border-color: #dc3545; -fx-border-radius: 5;"
+              text="Cerrar Sesión" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="20.0">
+         <font><Font name="System Bold" size="13.0" /></font>
       </Button>
-      <Label text="Panel de Administración Central" textFill="#007bff" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="30.0">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
+
+      <!-- Bienvenida -->
+      <Label fx:id="lblBienvenida" alignment="CENTER_RIGHT" prefWidth="300.0"
+             text="Bienvenido, Usuario" textFill="#666666"
+             AnchorPane.rightAnchor="210.0" AnchorPane.topAnchor="28.0">
+         <font><Font size="14.0" /></font>
       </Label>
 
-      <VBox alignment="CENTER" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #e0e0e0; -fx-border-radius: 15;" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="100.0">
-         <effect>
-            <DropShadow color="#00000026" offsetX="0.0" offsetY="5.0" radius="15.0" />
-         </effect>
-         <children>
-            <Label text="Seleccione un módulo para gestionar los recursos globales del sistema." textFill="#666666">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Label>
+      <!-- Título principal -->
+      <Label text="Menú Central" textFill="#1a365d"
+             AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="20.0">
+         <font><Font name="System Bold" size="24.0" /></font>
+      </Label>
 
-            <HBox alignment="CENTER" spacing="50.0">
-               <children>
+      <!-- Contenedor principal con dos secciones lado a lado -->
+      <HBox spacing="20.0"
+            AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0"
+            AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="75.0">
 
-                  <Button fx:id="btnUsuarios" mnemonicParsing="false" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
-                     <graphic>
-                        <VBox alignment="CENTER" spacing="15.0">
-                           <children>
-                              <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../imagenes/usuario (1).png" />
-                                 </image>
-                              </ImageView>
-                              <Label text="Usuarios" textFill="#495057">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </graphic>
-                  </Button>
+         <!-- ===================== SECCIÓN CATÁLOGOS (izquierda) ===================== -->
+         <VBox alignment="TOP_CENTER" spacing="20.0" prefWidth="580.0"
+               style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #e0e0e0; -fx-border-radius: 15;">
+            <effect>
+               <DropShadow color="#00000026" offsetX="0.0" offsetY="5.0" radius="15.0" />
+            </effect>
+            <padding>
+               <Insets bottom="25.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <children>
 
-                  <Button fx:id="btnSucursales" mnemonicParsing="false" prefHeight="140.0" prefWidth="140.0" style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
-                     <graphic>
-                        <VBox alignment="CENTER" spacing="15.0">
-                           <children>
-                              <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../imagenes/grafico-de-barras.png" />
-                                 </image>
-                              </ImageView>
-                              <Label text="Sucursales" textFill="#495057">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </graphic>
-                  </Button>
+               <!-- Título Catálogos -->
+               <Label text="Catálogos" textFill="#1a365d">
+                  <font><Font name="System Bold" size="18.0" /></font>
+               </Label>
 
-               </children>
-               <padding>
-                  <Insets top="30.0" />
-               </padding>
-            </HBox>
-         </children>
-      </VBox>
+               <Separator />
+
+               <Label text="Gestione la información base del sistema." textFill="#888888">
+                  <font><Font size="13.0" /></font>
+               </Label>
+
+               <!-- Fila 1: Ítems y Encargados -->
+               <HBox alignment="CENTER" spacing="20.0">
+                  <children>
+                     <Button fx:id="btnItems" mnemonicParsing="false" prefHeight="135.0" prefWidth="145.0"
+                             style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
+                        <graphic>
+                           <VBox alignment="CENTER" spacing="12.0">
+                              <children>
+                                 <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                    <image><Image url="@../imagenes/items.png" /></image>
+                                 </ImageView>
+                                 <Label text="Ítems" textFill="#1a365d">
+                                    <font><Font name="System Bold" size="14.0" /></font>
+                                 </Label>
+                              </children>
+                           </VBox>
+                        </graphic>
+                     </Button>
+
+                     <Button fx:id="btnEncargados" mnemonicParsing="false" prefHeight="135.0" prefWidth="145.0"
+                             style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
+                        <graphic>
+                           <VBox alignment="CENTER" spacing="12.0">
+                              <children>
+                                 <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                    <image><Image url="@../imagenes/encargados.png" /></image>
+                                 </ImageView>
+                                 <Label text="Encargados" textFill="#1a365d">
+                                    <font><Font name="System Bold" size="14.0" /></font>
+                                 </Label>
+                              </children>
+                           </VBox>
+                        </graphic>
+                     </Button>
+                  </children>
+               </HBox>
+
+               <!-- Fila 2: Sucursales y Partidas -->
+               <HBox alignment="CENTER" spacing="20.0">
+                  <children>
+                     <Button fx:id="btnSucursales" mnemonicParsing="false" prefHeight="135.0" prefWidth="145.0"
+                             style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
+                        <graphic>
+                           <VBox alignment="CENTER" spacing="12.0">
+                              <children>
+                                 <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                    <image><Image url="@../imagenes/sucursales.png" /></image>
+                                 </ImageView>
+                                 <Label text="Sucursales" textFill="#1a365d">
+                                    <font><Font name="System Bold" size="14.0" /></font>
+                                 </Label>
+                              </children>
+                           </VBox>
+                        </graphic>
+                     </Button>
+
+                     <Button fx:id="btnPartidas" mnemonicParsing="false" prefHeight="135.0" prefWidth="145.0"
+                             style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
+                        <graphic>
+                           <VBox alignment="CENTER" spacing="12.0">
+                              <children>
+                                 <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                                    <image><Image url="@../imagenes/partidas.png" /></image>
+                                 </ImageView>
+                                 <Label text="Partidas Presupuestales" textFill="#1a365d" wrapText="true" alignment="CENTER" maxWidth="130.0">
+                                    <font><Font name="System Bold" size="13.0" /></font>
+                                 </Label>
+                              </children>
+                           </VBox>
+                        </graphic>
+                     </Button>
+                  </children>
+               </HBox>
+
+            </children>
+         </VBox>
+
+         <!-- ===================== SECCIÓN CONSULTAS (derecha) ===================== -->
+         <VBox alignment="TOP_CENTER" spacing="20.0" prefWidth="360.0"
+               style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #e0e0e0; -fx-border-radius: 15;">
+            <effect>
+               <DropShadow color="#00000026" offsetX="0.0" offsetY="5.0" radius="15.0" />
+            </effect>
+            <padding>
+               <Insets bottom="25.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <children>
+
+               <!-- Título Consultas -->
+               <Label text="Consultas" textFill="#1a365d">
+                  <font><Font name="System Bold" size="18.0" /></font>
+               </Label>
+
+               <Separator />
+
+               <Label text="Consulte y gestione documentos del sistema." textFill="#888888" wrapText="true">
+                  <font><Font size="13.0" /></font>
+               </Label>
+
+               <!-- Facturas -->
+               <Button fx:id="btnFacturas" mnemonicParsing="false" prefHeight="135.0" prefWidth="145.0"
+                       style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
+                  <graphic>
+                     <VBox alignment="CENTER" spacing="12.0">
+                        <children>
+                           <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                              <image><Image url="@../imagenes/factura.png" /></image>
+                           </ImageView>
+                           <Label text="Facturas" textFill="#1a365d">
+                              <font><Font name="System Bold" size="14.0" /></font>
+                           </Label>
+                        </children>
+                     </VBox>
+                  </graphic>
+               </Button>
+
+               <!-- Solicitudes -->
+               <Button fx:id="btnSolicitudes" mnemonicParsing="false" prefHeight="135.0" prefWidth="145.0"
+                       style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
+                  <graphic>
+                     <VBox alignment="CENTER" spacing="12.0">
+                        <children>
+                           <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
+                              <image><Image url="@../imagenes/solicitud.png" /></image>
+                           </ImageView>
+                           <Label text="Solicitudes" textFill="#1a365d">
+                              <font><Font name="System Bold" size="14.0" /></font>
+                           </Label>
+                        </children>
+                     </VBox>
+                  </graphic>
+               </Button>
+
+            </children>
+         </VBox>
+
+      </HBox>
    </children>
 </AnchorPane>
