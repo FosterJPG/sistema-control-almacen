@@ -74,7 +74,7 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="cb_filtroStock" prefWidth="180.0" promptText="Nivel de Stock" visibleRowCount="2" />
+                  <ComboBox fx:id="cb_filtroStock" prefWidth="180.0" promptText="Nivel de Stock" visibleRowCount="3" />
                   
                   <Region HBox.hgrow="ALWAYS" />
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clicBuscarItemAlmacenado" prefHeight="13.0" prefWidth="59.0" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar" /> <TextField fx:id="txt_buscarIdProducto" prefWidth="250.0" promptText="Buscar producto por ID" />

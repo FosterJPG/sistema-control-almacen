@@ -4,7 +4,7 @@ import uv.lis.controlalmacen.modelo.dao.FacturaDAO;
 import uv.lis.controlalmacen.modelo.dto.DetallesFactura;
 import uv.lis.controlalmacen.modelo.dto.Factura;
 
-public class FacturaService {
+/*public class FacturaService {
     FacturaDAO facturaDAO = new FacturaDAO();
 
     public static boolean guardarFactura(Factura factura){
@@ -16,4 +16,4 @@ public class FacturaService {
         //return facturaDAO.registrar(factura);
         return true;
     }
-}
+}*/

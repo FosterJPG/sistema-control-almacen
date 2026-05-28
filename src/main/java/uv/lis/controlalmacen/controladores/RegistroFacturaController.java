@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import uv.lis.controlalmacen.logica.FacturaService;
+//import uv.lis.controlalmacen.logica.FacturaService;
 import uv.lis.controlalmacen.modelo.dto.DetallesFactura;
 import uv.lis.controlalmacen.modelo.dto.Factura;
 import uv.lis.controlalmacen.modelo.dto.Sesion;
@@ -73,6 +73,7 @@ public class RegistroFacturaController implements Initializable {
     private void clicAgregarItem(ActionEvent event) {
     }
 
+    /*
     @FXML
     private void clicGuardarFactura(ActionEvent event) {
         //VALIDAR DATOS
@@ -97,6 +98,7 @@ public class RegistroFacturaController implements Initializable {
 
     }
 
+    /*
     //2. OBTENER
     //TODO HABER VALIDADO DATOS
     private Factura obtenerFactura(){
@@ -145,7 +147,7 @@ public class RegistroFacturaController implements Initializable {
             // Mensaje
         }
     }
-
+*/
     //NAVEGACION
     @FXML
     public void clicCancelar(ActionEvent actionEvent) {
