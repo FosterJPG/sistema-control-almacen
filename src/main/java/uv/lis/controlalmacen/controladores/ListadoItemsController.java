@@ -51,7 +51,7 @@ public class ListadoItemsController implements Initializable {
 
     private ObservableList<ItemAlmacenado> itemsAlmacenados;
 
-    ItemAlmacenadoDAO itemAlmacenadoDAO 
+    ItemAlmacenadoDAO itemAlmacenadoDAO;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -68,7 +68,7 @@ public class ListadoItemsController implements Initializable {
 
     private void cargarInformacionItems(){
         itemsAlmacenados = FXCollections.observableArrayList();
-        List<ItemAlmacenado> itemsAlmacenadosBD =
+        List<ItemAlmacenado> itemsAlmacenadosBD;
     }
 
     @FXML
