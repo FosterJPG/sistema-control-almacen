@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.CatalagoItemsController">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.CatalogoItemsController">
    <children>
 
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -39,8 +53,8 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
          </padding>
          <children>
-            
-            <Label styleClass="label-titulo" text="Catálogo General de Ítems">
+
+            <Label styleClass="label-titulo" text="Catálogo General de Ítems" textFill="#044c87">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -51,35 +65,66 @@
 
             <HBox alignment="CENTER_LEFT" spacing="15.0">
                <children>
-                  <Label text="Filtrar por Partida:">
+                  <Label text="Filtrar por Partida:" textFill="#044c87">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="cbPartidaPresupuestal" prefWidth="220.0" promptText="Todas las partidas..." />
-                  
-                  <Region HBox.hgrow="ALWAYS" /> <TextField fx:id="txtBuscar" prefHeight="25.0" prefWidth="268.0" promptText="Buscar por descripción..." />
+                  <ComboBox fx:id="cbPartidaPresupuestal" prefHeight="30.0" prefWidth="220.0" promptText="Todas las partidas..." />
+
+                  <Region HBox.hgrow="ALWAYS" />
+
+                  <TextField fx:id="txtBuscar" prefHeight="30.0" prefWidth="205.0" promptText="Buscar por descripción..." />
+
+                  <Button mnemonicParsing="false" onAction="#clicBuscar" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar">
+                     <effect>
+                        <InnerShadow color="#ffffff40" offsetY="3.0" />
+                     </effect>
+                  </Button>
                </children>
             </HBox>
 
-            <TableView fx:id="tvCatalogo" prefHeight="250.0" VBox.vgrow="ALWAYS">
-              <columns>
-                <TableColumn fx:id="colIdItem" prefWidth="68.0" text="ID Ítem" />
-                <TableColumn fx:id="colDescripcion" prefWidth="432.0" text="Descripción del Producto" />
-                <TableColumn fx:id="colPartida" prefWidth="267.0" text="Partida Presupuestal" />
-              </columns>
+            <TableView fx:id="tvCatalogo" onSort="#tv_listado" prefHeight="250.0" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="colIdItem" onEditStart="#col_idColuma" prefWidth="80.0" text="ID Ítem" />
+                  <TableColumn fx:id="colDescripcion" onEditStart="#col_descripcionColuma" prefWidth="420.0" text="Descripción del Producto" />
+                  <TableColumn fx:id="colPartida" onEditStart="#col_partidaColuma" prefWidth="267.0" text="Partida Presupuestal" />
+               </columns>
+               <effect>
+                  <DropShadow offsetX="-3.0" offsetY="3.0">
+                     <color>
+                        <Color opacity="0.15" />
+                     </color>
+                  </DropShadow>
+               </effect>
             </TableView>
 
-            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+            <HBox alignment="CENTER_LEFT" spacing="15.0">
                <children>
-                  <Button fx:id="btnRegresar" mnemonicParsing="false" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar al Menú">
+                  <Button mnemonicParsing="false" onAction="#clicAgregar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Agregar">
                      <effect>
-                        <InnerShadow color="#ffffff00" offsetY="7.0" />
-                     </effect></Button>
+                        <InnerShadow color="#ffffff40" offsetY="3.0" />
+                     </effect>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#clicModificar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Modificar">
+                     <effect>
+                        <InnerShadow color="#ffffff40" offsetY="3.0" />
+                     </effect>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#clicEliminar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Eliminar">
+                     <effect>
+                        <InnerShadow color="#ffffff40" offsetY="3.0" />
+                     </effect>
+                  </Button>
+
+                  <Region HBox.hgrow="ALWAYS" />
+
+                  <Button mnemonicParsing="false" onAction="#clicRegresar" prefHeight="30.0" prefWidth="140.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar al Menú">
+                     <effect>
+                        <InnerShadow color="#ffffff40" offsetY="3.0" />
+                     </effect>
+                  </Button>
                </children>
-               <effect>
-                  <DropShadow color="TRANSPARENT" offsetX="-3.0" offsetY="3.0" />
-               </effect>
             </HBox>
 
          </children>
