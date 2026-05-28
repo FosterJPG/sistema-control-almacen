@@ -28,12 +28,12 @@
          <children>
             <VBox spacing="5.0">
                <children>
-                  <Label styleClass="label-titulo" text="Generador de Reportes de Ingreso">
+                  <Label styleClass="label-titulo" text="Reportes de Ingresos">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <Label text="Seleccione el rango de fechas para generar el informe de los materiales que entraron al almacén." textFill="#666666">
+                  <Label text="Seleccione el rango de fechas para generar el informe de los materiales que entraron al almacén mediante facturas" textFill="#666666">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -43,7 +43,7 @@
             <Separator prefWidth="200.0" />
             <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
                <children>
-                  <GridPane hgap="20.0" maxWidth="450.0" style="-fx-background-color: #f8f9fa; -fx-padding: 30; -fx-background-radius: 8; -fx-border-color: #dee2e6; -fx-border-radius: 8;" vgap="25.0">
+                  <GridPane hgap="20.0" maxWidth="529.0" prefHeight="192.0" prefWidth="529.0" style="-fx-background-color: #f8f9fa; -fx-padding: 30; -fx-background-radius: 8; -fx-border-color: #dee2e6; -fx-border-radius: 8;" vgap="25.0">
                     <columnConstraints>
                       <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="120.0" />
                       <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
@@ -55,24 +55,24 @@
                      <children>
                         <Label text="Inicio de periodo:" textFill="#495057">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="dpInicio" prefWidth="250.0" promptText="Seleccione fecha inicial..." GridPane.columnIndex="1" />
+                        <DatePicker fx:id="dp_inicio" prefHeight="40.0" prefWidth="273.0" promptText="Seleccione fecha inicial..." GridPane.columnIndex="1" />
                         <Label text="Fin de periodo:" textFill="#495057" GridPane.rowIndex="1">
                            <font>
-                              <Font name="System Bold" size="14.0" />
+                              <Font name="System Bold" size="18.0" />
                            </font>
                         </Label>
-                        <DatePicker fx:id="dpFin" prefWidth="250.0" promptText="Seleccione fecha final..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <DatePicker fx:id="dp_fin" prefHeight="40.0" prefWidth="272.0" promptText="Seleccione fecha final..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>
             </VBox>
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
-                  <Button fx:id="btnRegresar" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" />
-                  <Button fx:id="btnGenerarReporte" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Generar Reporte">
+                  <Button mnemonicParsing="false" onAction="#clicRegresar" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar" />
+                  <Button mnemonicParsing="false" onAction="#clicGenerarReporte" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Generar Reporte">
                      <effect>
                         <InnerShadow color="#ffffff61" height="11.0" offsetY="10.0" radius="7.5" />
                      </effect></Button>

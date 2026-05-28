@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="550.0" prefWidth="850.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.AceptarSolicitudModalController">
+<AnchorPane prefHeight="550.0" prefWidth="850.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.AceptarSolicitudModalController">
     <children>
         <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-border-color: #dee2e6; -fx-border-radius: 8;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
             <padding>
@@ -21,12 +23,12 @@
                     <children>
                         <HBox alignment="CENTER_LEFT" spacing="15.0">
                             <children>
-                                <Label text="Detalles de Solicitud:" textFill="#007bff">
+                                <Label text="Detalles de Solicitud:">
                                     <font>
                                         <Font name="System Bold" size="20.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="lblFolioSolicitud" text="#1045" textFill="#495057">
+                                <Label fx:id="lblFolioSolicitud" text="#1045" textFill="#044c87">
                                     <font>
                                         <Font name="System Bold" size="20.0" />
                                     </font>
@@ -55,7 +57,7 @@
                                 <Font name="System Bold" size="13.0" />
                             </font>
                         </Label>
-                        <Label fx:id="lblNombreEmpleado" text="Cargando nombre..." GridPane.columnIndex="1" />
+                        <Label fx:id="lblNombreEmpleado" text="Nombre" GridPane.columnIndex="1" />
 
                         <Label text="Fecha:" textFill="#495057" GridPane.columnIndex="2">
                             <font>
@@ -75,11 +77,12 @@
 
                 <TableView fx:id="tvDetallesSolicitud" prefHeight="200.0" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="colIdItem" prefWidth="52.0" text="ID Ítem" />
-                        <TableColumn fx:id="colDescripcion" prefWidth="340.0" text="Descripción del Artículo" />
-                        <TableColumn fx:id="colStockActual" prefWidth="124.0" text="Stock Actual" />
-                        <TableColumn fx:id="colCantSolicitada" prefWidth="123.0" text="Cant. Solicitada" />
-                        <TableColumn fx:id="colCantEntregar" prefWidth="128.0" style="-fx-font-weight: bold; -fx-background-color: #e8f4f8;" text="Cant. a Entregar" />
+                        <TableColumn fx:id="colIdItem" prefWidth="52.0" text="Código" />
+                        <TableColumn fx:id="colDescripcion" prefWidth="164.0" text="Descripción del Artículo" />
+                        <TableColumn fx:id="colStockActual" prefWidth="140.0" text="Stock Actual" />
+                        <TableColumn fx:id="colCantSolicitada" prefWidth="99.0" text="Cant. Solicitada" />
+                        <TableColumn fx:id="colCantEntregar" prefWidth="116.0" style="-fx-font-weight: bold; -fx-background-color: #e8f4f8;" text="Cant. a Entregar" />
+                  <TableColumn prefWidth="196.0" text="Uso" />
                     </columns>
                     <placeholder>
                         <Label text="Cargando artículos de la solicitud..." textFill="#999999" />
@@ -90,19 +93,34 @@
 
                 <HBox alignment="CENTER_RIGHT" spacing="15.0">
                     <children>
-                        <Label text="Firma de Autorización (Su ID):" textFill="#495057">
-                            <font>
-                                <Font name="System Bold" size="13.0" />
-                            </font>
-                        </Label>
-                        <TextField fx:id="txtFirmaEncargado" prefWidth="150.0" promptText="Ingrese su ID" />
 
                         <HBox HBox.hgrow="ALWAYS" />
 
-                        <Button fx:id="btnRechazar" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4;" text="Rechazar Todo" />
+                        <Button fx:id="btnRechazar" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4;" text="Rechazar">
+                     <effect>
+                        <InnerShadow offsetY="9.0">
+                           <color>
+                              <Color blue="1.0" green="1.0" opacity="0.4761904776096344" red="1.0" />
+                           </color>
+                        </InnerShadow>
+                     </effect></Button>
+                        <Button fx:id="btnProcesarEntrega" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4;" text="Aceptar">
+                     <effect>
+                        <InnerShadow offsetY="9.0">
+                           <color>
+                              <Color blue="1.0" green="1.0" opacity="0.4761904776096344" red="1.0" />
+                           </color>
+                        </InnerShadow>
+                     </effect></Button>
                         <Button fx:id="btnCancelar" mnemonicParsing="false" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4;" text="Cancelar" />
-                        <Button fx:id="btnProcesarEntrega" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4;" text="Procesar Entrega" />
                     </children>
+               <effect>
+                  <DropShadow offsetX="-3.0" offsetY="3.0">
+                     <color>
+                        <Color opacity="0.4675324559211731" />
+                     </color>
+                  </DropShadow>
+               </effect>
                 </HBox>
 
             </children>

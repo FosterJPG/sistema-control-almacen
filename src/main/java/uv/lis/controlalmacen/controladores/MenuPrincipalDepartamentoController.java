@@ -23,7 +23,7 @@ import uv.lis.controlalmacen.utilidades.UtilidadesFX;
  *
  * @author macol
  */
-public class MenuPrincipalSalidasController implements Initializable, MenuController {
+public class MenuPrincipalDepartamentoController implements Initializable, MenuController {
 
     @FXML
     private Label lb_nombreEmpleado;
@@ -35,8 +35,8 @@ public class MenuPrincipalSalidasController implements Initializable, MenuContro
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //TODO
-    }
+        // TODO
+    }    
 
     @Override
     public void cargarDatos(){
@@ -44,24 +44,8 @@ public class MenuPrincipalSalidasController implements Initializable, MenuContro
     }
     
     @FXML
-    private void clicAtenderSolicitud(ActionEvent event) {
-        try {
-            FXMLLoader loader = UtilidadesFX.cargarFXML("ListadoSolicitudes");
-            Parent vista = loader.load();
-            Scene escena = new Scene(vista);
-
-            Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
-            stage.setTitle("Solicitudes por atender");
-            stage.setResizable(false);
-            stage.setScene(escena);
-
-            stage.centerOnScreen();
-            stage.show();
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void clicCrearSolicitud(ActionEvent event) {
     }
-    
 
     @FXML
     public void clicCerrarSesion(ActionEvent actionEvent) {
@@ -82,6 +66,4 @@ public class MenuPrincipalSalidasController implements Initializable, MenuContro
             throw new RuntimeException(e);
         }
     }
-
-
 }

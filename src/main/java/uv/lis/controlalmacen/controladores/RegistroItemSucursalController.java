@@ -1,113 +1,126 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ */
 package uv.lis.controlalmacen.controladores;
 
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import uv.lis.controlalmacen.modelo.dto.Empleado;
-import uv.lis.controlalmacen.modelo.dto.Sesion;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
-public class MenuPrincipalEncargadoController implements Initializable, MenuController {
-
-    @FXML
-    private Label lb_nombreEmpleado;
+/**
+ * FXML Controller class
+ *
+ * @author macol
+ */
+public class RegistroItemSucursalController implements Initializable {
 
     @FXML
-    private Label lb_nombreSucursal;
+    private TextField txt_descripcion;
+    @FXML
+    private TextField txt_stockMinimo;
+    @FXML
+    private TextField txt_stockMaximo;
+    @FXML
+    private TextField txt_idItem;
 
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
 
-    }
-
-    @Override
-    public void cargarDatos(){
-        lb_nombreEmpleado.setText("Bienvenido: " + Sesion.getUsuarioActual().getEmpleado().getNombre());
-    }
 
     @FXML
-    public void clicCerrarSesion(ActionEvent actionEvent) {
+    private void clicGuardar(ActionEvent event) {
+    }
+
+    // NAVEGABILIDAD //
+
+    @FXML
+    public void clicCancelar(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = UtilidadesFX.cargarFXML("InicioSesion");
-            Parent vista = loader.load();
+            FXMLLoader loader = UtilidadesFX.cargarFXML("MenuPrincipalEncargado");
+            Parent vista =  loader.load();
             Scene escena = new Scene(vista);
 
-            Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
-            stage.setTitle("Control de Almacén - GLOBAL FINANCE");
+            Stage stage = (Stage) txt_idItem.getScene().getWindow();
+            stage.setTitle("Menu principal");
             stage.setResizable(false);
             stage.centerOnScreen();
 
-            Sesion.cerrarSesion();
             stage.setScene(escena);
             stage.show();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
     @FXML
     public void clicRegistrarFactura(ActionEvent actionEvent) {
-        try {
+        try{
             FXMLLoader loader = UtilidadesFX.cargarFXML("RegistroFactura");
-            Parent vista = loader.load();
+            Parent vista =  loader.load();
             Scene escena = new Scene(vista);
 
-            Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
-            stage.setTitle("Registro de facturas");
+            Stage stage = (Stage) txt_idItem.getScene().getWindow();
+            stage.setTitle("Registrar Factura");
             stage.setResizable(false);
             stage.centerOnScreen();
 
             stage.setScene(escena);
             stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 
     @FXML
     public void clicConsultarFacturas(ActionEvent actionEvent) {
-        try {
+        try{
             FXMLLoader loader = UtilidadesFX.cargarFXML("ListadoFacturas");
-            Parent vista = loader.load();
+            Parent vista =  loader.load();
             Scene escena = new Scene(vista);
 
-            Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
-            stage.setTitle("Listado de facturas");
+            Stage stage = (Stage) txt_idItem.getScene().getWindow();
+            stage.setTitle("Consultar Factura");
             stage.setResizable(false);
             stage.centerOnScreen();
 
             stage.setScene(escena);
             stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 
     @FXML
     public void clicRegistrarItem(ActionEvent actionEvent) {
-        try {
+        try{
             FXMLLoader loader = UtilidadesFX.cargarFXML("RegistroItemSucursal");
-            Parent vista = loader.load();
+            Parent vista =  loader.load();
             Scene escena = new Scene(vista);
 
-            Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
-            stage.setTitle("Registro de items para la sucursal");
+            Stage stage = (Stage) txt_idItem.getScene().getWindow();
+            stage.setTitle("Registrar Item");
             stage.setResizable(false);
             stage.centerOnScreen();
 
             stage.setScene(escena);
             stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 
@@ -115,11 +128,11 @@ public class MenuPrincipalEncargadoController implements Initializable, MenuCont
     public void clicConsultarItems(ActionEvent actionEvent) {
         try {
             FXMLLoader loader = UtilidadesFX.cargarFXML("ListadoItems");
-            Parent vista = loader.load();
+            Parent vista =  loader.load();
             Scene escena = new Scene(vista);
 
-            Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
-            stage.setTitle("Listado de items almacenados");
+            Stage stage = (Stage) txt_idItem.getScene().getWindow();
+            stage.setTitle("Consultar Items");
             stage.setResizable(false);
             stage.centerOnScreen();
 
@@ -132,20 +145,22 @@ public class MenuPrincipalEncargadoController implements Initializable, MenuCont
 
     @FXML
     public void clicConsultarBitacora(ActionEvent actionEvent) {
-        try {
+        try{
             FXMLLoader loader = UtilidadesFX.cargarFXML("BitacoraPedidos");
-            Parent vista = loader.load();
+            Parent vista =  loader.load();
             Scene escena = new Scene(vista);
 
-            Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
-            stage.setTitle("Bitacora de pedidos");
+            Stage stage = (Stage) txt_idItem.getScene().getWindow();
+            stage.setTitle("Consultar Bitacora");
             stage.setResizable(false);
             stage.centerOnScreen();
 
             stage.setScene(escena);
             stage.show();
-        } catch (IOException ex) {
+        }catch(IOException ex){
             ex.printStackTrace();
         }
     }
+
+
 }

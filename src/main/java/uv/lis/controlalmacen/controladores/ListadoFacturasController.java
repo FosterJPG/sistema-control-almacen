@@ -157,7 +157,7 @@ public class ListadoFacturasController implements Initializable {
     @FXML
     public void clicRegistrarItem(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = UtilidadesFX.cargarFXML("RegistroItem");
+            FXMLLoader loader = UtilidadesFX.cargarFXML("RegistroItemSucursal");
             Parent vista =  loader.load();
             Scene escena = new Scene(vista);
 

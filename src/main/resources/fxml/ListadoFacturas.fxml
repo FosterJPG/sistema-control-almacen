@@ -18,7 +18,7 @@
          </padding>
          <children>
             
-            <Label styleClass="label-titulo" text="Registro de Facturas (Ingresos)">
+            <Label styleClass="label-titulo" text="Consulta de Facturas (Ingresos)">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -29,23 +29,21 @@
 
             <HBox alignment="CENTER_LEFT" spacing="15.0">
                <children>
-                  <Label text="Filtrar por:">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
-                  </Label>
-                  <DatePicker fx:id="dpFechaFactura" promptText="Fecha de factura..." />
+                  
+                  <TextField fx:id="txt_buscar" prefWidth="250.0" promptText="Folio de la factura" />
+                  <Button mnemonicParsing="false" onAction="#clicVerDetalles" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Ver Detalles de Factura">
+                     <effect>
+                        <InnerShadow color="#ffffff5c" offsetY="9.0" />
+                     </effect></Button>
                   
                   <Region HBox.hgrow="ALWAYS" />
-                  
-                  <TextField fx:id="txt_buscar" prefWidth="250.0" promptText="Buscar por folio o RFC..." />
                </children>
             </HBox>
 
             <TableView fx:id="tv_facturas" prefHeight="250.0" VBox.vgrow="ALWAYS">
               <columns>
                 <TableColumn fx:id="col_folio" prefWidth="109.0" text="Folio" />
-                <TableColumn fx:id="col_fecha" prefWidth="112.0" text="Fecha Factura" />
+                <TableColumn fx:id="col_fecha" prefWidth="112.0" text="Fecha" />
                 <TableColumn fx:id="col_rfc" prefWidth="175.0" text="RFC Proveedor" />
                   <TableColumn fx:id="col_razonSocial" prefWidth="201.0" text="Razón social" />
                   <TableColumn fx:id="col_telefono" prefWidth="173.0" text="Teléfono" />
@@ -54,11 +52,7 @@
 
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#clicVerDetalles" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Ver Detalles de Factura">
-                     <effect>
-                        <InnerShadow color="#ffffff5c" offsetY="9.0" />
-                     </effect></Button>
-                  <Button mnemonicParsing="false" onAction="#clicGenerarReporte" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Generar reporte">
+                  <Button mnemonicParsing="false" onAction="#clicGenerarReporte" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Generar reporte">
                      <effect>
                         <InnerShadow color="#00000021" height="11.0" offsetY="-8.0" radius="7.5" />
                      </effect>

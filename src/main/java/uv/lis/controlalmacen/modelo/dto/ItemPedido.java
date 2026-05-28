@@ -6,7 +6,7 @@ public class ItemPedido {
     private String idItem;
     private String descripcion;
     private Integer  existencias;
-    private Integer stockMax;
+    private Integer stockMin;
     private Date fecha;
 
     public String getDescripcion() {
@@ -41,11 +41,13 @@ public class ItemPedido {
         this.idItem = idItem;
     }
 
-    public Integer getStockMax() {
-        return stockMax;
+    public Integer getStockMin() {
+        return stockMin;
     }
 
-    public void setStockMax(Integer stockMax) {
-        this.stockMax = stockMax;
+    public void setStockMin(Integer stockMin) {
+        this.stockMin = stockMin;
     }
+
+
 }

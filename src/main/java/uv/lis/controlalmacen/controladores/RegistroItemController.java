@@ -40,11 +40,9 @@ public class RegistroItemController implements Initializable {
     PartidaPresupuestalDAO partidaPresupuestalDAO = new PartidaPresupuestalDAO();
     
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle){
         cargarInformacionPartidasPresupuestales();
     }
-
-
         
     private void cargarInformacionPartidasPresupuestales(){
         try{

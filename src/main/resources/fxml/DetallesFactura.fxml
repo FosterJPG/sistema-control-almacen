@@ -1,35 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.DetallesFacturaController">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.DetallesFacturaController">
    <children>
-
-      <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <menus>
-            <Menu mnemonicParsing="false" text="Ingresos">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Registrar factura" />
-                  <MenuItem mnemonicParsing="false" text="Consultar facturas" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Items">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Registrar item" />
-                  <MenuItem mnemonicParsing="false" text="Consultar items" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Pedidos">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Consultar bitácora" />
-               </items>
-            </Menu>
-         </menus>
-      </MenuBar>
 
       <VBox layoutY="36.0" prefHeight="544.0" prefWidth="810.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="36.0">
          <effect>
@@ -47,7 +26,7 @@
                         <Font name="System Bold" size="22.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblFolioTitulo" text="AAAAA" textFill="#007bff">
+                  <Label fx:id="lb_folio" text="FOLIO" textFill="#044c87">
                      <font>
                         <Font name="System Bold" size="22.0" />
                      </font>
@@ -61,7 +40,7 @@
                   
                   <VBox prefWidth="320.0" spacing="15.0" style="-fx-background-color: #f8f9fa; -fx-padding: 15; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;">
                      <children>
-                        <Label text="Información General" textFill="#495057">
+                        <Label text="Información General" textFill="#044c87">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
@@ -85,32 +64,32 @@
                               <Label text="Folio:" textFill="#666666">
                                   <font><Font name="System Bold" size="13.0" /></font>
                               </Label>
-                              <Label fx:id="lblFolio" text="-" GridPane.columnIndex="1" />
+                              <Label fx:id="lb_folio" text="-" GridPane.columnIndex="1" />
                               
                               <Label text="Fecha:" textFill="#666666" GridPane.rowIndex="1">
                                   <font><Font name="System Bold" size="13.0" /></font>
                               </Label>
-                              <Label fx:id="lblFecha" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                              <Label fx:id="lb_fecha" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                               
-                              <Label text="RFC Prov.:" textFill="#666666" GridPane.rowIndex="2">
+                              <Label text="RFC:" textFill="#666666" GridPane.rowIndex="2">
                                   <font><Font name="System Bold" size="13.0" /></font>
                               </Label>
-                              <Label fx:id="lblRFC" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Label fx:id="lb_rfc" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               
                               <Label text="Razón Social:" textFill="#666666" GridPane.rowIndex="3">
                                   <font><Font name="System Bold" size="13.0" /></font>
                               </Label>
-                              <Label fx:id="lblRazonSocial" text="-" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                              <Label fx:id="lb_razonSocial" text="-" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                               
                               <Label text="Domicilio:" textFill="#666666" GridPane.rowIndex="4">
                                   <font><Font name="System Bold" size="13.0" /></font>
                               </Label>
-                              <Label fx:id="lblDomicilio" text="-" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                              <Label fx:id="lb_domicilio" text="-" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               
                               <Label text="Teléfono:" textFill="#666666" GridPane.rowIndex="5">
                                   <font><Font name="System Bold" size="13.0" /></font>
                               </Label>
-                              <Label fx:id="lblTelefono" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <Label fx:id="lbl_telefono" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                            </children>
                         </GridPane>
                      </children>
@@ -118,16 +97,16 @@
 
                   <VBox spacing="10.0" HBox.hgrow="ALWAYS">
                      <children>
-                        <Label text="Artículos Ingresados" textFill="#495057">
+                        <Label text="Items Ingresados" textFill="#044c87">
                            <font>
                               <Font name="System Bold" size="16.0" />
                            </font>
                         </Label>
                         <TableView fx:id="tvMateriales" VBox.vgrow="ALWAYS">
                           <columns>
-                            <TableColumn fx:id="colMaterial" prefWidth="200.0" text="Material / Artículo" />
-                            <TableColumn fx:id="colCantidad" prefWidth="100.0" text="Cantidad" />
-                            <TableColumn fx:id="colCostoUnitario" prefWidth="120.0" text="Costo Unitario ($)" />
+                            <TableColumn fx:id="col_item" prefWidth="200.0" text="Item" />
+                            <TableColumn fx:id="col_cantidad" prefWidth="100.0" text="Cantidad" />
+                            <TableColumn fx:id="col_costoUnitario" prefWidth="120.0" text="Costo Unitario ($)" />
                           </columns>
                         </TableView>
                      </children>
@@ -138,7 +117,7 @@
 
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
-                  <Button fx:id="btnRegresar" mnemonicParsing="false" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar" />
+                  <Button mnemonicParsing="false" onAction="#clicRegresar" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar" />
                </children>
             </HBox>
 
