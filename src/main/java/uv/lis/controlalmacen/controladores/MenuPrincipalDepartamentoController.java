@@ -45,6 +45,21 @@ public class MenuPrincipalDepartamentoController implements Initializable, MenuC
     
     @FXML
     private void clicCrearSolicitud(ActionEvent event) {
+        try {
+            FXMLLoader loader = UtilidadesFX.cargarFXML("InicioSesion");
+            Parent vista = loader.load();
+            Scene escena = new Scene(vista);
+
+            Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
+            stage.setTitle("Crear solicitud");
+            stage.setResizable(false);
+
+            stage.setScene(escena);
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -59,8 +74,8 @@ public class MenuPrincipalDepartamentoController implements Initializable, MenuC
             stage.setResizable(false);
 
             Sesion.cerrarSesion();
-            stage.setScene(escena);
             stage.centerOnScreen();
+            stage.setScene(escena);
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);

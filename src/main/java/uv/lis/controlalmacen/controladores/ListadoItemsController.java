@@ -167,7 +167,7 @@ public class ListadoItemsController implements Initializable {
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) cb_filtroStock.getScene().getWindow();
-            stage.setTitle("Menu principal");
+            stage.setTitle("Menú principal");
             stage.setResizable(false);
             stage.centerOnScreen();
 
