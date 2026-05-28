@@ -15,6 +15,7 @@ import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.stage.Modality;
 
 public class MenuPrincipalEncargadoController implements Initializable, MenuController {
 
@@ -146,6 +147,26 @@ public class MenuPrincipalEncargadoController implements Initializable, MenuCont
             stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void clicConsultarSolicitudes(ActionEvent event) {
+             try {
+            FXMLLoader loader = UtilidadesFX.cargarFXML("ReporteEgresos");
+            Parent vista = loader.load();
+            Scene escena = new Scene(vista);
+
+            Stage stage = new Stage();
+            stage.setTitle("Reporte de solicitudes");
+            stage.setResizable(false);
+            stage.setScene(escena);
+
+            stage.centerOnScreen();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

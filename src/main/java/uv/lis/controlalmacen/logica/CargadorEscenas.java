@@ -17,7 +17,7 @@ public class CargadorEscenas {
             rutaMenu = "MenuPrincipalSalidas";
         }
         if (rolUsuario == Rol.SOLICITUDES) {
-            rutaMenu = "MenuPrincipalSolicitudes";
+            rutaMenu = "MenuPrincipalDepartamento";
         }
 
         return rutaMenu;

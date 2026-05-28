@@ -118,19 +118,14 @@
                      </font>
                   </Label>
                   <Separator prefWidth="150.0" />
-                  <Button mnemonicParsing="false" onAction="#clicConsultarBitacora" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #044c87; -fx-text-fill: #ffffff; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar bitacora de pedidos" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#clicConsultarBitacora" prefHeight="35.0" prefWidth="205.0" style="-fx-background-color: #044c87; -fx-text-fill: #ffffff; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar bitacora de pedidos" textFill="WHITE">
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect>
                      <font>
                         <Font name="System Bold" size="11.0" />
                      </font></Button>
-                  <Button mnemonicParsing="false" onAction="#clicConsultarBitacora" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: ##6c757d; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar reporte de entradas">
-                     <effect>
-                        <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
-                     </effect>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#clicConsultarBitacora" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: ##6c757d; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar reporte de salidas">
+                  <Button mnemonicParsing="false" onAction="#clicConsultarSolicitudes" prefHeight="35.0" prefWidth="205.0" style="-fx-background-color: ##6c757d; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar reporte de solicitudes">
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect>

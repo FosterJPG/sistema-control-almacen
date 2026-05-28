@@ -6,16 +6,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import uv.lis.controlalmacen.logica.FacturaService;
+import uv.lis.controlalmacen.modelo.dto.DetallesFactura;
+import uv.lis.controlalmacen.modelo.dto.Factura;
+import uv.lis.controlalmacen.modelo.dto.Sesion;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 
 public class RegistroFacturaController implements Initializable {
 
@@ -38,21 +40,113 @@ public class RegistroFacturaController implements Initializable {
     @FXML
     private TextField txt_idItem;
     @FXML
-    private TableView<?> tv_detalleFactura;
+    private TableColumn col_idItem;
     @FXML
-    private TableColumn<?, ?> col_idItem;
+    private TableColumn col_descripcion;
     @FXML
-    private TableColumn<?, ?> col_descripcion;
+    private TableColumn col_cantidad;
     @FXML
-    private TableColumn<?, ?> col_cantidad;
+    private TableColumn col_costoUnitario;
     @FXML
-    private TableColumn<?, ?> col_costoUnitario;
+    private TableColumn col_partidaPresupuestal;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        configurarTablaDetallesFactura();
+    }
+
+    private void configurarTablaDetallesFactura(){
+        col_idItem.setCellValueFactory(new PropertyValueFactory("idItem"));
+        col_descripcion.setCellValueFactory(new PropertyValueFactory("descripcion"));
+        col_cantidad.setCellValueFactory(new PropertyValueFactory("cantidad"));
+        col_costoUnitario.setCellValueFactory(new PropertyValueFactory("costoUnitario"));
+        col_partidaPresupuestal.setCellValueFactory(new PropertyValueFactory("descripcionPartida"));
 
     }
 
+
+    @FXML
+    private void clicEliminarItem(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicAgregarItem(ActionEvent event) {
+    }
+
+    @FXML
+    private void clicGuardarFactura(ActionEvent event) {
+        //VALIDAR DATOS
+        if(datosValidosFactura() && datosValidosDetalles()){
+            guardarFactura();
+            guardarDetalles();
+
+        }else{
+            UtilidadesFX.mostrarAlertaSimple("Datos inválidos",
+                    "Datos inválidos para proceder con el guardado",
+                            Alert.AlertType.WARNING);
+        }
+    }
+
+    //1. VALIDAR DATOS
+
+    private boolean datosValidosFactura(){
+
+    }
+
+    private boolean datosValidosDetalles(){
+
+    }
+
+    //2. OBTENER
+    //TODO HABER VALIDADO DATOS
+    private Factura obtenerFactura(){
+        Factura factura = new Factura();
+        factura.setFolio(txt_folio.getText());
+        factura.setFecha();
+        factura.setRfc(txt_rfc.getText());
+        factura.setTelefono(txt_telefono.getText());
+        factura.setNoSucursal(Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
+        factura.setRazonSocial(txt_rfc.getText());
+        return factura;
+    }
+
+    private <List>DetallesFactura obtenerDetalles(){
+
+    }
+
+
+    //3.GUARDAR
+    private void guardarFactura(){
+        try{
+            Factura factura = obtenerFactura();
+
+            if(FacturaService.guardarFactura(factura)){
+                UtilidadesFX.mostrarAlertaSimple("Factura guardada correctamente",
+                        "La información de la factura fue registrada correctamente",
+                        Alert.AlertType.WARNING);
+            }
+            //AQUI VAN LAS EXCEPCIONES QUE VENGAN DE OBTENER Y GUARDAR
+        }catch(SQLException e) {
+            // Mensaje
+        }
+    }
+
+    private void guardarDetalles(){
+        try{
+            List<DetallesFactura> detallesFactura = obtenerDetalles();
+
+            if(FacturaService.guardarDetalles(detallesFactura)){
+                UtilidadesFX.mostrarAlertaSimple("Factura guardada correctamente",
+                        "La información de la factura fue registrada correctamente",
+                        Alert.AlertType.WARNING);
+            }
+            //AQUI VAN LAS EXCEPCIONES QUE VENGAN DE OBTENER Y GUARDAR
+        }catch(SQLException e) {
+            // Mensaje
+        }
+    }
+
+    //NAVEGACION
     @FXML
     public void clicCancelar(ActionEvent actionEvent) {
         try {
@@ -148,17 +242,5 @@ public class RegistroFacturaController implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-    }
-
-    @FXML
-    private void clicEliminarItem(ActionEvent event) {
-    }
-
-    @FXML
-    private void clicAgregarItem(ActionEvent event) {
-    }
-
-    @FXML
-    private void clicGuardarFactura(ActionEvent event) {
     }
 }
