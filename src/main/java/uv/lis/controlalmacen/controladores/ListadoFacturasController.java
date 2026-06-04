@@ -1,5 +1,7 @@
 package uv.lis.controlalmacen.controladores;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,9 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -21,6 +21,10 @@ import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -28,37 +32,77 @@ public class ListadoFacturasController implements Initializable {
 
     private static final FacturaDAO facturaDAO = new  FacturaDAO();
 
-
+    @FXML
+    private DatePicker dp_fechaInicial;
+    @FXML
+    private DatePicker dp_fechaFinal;
     @FXML
     private TableView<Factura> tv_facturas;
     @FXML
     private TextField txt_buscar;
     @FXML
-    private TableColumn col_folio;
+    private TableColumn<Factura, String> col_folio;
     @FXML
-    private TableColumn col_fecha;
+    private TableColumn<Factura, Date> col_fecha;
     @FXML
-    private TableColumn col_rfc;
+    private TableColumn<Factura, String> col_rfc;
     @FXML
-    private TableColumn col_razonSocial;
+    private TableColumn<Factura, String> col_razonSocial;
     @FXML
-    private TableColumn col_telefono;
+    private TableColumn<Factura, String> col_telefono;
 
     private ObservableList<Factura> facturas;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         configurarTabla();
         cargarInformacionTabla();
+        dp_fechaFinal.setDisable(true);
+        configurarSeleccionFecha();
     }
 
     private void configurarTabla() {
-        col_folio.setCellValueFactory(new PropertyValueFactory("folio"));
-        col_fecha.setCellValueFactory(new PropertyValueFactory("fecha"));
-        col_rfc.setCellValueFactory(new PropertyValueFactory("rfc"));
-        col_razonSocial.setCellValueFactory(new PropertyValueFactory("razonSocial"));
-        col_telefono.setCellValueFactory(new PropertyValueFactory("telefono"));
+        col_folio.setCellValueFactory(new PropertyValueFactory<>("folio"));
+        col_fecha.setCellValueFactory(new PropertyValueFactory<>("fecha"));
+        col_rfc.setCellValueFactory(new PropertyValueFactory<>("rfc"));
+        col_razonSocial.setCellValueFactory(new PropertyValueFactory<>("razonSocial"));
+        col_telefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+    }
+
+    private void configurarSeleccionFecha() {
+        dp_fechaInicial.valueProperty().addListener(new ChangeListener<LocalDate>() {
+            @Override
+            public void changed(ObservableValue<? extends LocalDate> observableValue, LocalDate localDate, LocalDate newValue) {
+
+                if (newValue != null) {
+                    dp_fechaFinal.setDisable(false);
+                } else {
+                    dp_fechaFinal.setDisable(true);
+                    dp_fechaFinal.setValue(null);
+                    return;
+                }
+
+                if (dp_fechaFinal.getValue() != null && dp_fechaFinal.getValue().isBefore(newValue)) {
+                    dp_fechaFinal.setValue(null);
+                }
+
+                dp_fechaFinal.setDayCellFactory(dp -> new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setDisable(empty || item.isBefore(newValue));
+                    }
+                });
+
+                if (dp_fechaFinal.getValue() != null && !dp_fechaFinal.getValue().isBefore(newValue)) {
+                    cargarPedidosPorFecha();
+                }
+            }
+        });
+
+        dp_fechaFinal.valueProperty().addListener(
+                (observableValue, localDate, t1) ->
+                        cargarPedidosPorFecha());
     }
 
     private void cargarInformacionTabla() {
@@ -71,6 +115,34 @@ public class ListadoFacturasController implements Initializable {
         } catch (SQLException | IOException | ClassNotFoundException e) {
             // TODO Errores
         }
+    }
+
+    private void cargarPedidosPorFecha() {
+        if (dp_fechaInicial.getValue() == null || dp_fechaFinal.getValue() == null) {
+            return;
+        }
+
+        try {
+            facturas = FXCollections.observableArrayList();
+            List<Factura> facturasBD = facturaDAO.buscarPorFecha(dp_fechaInicial.getValue(), dp_fechaFinal.getValue());
+            facturas.addAll(facturasBD);
+            tv_facturas.setItems(facturas);
+        } catch (SQLException e){
+            e.printStackTrace();
+        } catch (NullPointerException | ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void clicVerTodos(ActionEvent actionEvent) {
+        cargarInformacionTabla();
+    }
+
+    @FXML
+    public void clicBuscarPorFolio(ActionEvent actionEvent) {
+        String folioBuscar = txt_buscar.getText();
+
     }
 
 
@@ -86,9 +158,9 @@ public class ListadoFacturasController implements Initializable {
             Stage stage = (Stage) txt_buscar.getScene().getWindow();
             stage.setTitle("Menu principal");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -97,6 +169,19 @@ public class ListadoFacturasController implements Initializable {
 
     @FXML
     public void clicVerDetalles(ActionEvent actionEvent) {
+        /*
+        TODO
+        1. ver si está seleccionada
+        2. cargar el modal
+         */
+        Factura facturaSeleccionada =  tv_facturas.getSelectionModel().getSelectedItem();
+        if (facturaSeleccionada == null) {
+            UtilidadesFX.mostrarAlertaSimple("Sin selección",
+                    "No hay una factura seleccionada para mostrar sus detalles",
+                    Alert.AlertType.WARNING);
+            return;
+        }
+
         try {
             FXMLLoader loader = UtilidadesFX.cargarFXML("DetallesFactura");
             Parent vista = loader.load();
@@ -145,9 +230,9 @@ public class ListadoFacturasController implements Initializable {
             Stage stage = (Stage) txt_buscar.getScene().getWindow();
             stage.setTitle("Registro de facturas");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -164,9 +249,9 @@ public class ListadoFacturasController implements Initializable {
             Stage stage = (Stage) txt_buscar.getScene().getWindow();
             stage.setTitle("Registro de items para la sucursal");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -183,9 +268,9 @@ public class ListadoFacturasController implements Initializable {
             Stage stage = (Stage) txt_buscar.getScene().getWindow();
             stage.setTitle("Listado de items almacenados");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -202,9 +287,9 @@ public class ListadoFacturasController implements Initializable {
             Stage stage = (Stage) txt_buscar.getScene().getWindow();
             stage.setTitle("Bitacora de pedidos");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();

@@ -4,6 +4,8 @@ import uv.lis.controlalmacen.modelo.dao.FacturaDAO;
 import uv.lis.controlalmacen.modelo.dto.DetallesFactura;
 import uv.lis.controlalmacen.modelo.dto.Factura;
 
+import java.util.List;
+
 public class FacturaService {
     FacturaDAO facturaDAO = new FacturaDAO();
 

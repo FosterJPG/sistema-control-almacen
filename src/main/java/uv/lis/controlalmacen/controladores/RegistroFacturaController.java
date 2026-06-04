@@ -17,6 +17,9 @@ import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class RegistroFacturaController implements Initializable {
@@ -91,10 +94,12 @@ public class RegistroFacturaController implements Initializable {
 
     private boolean datosValidosFactura(){
 
+        return false;
     }
 
     private boolean datosValidosDetalles(){
 
+        return false;
     }
 
     //2. OBTENER
@@ -102,7 +107,7 @@ public class RegistroFacturaController implements Initializable {
     private Factura obtenerFactura(){
         Factura factura = new Factura();
         factura.setFolio(txt_folio.getText());
-        factura.setFecha();
+        //factura.setFecha(dp_fecha.getValue());
         factura.setRfc(txt_rfc.getText());
         factura.setTelefono(txt_telefono.getText());
         factura.setNoSucursal(Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
@@ -110,8 +115,9 @@ public class RegistroFacturaController implements Initializable {
         return factura;
     }
 
-    private <List>DetallesFactura obtenerDetalles(){
+    private List<DetallesFactura> obtenerDetalles(){
 
+        return null;
     }
 
 
@@ -126,7 +132,7 @@ public class RegistroFacturaController implements Initializable {
                         Alert.AlertType.WARNING);
             }
             //AQUI VAN LAS EXCEPCIONES QUE VENGAN DE OBTENER Y GUARDAR
-        }catch(SQLException e) {
+        }catch(Exception e) { // TODO cambiar a las excepciones especificas
             // Mensaje
         }
     }
@@ -141,7 +147,7 @@ public class RegistroFacturaController implements Initializable {
                         Alert.AlertType.WARNING);
             }
             //AQUI VAN LAS EXCEPCIONES QUE VENGAN DE OBTENER Y GUARDAR
-        }catch(SQLException e) {
+        }catch(Exception e) { // TODO cambiar a las excepciones especificas
             // Mensaje
         }
     }
@@ -159,9 +165,9 @@ public class RegistroFacturaController implements Initializable {
             Stage stage = (Stage) txt_folio.getScene().getWindow();
             stage.setTitle("Menu principal");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -178,9 +184,9 @@ public class RegistroFacturaController implements Initializable {
             Stage stage = (Stage) txt_folio.getScene().getWindow();
             stage.setTitle("Listado de facturas");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -197,9 +203,9 @@ public class RegistroFacturaController implements Initializable {
             Stage stage = (Stage) txt_folio.getScene().getWindow();
             stage.setTitle("Registro de items para la sucursal");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -216,9 +222,9 @@ public class RegistroFacturaController implements Initializable {
             Stage stage = (Stage) txt_folio.getScene().getWindow();
             stage.setTitle("Listado de items almacenados");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -235,9 +241,9 @@ public class RegistroFacturaController implements Initializable {
             Stage stage = (Stage) txt_folio.getScene().getWindow();
             stage.setTitle("Bitacora de pedidos");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();

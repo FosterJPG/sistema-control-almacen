@@ -45,10 +45,10 @@ public class MenuPrincipalEncargadoController implements Initializable, MenuCont
             Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
             stage.setTitle("Control de Almacén - GLOBAL FINANCE");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             Sesion.cerrarSesion();
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -65,9 +65,9 @@ public class MenuPrincipalEncargadoController implements Initializable, MenuCont
             Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
             stage.setTitle("Registro de facturas");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -84,9 +84,9 @@ public class MenuPrincipalEncargadoController implements Initializable, MenuCont
             Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
             stage.setTitle("Listado de facturas");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -103,9 +103,9 @@ public class MenuPrincipalEncargadoController implements Initializable, MenuCont
             Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
             stage.setTitle("Registro de items para la sucursal");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -122,9 +122,9 @@ public class MenuPrincipalEncargadoController implements Initializable, MenuCont
             Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
             stage.setTitle("Listado de items almacenados");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -141,9 +141,9 @@ public class MenuPrincipalEncargadoController implements Initializable, MenuCont
             Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
             stage.setTitle("Bitacora de pedidos");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();

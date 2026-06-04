@@ -1,5 +1,6 @@
 package uv.lis.controlalmacen.modelo.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 

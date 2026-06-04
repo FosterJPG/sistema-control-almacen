@@ -30,13 +30,19 @@
             <HBox alignment="CENTER_LEFT" spacing="15.0">
                <children>
                   
-                  <TextField fx:id="txt_buscar" prefWidth="250.0" promptText="Folio de la factura" />
-                  <Button mnemonicParsing="false" onAction="#clicVerDetalles" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Ver Detalles de Factura">
+                  <TextField fx:id="txt_buscar" prefHeight="31.0" prefWidth="169.0" promptText="Folio de la factura" />
+                  <Button mnemonicParsing="false" onAction="#clicBuscarPorFolio" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="🔍">
                      <effect>
                         <InnerShadow color="#ffffff5c" offsetY="9.0" />
-                     </effect></Button>
-                  
-                  <Region HBox.hgrow="ALWAYS" />
+                     </effect>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#clicVerTodos" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Ver todos" />
+                  <HBox alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="434.0" spacing="10.0">
+                     <children>
+                        <DatePicker fx:id="dp_fechaInicial" prefHeight="31.0" prefWidth="160.0" promptText="Fecha inicio" />
+                        <DatePicker fx:id="dp_fechaFinal" prefHeight="31.0" prefWidth="160.0" promptText="Fecha final" />
+                     </children>
+                  </HBox>
                </children>
             </HBox>
 
@@ -52,6 +58,10 @@
 
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
+                  <Button mnemonicParsing="false" onAction="#clicVerDetalles" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Ver Detalles de Factura">
+                     <effect>
+                        <InnerShadow color="#ffffff5c" offsetY="9.0" />
+                     </effect></Button>
                   <Button mnemonicParsing="false" onAction="#clicGenerarReporte" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Generar reporte">
                      <effect>
                         <InnerShadow color="#00000021" height="11.0" offsetY="-8.0" radius="7.5" />
