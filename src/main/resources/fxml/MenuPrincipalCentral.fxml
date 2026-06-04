@@ -16,7 +16,7 @@
    <children>
 
       <!-- Botón cerrar sesión -->
-      <Button fx:id="btnCerrarSesion" mnemonicParsing="false" prefHeight="35.0" prefWidth="150.0"
+      <Button fx:id="btnCerrarSesion" mnemonicParsing="false" onAction="#clicCerrarSesion" prefHeight="35.0" prefWidth="150.0"
               style="-fx-background-color: transparent; -fx-text-fill: #dc3545; -fx-border-color: #dc3545; -fx-border-radius: 5;"
               text="Cerrar Sesión" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="20.0">
          <font><Font name="System Bold" size="13.0" /></font>
@@ -65,7 +65,7 @@
                <!-- Fila 1: Ítems y Encargados -->
                <HBox alignment="CENTER" spacing="20.0">
                   <children>
-                     <Button fx:id="btnItems" mnemonicParsing="false" prefHeight="135.0" prefWidth="145.0"
+                     <Button fx:id="btnItems" mnemonicParsing="false" onAction="#clicItems" prefHeight="135.0" prefWidth="145.0"
                              style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
                         <graphic>
                            <VBox alignment="CENTER" spacing="12.0">
@@ -81,7 +81,7 @@
                         </graphic>
                      </Button>
 
-                     <Button fx:id="btnEncargados" mnemonicParsing="false" prefHeight="135.0" prefWidth="145.0"
+                     <Button fx:id="btnEncargados" mnemonicParsing="false" onAction="#clicEncargados" prefHeight="135.0" prefWidth="145.0"
                              style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
                         <graphic>
                            <VBox alignment="CENTER" spacing="12.0">
@@ -102,7 +102,7 @@
                <!-- Fila 2: Sucursales y Partidas -->
                <HBox alignment="CENTER" spacing="20.0">
                   <children>
-                     <Button fx:id="btnSucursales" mnemonicParsing="false" prefHeight="135.0" prefWidth="145.0"
+                     <Button fx:id="btnSucursales" mnemonicParsing="false" onAction="#clicSucursales" prefHeight="135.0" prefWidth="145.0"
                              style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
                         <graphic>
                            <VBox alignment="CENTER" spacing="12.0">
@@ -118,7 +118,7 @@
                         </graphic>
                      </Button>
 
-                     <Button fx:id="btnPartidas" mnemonicParsing="false" prefHeight="135.0" prefWidth="145.0"
+                     <Button fx:id="btnPartidas" mnemonicParsing="false" onAction="#clicPartidas" prefHeight="135.0" prefWidth="145.0"
                              style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
                         <graphic>
                            <VBox alignment="CENTER" spacing="12.0">
@@ -162,7 +162,7 @@
                </Label>
 
                <!-- Facturas -->
-               <Button fx:id="btnFacturas" mnemonicParsing="false" prefHeight="135.0" prefWidth="145.0"
+               <Button fx:id="btnFacturas" mnemonicParsing="false" onAction="#clicFacturas" prefHeight="135.0" prefWidth="145.0"
                        style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
                   <graphic>
                      <VBox alignment="CENTER" spacing="12.0">
@@ -179,7 +179,7 @@
                </Button>
 
                <!-- Solicitudes -->
-               <Button fx:id="btnSolicitudes" mnemonicParsing="false" prefHeight="135.0" prefWidth="145.0"
+               <Button fx:id="btnSolicitudes" mnemonicParsing="false" onAction="#clicSolicitudes" prefHeight="135.0" prefWidth="145.0"
                        style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
                   <graphic>
                      <VBox alignment="CENTER" spacing="12.0">

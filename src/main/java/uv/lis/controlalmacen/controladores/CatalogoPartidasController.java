@@ -1,33 +1,31 @@
 package uv.lis.controlalmacen.controladores;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import uv.lis.controlalmacen.logica.CargadorEscenas;
+import uv.lis.controlalmacen.modelo.dto.PartidaPresupuestal;
 import uv.lis.controlalmacen.modelo.dto.Sesion;
-import uv.lis.controlalmacen.modelo.dto.Sucursal;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SucursalesController implements Initializable {
+public class CatalogoPartidasController implements Initializable {
 
-    @FXML private TableView<Sucursal> tv_listado;
-    @FXML private TableColumn<Sucursal, Integer> col_noSucursal;
-    @FXML private TableColumn<Sucursal, String>  col_nombre;
-    @FXML private TableColumn<Sucursal, String>  col_direccion;
-    @FXML private TableColumn<Sucursal, String>  col_telefono;
-    @FXML private TextField txt_nombreSucursal;
+    @FXML private TableView<PartidaPresupuestal> tv_listado;
+    @FXML private TableColumn<PartidaPresupuestal, Integer> col_codigo;
+    @FXML private TableColumn<PartidaPresupuestal, String>  col_descripcion;
+    @FXML private TextField txtBuscar;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -35,10 +33,8 @@ public class SucursalesController implements Initializable {
     }
 
     private void configurarTabla() {
-        col_noSucursal.setCellValueFactory(new PropertyValueFactory<>("noSucursal"));
-        col_nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
-        col_direccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
-        col_telefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
+        col_codigo.setCellValueFactory(new PropertyValueFactory<>("codigo"));
+        col_descripcion.setCellValueFactory(new PropertyValueFactory<>("descripcionPartida"));
     }
 
     @FXML private void clicBuscar(ActionEvent event)    { /* TODO */ }
