@@ -49,7 +49,7 @@ public class ListadoItemsController implements Initializable {
     private TableColumn col_stockMax;
 
     private ObservableList<String> listaOpcionesStock = FXCollections.observableArrayList(
-            "Sobre el máximo", "Menor que el mínimo");
+            "Sobre el máximo", "Menor que el mínimo", "Mostrar Todos");
     private ObservableList<ItemAlmacenado> itemsAlmacenados;
 
     ItemAlmacenadoDAO itemAlmacenadoDAO = new ItemAlmacenadoDAO();
@@ -96,7 +96,13 @@ public class ListadoItemsController implements Initializable {
                 if(newValue != null){
                     try {
                         itemsAlmacenados = FXCollections.observableArrayList();
-                        List<ItemAlmacenado> itemsAlmacenadosBD = itemAlmacenadoDAO.buscarPorStock(newValue);
+                        List<ItemAlmacenado> itemsAlmacenadosBD;
+                        if(newValue.equals("Mostrar Todos")){
+                            itemsAlmacenadosBD = itemAlmacenadoDAO.buscarTodos();
+                        }else{
+                            itemsAlmacenadosBD = itemAlmacenadoDAO.buscarPorStock(newValue);
+                        }
+
                         itemsAlmacenados.addAll(itemsAlmacenadosBD);
                         tv_inventario.setItems(itemsAlmacenados);
                     }catch(SQLException ex){
@@ -138,22 +144,32 @@ public class ListadoItemsController implements Initializable {
 
     @FXML
     private void clicVerKardex(ActionEvent event) {
-        try {
-            FXMLLoader loader = UtilidadesFX.cargarFXML("Kardex");
-            Parent vista = loader.load();
-            Scene escena = new Scene(vista);
+        ItemAlmacenado itemElegido = tv_inventario.getSelectionModel().getSelectedItem();
+        if(itemElegido != null){
+            try {
+                FXMLLoader loader = UtilidadesFX.cargarFXML("Kardex");
+                Parent vista = loader.load();
+                KardexController controller = loader.getController();
+                controller.cargarKardexItem(itemElegido);
+                Scene escena = new Scene(vista);
 
-            Stage stage = new Stage();
-            stage.setTitle("Kárdex");
-            stage.setResizable(false);
-            stage.setScene(escena);
+                Stage stage = new Stage();
+                stage.setTitle("Kárdex");
+                stage.setResizable(false);
+                stage.centerOnScreen();
 
-            stage.centerOnScreen();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
+                stage.setScene(escena);
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.showAndWait();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else{
+            UtilidadesFX.mostrarAlertaSimple("Sin selección",
+                    "No hay un item seleccionado para mostrar un kárdex",
+                    Alert.AlertType.WARNING);
         }
+
     }
 
     
@@ -169,9 +185,9 @@ public class ListadoItemsController implements Initializable {
             Stage stage = (Stage) cb_filtroStock.getScene().getWindow();
             stage.setTitle("Menú principal");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -188,9 +204,9 @@ public class ListadoItemsController implements Initializable {
             Stage stage = (Stage) cb_filtroStock.getScene().getWindow();
             stage.setTitle("Registrar Factura");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         }catch(IOException e){
             e.printStackTrace();
@@ -207,9 +223,9 @@ public class ListadoItemsController implements Initializable {
             Stage stage = (Stage) cb_filtroStock.getScene().getWindow();
             stage.setTitle("Consultar Factura");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         }catch(IOException e){
             e.printStackTrace();
@@ -226,9 +242,9 @@ public class ListadoItemsController implements Initializable {
             Stage stage = (Stage) cb_filtroStock.getScene().getWindow();
             stage.setTitle("Registrar Item");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         }catch(IOException e){
             e.printStackTrace();
@@ -245,9 +261,9 @@ public class ListadoItemsController implements Initializable {
             Stage stage = (Stage) cb_filtroPartida.getScene().getWindow();
             stage.setTitle("Consultar Items");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -264,9 +280,9 @@ public class ListadoItemsController implements Initializable {
             Stage stage = (Stage) cb_filtroStock.getScene().getWindow();
             stage.setTitle("Consultar Bitacora");
             stage.setResizable(false);
-            stage.centerOnScreen();
 
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         }catch(IOException ex){
             ex.printStackTrace();

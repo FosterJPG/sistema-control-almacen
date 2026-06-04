@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -8,7 +7,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.RegistroItemSucursalController">
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.RegistroItemSucursalController">
     <children>
 
         <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -82,7 +81,7 @@
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="txt_descripcion" maxWidth="150.0" promptText="Ej: Lapicero Azul Zebra" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="txt_descripcion" maxWidth="453.0" prefHeight="25.0" prefWidth="453.0" promptText="Ej: Lapicero Azul Zebra" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
                         <Label text="Stock Mínimo:" textFill="#495057" GridPane.rowIndex="2">
                             <font>
@@ -97,7 +96,7 @@
                             </font>
                         </Label>
                         <TextField fx:id="txt_stockMaximo" maxWidth="150.0" promptText="Ej: 200" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField fx:id="txt_idItem" maxWidth="150.0" promptText="Ej: I001" GridPane.columnIndex="1" />
+                  <TextField fx:id="txt_idItem" maxWidth="524.0" prefHeight="25.0" prefWidth="524.0" promptText="Ej: I001" GridPane.columnIndex="1" />
 
                     </children>
                 </GridPane>
@@ -111,7 +110,7 @@
                      <effect>
                         <InnerShadow offsetY="8.0">
                            <color>
-                              <Color blue="1.0" green="1.0" opacity="0.48051947355270386" red="1.0" />
+                              <Color red="1.0" green="1.0" blue="1.0" opacity="0.48051947355270386" />
                            </color>
                         </InnerShadow>
                      </effect></Button>

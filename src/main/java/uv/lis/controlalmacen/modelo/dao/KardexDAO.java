@@ -1,0 +1,39 @@
+package uv.lis.controlalmacen.modelo.dao;
+
+import uv.lis.controlalmacen.db.ConnectionFactory;
+import uv.lis.controlalmacen.modelo.dto.ItemAlmacenado;
+import uv.lis.controlalmacen.modelo.dto.Kardex;
+import uv.lis.controlalmacen.modelo.dto.Sesion;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class KardexDAO {
+
+    public static List<Kardex> buscarKardexItem(String idItem) throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+        List<Kardex> lista = new ArrayList<>();
+        Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol());
+        String consulta = "SELECT id_item, no_sucursal, folio, fecha_factura, costo_unitario, costo_promedio FROM vista_kardex_item WHERE id_item = ?;";
+        if (conn != null) {
+            PreparedStatement sentencia = conn.prepareStatement(consulta);
+            sentencia.setString(1, idItem);
+
+            ResultSet resultado = sentencia.executeQuery();
+            while (resultado.next()) {
+                Kardex kardex = new Kardex();
+                kardex.setFolioFactura(resultado.getString("folio"));
+                kardex.setCostoPromedio(resultado.getDouble("costo_promedio"));
+                kardex.setCostoUnitario(resultado.getDouble("costo_unitario"));
+                kardex.setFechaFactura(resultado.getDate("fecha_factura"));
+                lista.add(kardex);
+            }
+            return lista;
+        }
+        throw new SQLException("No hay conexión con el almacenamiento de información");
+    }
+}
