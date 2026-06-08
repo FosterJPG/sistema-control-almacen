@@ -121,15 +121,23 @@ public class ListadoFacturasController implements Initializable {
         }
     }
 
-    // TODO refactorizar para que implemente la logica de la busqueda combinada si filtrosAplicados == 1
     private void cargarPedidosPorFecha() {
         if (dp_fechaInicial.getValue() == null || dp_fechaFinal.getValue() == null) {
             return;
         }
 
         try {
+            List<Factura> facturasBD;
             facturas = FXCollections.observableArrayList();
-            List<Factura> facturasBD = facturaDAO.buscarPorFecha(dp_fechaInicial.getValue(), dp_fechaFinal.getValue());
+
+            if (!filtroPartidaAplicado) {
+                facturasBD = facturaDAO.buscarPorFecha(dp_fechaInicial.getValue(), dp_fechaFinal.getValue());
+                filtroFechaAplicado = true;
+            } else {
+                facturasBD = facturaDAO.buscarPorPartidaYFecha(txt_partidaBusqueda.getText(),
+                        dp_fechaInicial.getValue(), dp_fechaFinal.getValue());
+            }
+
             facturas.addAll(facturasBD);
             tv_facturas.setItems(facturas);
         } catch (SQLException e){
@@ -147,12 +155,25 @@ public class ListadoFacturasController implements Initializable {
         dp_fechaFinal.setValue(null);
         dp_fechaInicial.setValue(null);
         txt_partidaBusqueda.setText("");
+        txt_buscar.setText("");
     }
 
     @FXML
     public void clicBuscarPorFolio(ActionEvent actionEvent) {
         String folioBuscar = txt_buscar.getText();
-        // TODO busqueda por folio
+        if (folioBuscar == null || folioBuscar.isEmpty()) {
+            return;
+        }
+        try {
+            facturas = FXCollections.observableArrayList();
+            Factura factura = facturaDAO.buscarUno(folioBuscar);
+            facturas.add(factura);
+            tv_facturas.setItems(facturas);
+        } catch (SQLException e){
+            e.printStackTrace();
+        } catch (NullPointerException | ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

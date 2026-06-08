@@ -87,8 +87,33 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
     }
 
     @Override
-    public Factura buscarUno(String folio) throws SQLException, NullPointerException, IOException, ClassNotFoundException {
-        return null;
+    public Factura buscarUno(String folio)
+            throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+        Factura factura  = new Factura();
+
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) {
+                throw new SQLException("Error: No se pudo conectar a la base de datos");
+            }
+
+            String consulta = "SELECT folio, fecha_factura, rfc, razon_social, telefono, no_sucursal FROM vista_facturas_lista " +
+                    "WHERE folio = ? AND no_sucursal = ?";
+            PreparedStatement ps = conn.prepareStatement(consulta);
+            ps.setString(1, folio);
+            ps.setInt(2, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                factura.setFolio(rs.getString("folio"));
+                factura.setFecha(rs.getDate("fecha_factura"));
+                factura.setRfc(rs.getString("rfc"));
+                factura.setRazonSocial(rs.getString("razon_social"));
+                factura.setTelefono(rs.getString("telefono"));
+                factura.setNoSucursal(rs.getInt("no_sucursal"));
+            }
+        }
+
+        return factura;
     }
 
     public List<Factura> buscarPorPartidaPresupuestal(String partidaBuscar)
@@ -123,7 +148,7 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
         return lista;
     }
 
-    public List<Factura> buscarPorPartidaYFecha(String partidaBuscar, LocalDate value, LocalDate value1)
+    public List<Factura> buscarPorPartidaYFecha(String partidaBuscar, LocalDate fechaInicial, LocalDate fechaFinal)
             throws SQLException, ClassNotFoundException, IOException, NullPointerException{
         List<Factura> lista = new ArrayList<>();
 
@@ -132,9 +157,27 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
                 throw new SQLException("Error: No se pudo conectar a la base de datos");
             }
 
-            String consulta = "SELECT folio, fecha_factura, rfc, razon_social, telefono, no_sucursal FROM vista_facturas_lista " +
-                    "WHERE fecha_factura BETWEEN ? AND ? AND no_sucursal = ?";
+            String consulta = "SELECT f.folio, f.fecha_factura, f.rfc, f.razon_social, f.telefono, f.no_sucursal FROM vista_facturas_lista f " +
+                    "JOIN vista_facturas_partida p ON f.folio = p.folio WHERE partida_presupuestal = ? AND " +
+                    "f.fecha_factura BETWEEN ? AND ? AND f.no_sucursal = ?";
 
+            PreparedStatement ps = conn.prepareStatement(consulta);
+            ps.setString(1, partidaBuscar);
+            ps.setDate(2, Date.valueOf(fechaInicial));
+            ps.setDate(3, Date.valueOf(fechaFinal));
+            ps.setInt(4, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Factura factura = new Factura();
+                factura.setFolio(rs.getString("f.folio"));
+                factura.setFecha(rs.getDate("f.fecha_factura"));
+                factura.setRfc(rs.getString("f.rfc"));
+                factura.setRazonSocial(rs.getString("f.razon_social"));
+                factura.setTelefono(rs.getString("f.telefono"));
+                factura.setNoSucursal(rs.getInt("f.no_sucursal"));
+                lista.add(factura);
+            }
         }
 
         return lista;
