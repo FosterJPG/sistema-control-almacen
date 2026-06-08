@@ -26,25 +26,43 @@
             <Label text="Historial completo de facturas de compra recibidas por proveedores." textFill="#666666" />
 
             <Separator prefWidth="200.0" />
-
-            <HBox alignment="CENTER_LEFT" spacing="15.0">
+            <VBox spacing="5.0">
                <children>
-                  
-                  <TextField fx:id="txt_buscar" prefHeight="31.0" prefWidth="169.0" promptText="Folio de la factura" />
-                  <Button mnemonicParsing="false" onAction="#clicBuscarPorFolio" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="🔍">
-                     <effect>
-                        <InnerShadow color="#ffffff5c" offsetY="9.0" />
-                     </effect>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#clicVerTodos" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Ver todos" />
-                  <HBox alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="434.0" spacing="10.0">
+      
+                  <HBox alignment="CENTER_LEFT" minHeight="50.0" spacing="15.0">
                      <children>
-                        <DatePicker fx:id="dp_fechaInicial" prefHeight="31.0" prefWidth="160.0" promptText="Fecha inicio" />
-                        <DatePicker fx:id="dp_fechaFinal" prefHeight="31.0" prefWidth="160.0" promptText="Fecha final" />
+                        
+                        <TextField fx:id="txt_buscar" prefHeight="31.0" prefWidth="169.0" promptText="Folio de la factura" />
+                        <Button mnemonicParsing="false" onAction="#clicBuscarPorFolio" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="🔍">
+                           <effect>
+                              <InnerShadow color="#ffffff5c" offsetY="9.0" />
+                           </effect>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#clicVerTodos" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Ver todos" />
                      </children>
                   </HBox>
+                  <Accordion>
+                    <panes>
+                      <TitledPane animated="false" style="-fx-background-color: white; -fx-border-color: white; -fx-background-insets: 0; -fx-border-insets: 0;" text="Filtros">
+                           <content>
+                              <HBox prefHeight="37.0" prefWidth="769.0" spacing="10.0" style="-fx-background-color: transparent;">
+                                 <children>
+                                    <TextField fx:id="txt_partidaBusqueda" prefHeight="31.0" prefWidth="230.0" promptText="Partida presupuestal" />
+                                    <Button mnemonicParsing="false" onAction="#clicBuscarPorPartida" prefHeight="31.0" prefWidth="158.0" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar por partida">
+                                       <effect>
+                                          <InnerShadow color="#ffffff5c" offsetY="9.0" />
+                                       </effect>
+                                    </Button>
+                                    <DatePicker fx:id="dp_fechaInicial" prefHeight="31.0" prefWidth="157.0" promptText="Fecha inicio" />
+                                    <DatePicker fx:id="dp_fechaFinal" prefHeight="31.0" prefWidth="158.0" promptText="Fecha final" />
+                                 </children>
+                              </HBox>
+                           </content>
+                      </TitledPane>
+                    </panes>
+                  </Accordion>
                </children>
-            </HBox>
+            </VBox>
 
             <TableView fx:id="tv_facturas" prefHeight="250.0" VBox.vgrow="ALWAYS">
               <columns>

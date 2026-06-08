@@ -76,6 +76,10 @@ public class RegistroFacturaController implements Initializable {
     private void clicAgregarItem(ActionEvent event) {
     }
 
+    @FXML
+    private void clicGuardarFactura(ActionEvent actionEvent) {
+    }
+
     /*
     @FXML
     private void clicGuardarFactura(ActionEvent event) {

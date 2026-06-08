@@ -64,7 +64,7 @@
                               <Label text="Folio:" textFill="#666666">
                                   <font><Font name="System Bold" size="13.0" /></font>
                               </Label>
-                              <Label fx:id="lb_folio" text="-" GridPane.columnIndex="1" />
+                              <Label fx:id="lb_folioFactura" text="-" GridPane.columnIndex="1" />
                               
                               <Label text="Fecha:" textFill="#666666" GridPane.rowIndex="1">
                                   <font><Font name="System Bold" size="13.0" /></font>

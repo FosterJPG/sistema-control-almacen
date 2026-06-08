@@ -33,6 +33,8 @@ public class ListadoFacturasController implements Initializable {
     private static final FacturaDAO facturaDAO = new  FacturaDAO();
 
     @FXML
+    private TextField txt_partidaBusqueda;
+    @FXML
     private DatePicker dp_fechaInicial;
     @FXML
     private DatePicker dp_fechaFinal;
@@ -52,6 +54,8 @@ public class ListadoFacturasController implements Initializable {
     private TableColumn<Factura, String> col_telefono;
 
     private ObservableList<Factura> facturas;
+    private boolean filtroFechaAplicado = false;
+    private boolean filtroPartidaAplicado = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -117,6 +121,7 @@ public class ListadoFacturasController implements Initializable {
         }
     }
 
+    // TODO refactorizar para que implemente la logica de la busqueda combinada si filtrosAplicados == 1
     private void cargarPedidosPorFecha() {
         if (dp_fechaInicial.getValue() == null || dp_fechaFinal.getValue() == null) {
             return;
@@ -137,12 +142,42 @@ public class ListadoFacturasController implements Initializable {
     @FXML
     public void clicVerTodos(ActionEvent actionEvent) {
         cargarInformacionTabla();
+        filtroFechaAplicado = false;
+        filtroPartidaAplicado = false;
+        dp_fechaFinal.setValue(null);
+        dp_fechaInicial.setValue(null);
+        txt_partidaBusqueda.setText("");
     }
 
     @FXML
     public void clicBuscarPorFolio(ActionEvent actionEvent) {
         String folioBuscar = txt_buscar.getText();
+        // TODO busqueda por folio
+    }
 
+    @FXML
+    public void clicBuscarPorPartida(ActionEvent actionEvent) {
+        String partidaBuscar = txt_partidaBusqueda.getText();
+        if (partidaBuscar == null || partidaBuscar.isEmpty()) {
+            return;
+        }
+        try {
+            List<Factura> facturasBD;
+            facturas = FXCollections.observableArrayList();
+            if (!filtroFechaAplicado) {
+                facturasBD = facturaDAO.buscarPorPartidaPresupuestal(partidaBuscar);
+                filtroPartidaAplicado = true;
+            } else {
+                facturasBD = facturaDAO.buscarPorPartidaYFecha(partidaBuscar, dp_fechaInicial.getValue(), dp_fechaFinal.getValue());
+            }
+            facturas.addAll(facturasBD);
+            tv_facturas.setItems(facturas);
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        } catch (NullPointerException | ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -295,4 +330,6 @@ public class ListadoFacturasController implements Initializable {
             ex.printStackTrace();
         }
     }
+
+
 }
