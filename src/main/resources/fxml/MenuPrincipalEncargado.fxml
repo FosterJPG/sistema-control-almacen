@@ -133,6 +133,36 @@
                </children>
             </VBox>
 
+            <VBox alignment="TOP_CENTER" prefWidth="200.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" HBox.hgrow="ALWAYS">
+               <effect>
+                  <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
+               </effect>
+               <padding>
+                  <Insets bottom="20.0" left="15.0" right="15.0" top="20.0" />
+               </padding>
+               <children>
+                  <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imagenes/usuario (1).png" />
+                     </image>
+                     <effect>
+                        <DropShadow color="#00000043" />
+                     </effect>
+                  </ImageView>
+                  <Label text="Empleados">
+                     <font>
+                        <Font name="System Bold" size="20.0" />
+                     </font>
+                  </Label>
+                  <Separator prefWidth="150.0" />
+                  <Button mnemonicParsing="false" onAction="#clicGestorEmpleados" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Gestionar empleados">
+                     <effect>
+                        <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
+                     </effect>
+                  </Button>
+               </children>
+            </VBox>
+
          </children>
       </HBox>
       <Button layoutX="730.0" layoutY="33.0" mnemonicParsing="false" onAction="#clicCerrarSesion" prefHeight="35.0" prefWidth="123.0" style="-fx-background-color: transparet; -fx-border-color: #dc3545; -fx-border-radius: 5; -fx-text-fill: #dc3545; -fx-font-weight: bold;" text="Cerrar Sesión" />

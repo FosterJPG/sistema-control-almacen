@@ -84,13 +84,13 @@
                     </children>
                 </HBox>
 
-                <TableView fx:id="tvEmpleados" prefHeight="250.0" VBox.vgrow="ALWAYS">
+                <TableView fx:id="tv_listado" prefHeight="250.0" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="colNoEmpleado" prefWidth="90.0" text="No. Empleado" />
-                        <TableColumn fx:id="colNombre" prefWidth="250.0" text="Nombre Completo" />
-                        <TableColumn fx:id="colSucursal" prefWidth="150.0" text="Sucursal Asignada" />
-                        <TableColumn fx:id="colPuesto" prefWidth="130.0" text="Puesto" />
-                        <TableColumn fx:id="colCorreo" prefWidth="147.0" text="Correo Electrónico" />
+                        <TableColumn fx:id="col_noEmpleado" prefWidth="90.0" text="No. Empleado" />
+                        <TableColumn fx:id="col_nombre" prefWidth="250.0" text="Nombre Completo" />
+                        <TableColumn fx:id="col_sucursal" prefWidth="150.0" text="Sucursal Asignada" />
+                        <TableColumn fx:id="col_puesto" prefWidth="130.0" text="Puesto" />
+                        <TableColumn fx:id="col_correo" prefWidth="147.0" text="Correo Electrónico" />
                     </columns>
                     <effect>
                         <DropShadow offsetX="-3.0" offsetY="3.0">

@@ -7,7 +7,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.CatalogoItemsController">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.CatalagoItemsController">
    <children>
 
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -71,11 +71,11 @@
                </children>
             </HBox>
 
-            <TableView fx:id="tvCatalogo" onSort="#tv_listado" prefHeight="250.0" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tv_listado" prefHeight="250.0" VBox.vgrow="ALWAYS">
                <columns>
-                  <TableColumn fx:id="colIdItem" onEditStart="#col_idColuma" prefWidth="80.0" text="ID Ítem" />
-                  <TableColumn fx:id="colDescripcion" onEditStart="#col_descripcionColuma" prefWidth="420.0" text="Descripción del Producto" />
-                  <TableColumn fx:id="colPartida" onEditStart="#col_partidaColuma" prefWidth="267.0" text="Partida Presupuestal" />
+                  <TableColumn fx:id="col_idItem" prefWidth="80.0" text="ID Ítem" />
+                  <TableColumn fx:id="col_descripcion" prefWidth="420.0" text="Descripción del Producto" />
+                  <TableColumn fx:id="col_partida" prefWidth="267.0" text="Partida Presupuestal" />
                </columns>
                <effect>
                   <DropShadow offsetX="-3.0" offsetY="3.0">

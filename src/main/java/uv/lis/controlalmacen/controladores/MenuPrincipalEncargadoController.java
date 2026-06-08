@@ -151,6 +151,25 @@ public class MenuPrincipalEncargadoController implements Initializable, MenuCont
     }
 
     @FXML
+    public void clicGestorEmpleados(ActionEvent actionEvent) {
+        try {
+            FXMLLoader loader = UtilidadesFX.cargarFXML("GestorEmpleados");
+            Parent vista = loader.load();
+            Scene escena = new Scene(vista);
+
+            Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
+            stage.setTitle("Gestión de Empleados");
+            stage.setResizable(false);
+            stage.centerOnScreen();
+
+            stage.setScene(escena);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void clicConsultarSolicitudes(ActionEvent event) {
              try {
             FXMLLoader loader = UtilidadesFX.cargarFXML("ReporteEgresos");

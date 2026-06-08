@@ -9,7 +9,7 @@ import javafx.scene.control.TableView;
 
 public class CatalagoItemsController implements Initializable {
     @FXML
-    private TableView<?> tvCatalogo;
+    private TableView<?> tv_listado;
     
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
