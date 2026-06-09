@@ -58,8 +58,6 @@ public class ListadoFacturasController implements Initializable {
     private TableColumn<Factura, String> col_telefono;
 
     private ObservableList<Factura> facturas;
-    private boolean filtroFechaAplicado = false;
-    private boolean filtroPartidaAplicado = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -103,14 +101,14 @@ public class ListadoFacturasController implements Initializable {
                 });
 
                 if (dp_fechaFinal.getValue() != null && !dp_fechaFinal.getValue().isBefore(newValue)) {
-                    cargarPedidosPorFecha();
+                    aplicarFiltros();
                 }
             }
         });
 
         dp_fechaFinal.valueProperty().addListener(
                 (observableValue, localDate, t1) ->
-                        cargarPedidosPorFecha());
+                        aplicarFiltros());
     }
 
     private void cargarInformacionTabla() {
@@ -125,41 +123,14 @@ public class ListadoFacturasController implements Initializable {
         }
     }
 
-    private void cargarPedidosPorFecha() {
-        if (dp_fechaInicial.getValue() == null || dp_fechaFinal.getValue() == null) {
-            return;
-        }
-
-        try {
-            List<Factura> facturasBD;
-            facturas = FXCollections.observableArrayList();
-
-            if (!filtroPartidaAplicado) {
-                facturasBD = facturaDAO.buscarPorFecha(dp_fechaInicial.getValue(), dp_fechaFinal.getValue());
-                filtroFechaAplicado = true;
-            } else {
-                facturasBD = facturaDAO.buscarPorPartidaYFecha(txt_partidaBusqueda.getText(),
-                        dp_fechaInicial.getValue(), dp_fechaFinal.getValue());
-            }
-
-            facturas.addAll(facturasBD);
-            tv_facturas.setItems(facturas);
-        } catch (SQLException e){
-            e.printStackTrace();
-        } catch (NullPointerException | ClassNotFoundException | IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     @FXML
     public void clicVerTodos(ActionEvent actionEvent) {
-        cargarInformacionTabla();
-        filtroFechaAplicado = false;
-        filtroPartidaAplicado = false;
+        //cargarInformacionTabla();
         dp_fechaFinal.setValue(null);
         dp_fechaInicial.setValue(null);
         txt_partidaBusqueda.setText("");
         txt_buscar.setText("");
+        aplicarFiltros();
     }
 
     @FXML
@@ -182,29 +153,40 @@ public class ListadoFacturasController implements Initializable {
 
     @FXML
     public void clicBuscarPorPartida(ActionEvent actionEvent) {
-        String partidaBuscar = txt_partidaBusqueda.getText();
-        if (partidaBuscar == null || partidaBuscar.isEmpty()) {
-            return;
-        }
+        aplicarFiltros();
+    }
+
+    private void aplicarFiltros() {
         try {
+            String partidaBuscar = txt_partidaBusqueda.getText();
+
+            boolean hayPartida = partidaBuscar != null && !partidaBuscar.isBlank();
+
+            boolean hayFecha = dp_fechaInicial.getValue() != null && dp_fechaFinal.getValue() != null;
+
             List<Factura> facturasBD;
-            facturas = FXCollections.observableArrayList();
-            if (!filtroFechaAplicado) {
-                facturasBD = facturaDAO.buscarPorPartidaPresupuestal(partidaBuscar);
-                filtroPartidaAplicado = true;
-            } else {
+
+            if (hayPartida && hayFecha) {
                 facturasBD = facturaDAO.buscarPorPartidaYFecha(partidaBuscar, dp_fechaInicial.getValue(), dp_fechaFinal.getValue());
+            } else if (hayPartida) {
+                facturasBD = facturaDAO.buscarPorPartidaPresupuestal(partidaBuscar);
+            } else if (hayFecha) {
+                facturasBD = facturaDAO.buscarPorFecha(dp_fechaInicial.getValue(), dp_fechaFinal.getValue());
+            } else {
+                facturasBD = facturaDAO.buscarTodos();
             }
+
+            facturas = FXCollections.observableArrayList();
             facturas.addAll(facturasBD);
+
             tv_facturas.setItems(facturas);
 
-        } catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         } catch (NullPointerException | ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
     }
-
 
     @FXML
     public void clicRegresar(ActionEvent actionEvent) {
@@ -311,7 +293,8 @@ public class ListadoFacturasController implements Initializable {
             }
 
             // TODO quitar el comentario en caso de exito
-            //ExportadorPDF.generarReporteIngresos(archivo.getAbsolutePath(), facturasConDetalles);
+            ExportadorPDF.generarReporteIngresos(archivo.getAbsolutePath(), facturasConDetalles,
+                    dp_fechaInicial.getValue(), dp_fechaFinal.getValue());
         } catch (SQLException e){
             e.printStackTrace();
         } catch (NullPointerException | ClassNotFoundException | IOException e) {

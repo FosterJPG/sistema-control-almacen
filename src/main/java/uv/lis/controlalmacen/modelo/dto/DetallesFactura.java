@@ -9,6 +9,7 @@ public class DetallesFactura {
     private Integer cantidad;
     private Double costoUnitario;
     private String descripcionPartida;
+    private Integer codigoPartida;
 
     public String getIdItem() {
         return idItem;
@@ -48,5 +49,13 @@ public class DetallesFactura {
 
     public void setDescripcionPartida(String descripcionPartida) {
         this.descripcionPartida = descripcionPartida;
+    }
+
+    public Integer getCodigoPartida() {
+        return codigoPartida;
+    }
+
+    public void setCodigoPartida(Integer codigoPartida) {
+        this.codigoPartida = codigoPartida;
     }
 }

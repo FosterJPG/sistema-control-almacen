@@ -65,7 +65,7 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
             }
 
             String consulta = "SELECT folio, fecha_factura, rfc, razon_social, telefono, no_sucursal FROM vista_facturas_lista " +
-                    "WHERE fecha_factura BETWEEN ? AND ? AND no_sucursal = ?";
+                    "WHERE fecha_factura BETWEEN ? AND ? AND no_sucursal = ? ORDER BY fecha_factura";
             PreparedStatement ps = conn.prepareStatement(consulta);
             ps.setDate(1, Date.valueOf(fechaInicial));
             ps.setDate(2, Date.valueOf(fechaFinal));
@@ -120,7 +120,7 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
 
     public static void cargarDetalles(Connection conexion, Factura factura)
             throws SQLException, ClassNotFoundException, IOException, NullPointerException {
-        String consulta = "SELECT descripcion, cantidad, costo_unitario, partida_presupuestal, domicilio_fiscal " +
+        String consulta = "SELECT descripcion, cantidad, costo_unitario, partida_presupuestal, domicilio_fiscal, codigo_partida " +
                 "FROM vista_factura_detalle " +
                 "WHERE folio = ? AND no_sucursal = ?";
         PreparedStatement ps = conexion.prepareStatement(consulta);
@@ -134,10 +134,13 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
             detalle.setCostoUnitario(rs.getDouble("costo_unitario"));
             detalle.setDescripcion(rs.getString("descripcion"));
             detalle.setDescripcionPartida(rs.getString("partida_presupuestal"));
+            detalle.setCodigoPartida(rs.getInt("codigo_partida"));
 
             factura.getDetallesFactura().add(detalle);
             factura.setDireccion(rs.getString("domicilio_fiscal"));
+
         }
+
     }
 
     public List<Factura> buscarPorPartidaPresupuestal(String partidaBuscar)
@@ -150,7 +153,7 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
             }
 
             String consulta = "SELECT folio, fecha_factura, p.rfc, p.razon_social, p.telefono, no_sucursal FROM vista_facturas_partida vf " +
-                    "JOIN proveedor p ON vf.rfc = p.rfc WHERE partida_presupuestal = ? AND no_sucursal = ? ";
+                    "JOIN proveedor p ON vf.rfc = p.rfc WHERE partida_presupuestal = ? AND no_sucursal = ? ORDER BY folio";
             PreparedStatement ps = conn.prepareStatement(consulta);
             ps.setString(1, partidaBuscar);
             ps.setInt(2, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
@@ -182,8 +185,9 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
             }
 
             String consulta = "SELECT f.folio, f.fecha_factura, f.rfc, f.razon_social, f.telefono, f.no_sucursal FROM vista_facturas_lista f " +
-                    "JOIN vista_facturas_partida p ON f.folio = p.folio WHERE partida_presupuestal = ? AND " +
-                    "f.fecha_factura BETWEEN ? AND ? AND f.no_sucursal = ?";
+                    "JOIN vista_facturas_partida p ON f.folio = p.folio AND f.no_sucursal = p.no_sucursal " +
+                    "WHERE partida_presupuestal = ? AND f.fecha_factura BETWEEN ? AND ? " +
+                    "AND f.no_sucursal = ? ORDER BY f.fecha_factura, f.folio";
 
             PreparedStatement ps = conn.prepareStatement(consulta);
             ps.setString(1, partidaBuscar);
