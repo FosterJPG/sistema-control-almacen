@@ -54,28 +54,19 @@
             </padding>
             <children>
 
-                <Label styleClass="label-titulo" text="Gestión de Empleados y Sucursales" textFill="#044c87">
+                <Label styleClass="label-titulo" text="Gestión de Empleados" textFill="#044c87">
                     <font>
                         <Font name="System Bold" size="22.0" />
                     </font>
                 </Label>
-                <Label text="Consulte y administre los empleados registrados y su asignación de sucursales." textFill="#666666" />
+                <Label text="Consulte y administre los empleados registrados en esta sucursal." textFill="#666666" />
 
                 <Separator prefWidth="200.0" />
 
                 <HBox alignment="CENTER_LEFT" spacing="15.0">
                     <children>
-                        <Label text="Filtrar por Sucursal:" textFill="#044c87">
-                            <font>
-                                <Font name="System Bold" size="13.0" />
-                            </font>
-                        </Label>
-                        <ComboBox fx:id="cbSucursal" prefHeight="30.0" prefWidth="220.0" promptText="Todas las sucursales..." />
-
                         <Region HBox.hgrow="ALWAYS" />
-
-                        <TextField fx:id="txtBuscar" prefHeight="30.0" prefWidth="205.0" promptText="Buscar por nombre o número..." />
-
+                        <TextField fx:id="txtBuscar" prefHeight="30.0" prefWidth="260.0" promptText="Buscar por nombre o número..." />
                         <Button mnemonicParsing="false" onAction="#clicBuscar" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar">
                             <effect>
                                 <InnerShadow color="#ffffff40" offsetY="3.0" />

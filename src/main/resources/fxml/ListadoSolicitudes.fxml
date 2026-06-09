@@ -40,101 +40,76 @@
          </menus>
       </MenuBar>
 
-      <VBox spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="60.0">
+      <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
          <effect>
-            <DropShadow color="#00000026" offsetX="0.0" offsetY="5.0" radius="15.0" />
+            <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
          </effect>
          <padding>
-            <Insets bottom="30.0" left="40.0" right="40.0" top="30.0" />
+            <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
          </padding>
          <children>
 
-            <VBox spacing="5.0">
+            <VBox spacing="4.0">
                <children>
-                  <Label text="Configuración de Stock en Almacén" textFill="#007bff">
+                  <Label text="Historial de Solicitudes (Salidas)" textFill="#044c87">
                      <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="System Bold" size="22.0" />
                      </font>
                   </Label>
-                  <Label text="Asigne un producto del catálogo general a esta sucursal y defina sus umbrales." textFill="#666666">
+                  <Label text="Consulte el registro histórico de los materiales entregados a los empleados de las sucursales." textFill="#666666">
                      <font>
-                        <Font size="14.0" />
+                        <Font size="13.0" />
                      </font>
                   </Label>
                </children>
             </VBox>
-            <Separator prefWidth="200.0" />
-
-            <GridPane hgap="20.0" vgap="25.0" VBox.vgrow="ALWAYS">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="NEVER" minWidth="160.0" />
-                  <ColumnConstraints hgrow="ALWAYS" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-
-                  <Label text="ID del Artículo:" textFill="#495057">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="1">
-                     <children>
-                        <TextField fx:id="txtIdItem" maxWidth="301.0" prefHeight="25.0" prefWidth="301.0" promptText="Ingrese ID..." />
-                        <Button fx:id="btnBuscarItem" mnemonicParsing="false" style="-fx-background-color: #17a2b8; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4;" text="Buscar en Catálogo" />
-                     </children>
-                  </HBox>
-
-                  <Label text="Descripción:" textFill="#495057" GridPane.rowIndex="1">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtDescripcionItem" editable="false" promptText="Se autocompletará al buscar..." style="-fx-background-color: #e9ecef;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-                  <Label text="Stock Mínimo (Alerta):" textFill="#495057" GridPane.rowIndex="2">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtStockMinimo" maxWidth="150.0" prefHeight="25.0" prefWidth="67.0" promptText="Ej: 10" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
-                  <Label text="Stock Máximo (Límite):" textFill="#495057" GridPane.rowIndex="3">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="txtStockMaximo" maxWidth="150.0" promptText="Ej: 200" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-
-               </children>
-            </GridPane>
 
             <Separator prefWidth="200.0" />
 
-            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+            <HBox alignment="CENTER_LEFT" spacing="15.0">
                <children>
-                  <Button fx:id="btnCancelar" mnemonicParsing="false" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" />
-                  <Button fx:id="btnGuardarStock" mnemonicParsing="false" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Guardar Configuración">
-                     <effect>
-                        <InnerShadow offsetY="8.0">
-                           <color>
-                              <Color red="1.0" green="1.0" blue="1.0" opacity="0.5974025726318359" />
-                           </color>
-                        </InnerShadow>
-                     </effect></Button>
+                  <Label text="Filtrar por Fecha:" textFill="#044c87">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <DatePicker fx:id="dpFechaFiltro" promptText="Seleccione una fecha" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="txtBuscar" prefWidth="260.0" promptText="Buscar por empleado o ítem..." />
                </children>
+            </HBox>
+
+            <TableView fx:id="tvSolicitudes" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="colFecha" prefWidth="90.0" text="Fecha" />
+                  <TableColumn fx:id="colNoSolicitud" prefWidth="100.0" text="No. Solicitud" />
+                  <TableColumn fx:id="colEmpleado" prefWidth="180.0" text="Empleado" />
+                  <TableColumn fx:id="colArticulo" prefWidth="200.0" text="Artículo Solicitado" />
+                  <TableColumn fx:id="colCantidad" prefWidth="80.0" text="Cantidad" />
+                  <TableColumn fx:id="colUso" prefWidth="270.0" text="Uso / Justificación" />
+               </columns>
                <effect>
                   <DropShadow offsetX="-3.0" offsetY="3.0">
                      <color>
-                        <Color opacity="0.38999998569488525" />
+                        <Color opacity="0.1" />
                      </color>
                   </DropShadow>
                </effect>
+            </TableView>
+
+            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+               <children>
+                  <Button fx:id="btnExportarPDF" mnemonicParsing="false" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Exportar a PDF">
+                     <effect>
+                        <InnerShadow color="#ffffff65" offsetY="3.0" />
+                     </effect>
+                  </Button>
+                  <Button fx:id="btnRegresar" mnemonicParsing="false" prefHeight="35.0" prefWidth="140.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar al Menú">
+                     <effect>
+                        <InnerShadow color="#ffffff40" offsetY="3.0" />
+                     </effect>
+                  </Button>
+               </children>
             </HBox>
 
          </children>

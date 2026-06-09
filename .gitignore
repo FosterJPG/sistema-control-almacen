@@ -6,3 +6,4 @@ jshell.history
 *.iml
 /out/
 /src/main/resources/config/*.properties
+*.md

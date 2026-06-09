@@ -29,7 +29,6 @@ public class GestorEmpleadosController implements Initializable {
     @FXML private TableColumn<Empleado, String>  col_sucursal;
     @FXML private TableColumn<Empleado, String>  col_puesto;
     @FXML private TableColumn<Empleado, String>  col_correo;
-    @FXML private ComboBox<?> cbSucursal;
     @FXML private TextField txtBuscar;
 
     @Override
@@ -46,7 +45,7 @@ public class GestorEmpleadosController implements Initializable {
 
     @FXML
     private void clicBuscar(ActionEvent event) {
-        // TODO: filtrar tv_listado por txtBuscar y cbSucursal
+        // TODO: filtrar tv_listado por txtBuscar
     }
 
     @FXML

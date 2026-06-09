@@ -1,88 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
 <?import javafx.geometry.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.ListadoSolicitudesController">
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.ConsultarUsuariosController">
    <children>
 
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <menus>
-            <Menu mnemonicParsing="false" text="Ingresos">
+            <Menu mnemonicParsing="false" text="Catálogos">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Registrar factura" />
-                  <MenuItem mnemonicParsing="false" text="Consultar facturas" />
+                  <MenuItem mnemonicParsing="false" text="Items" />
+                  <MenuItem mnemonicParsing="false" text="Sucursales" />
+                  <MenuItem mnemonicParsing="false" text="Partidas Presupuestales" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Items">
+            <Menu mnemonicParsing="false" text="Personal">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Registrar item" />
-                  <MenuItem mnemonicParsing="false" text="Consultar items" />
+                  <MenuItem mnemonicParsing="false" text="Gestionar empleados" />
+                  <MenuItem mnemonicParsing="false" text="Consultar usuarios" />
                </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Pedidos">
+            <Menu mnemonicParsing="false" text="Reportes">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Consultar bitácora" />
+                  <MenuItem mnemonicParsing="false" text="Reporte de ingresos" />
+                  <MenuItem mnemonicParsing="false" text="Reporte de egresos" />
                </items>
             </Menu>
          </menus>
       </MenuBar>
 
-      <VBox layoutY="40.0" prefHeight="540.0" prefWidth="810.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
+      <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
          <effect>
             <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
          </effect>
          <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            <Insets bottom="20.0" left="30.0" right="30.0" top="20.0" />
          </padding>
          <children>
-            
-            <Label styleClass="label-titulo" text="Historial de Solicitudes (Salidas)">
-               <font>
-                  <Font name="System Bold" size="22.0" />
-               </font>
-            </Label>
-            <Label text="Consulte el registro histórico de los materiales entregados a los empleados de las sucursales." textFill="#666666" />
+
+            <VBox spacing="4.0">
+               <children>
+                  <Label text="Gestión de Usuarios" textFill="#044c87">
+                     <font>
+                        <Font name="System Bold" size="22.0" />
+                     </font>
+                  </Label>
+                  <Label text="Consulte, registre y administre los usuarios del sistema y sus roles asignados." textFill="#666666">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
 
             <Separator prefWidth="200.0" />
 
             <HBox alignment="CENTER_LEFT" spacing="15.0">
                <children>
-                  <Label text="Filtrar por Fecha:">
+                  <Label text="Filtrar por Rol:" textFill="#044c87">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <DatePicker fx:id="dpFechaFiltro" promptText="Seleccione una fecha" />
-                  
-                  <Region HBox.hgrow="ALWAYS" /> <TextField fx:id="txtBuscar" prefWidth="250.0" promptText="Buscar por empleado o ítem..." />
+                  <ComboBox fx:id="cbRol" prefHeight="30.0" prefWidth="200.0" promptText="Todos los roles..." />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <TextField fx:id="txtBuscar" prefHeight="30.0" prefWidth="260.0" promptText="Buscar por nombre o usuario..." />
+                  <Button mnemonicParsing="false" onAction="#clicBuscar" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar">
+                     <effect>
+                        <InnerShadow color="#ffffff40" offsetY="3.0" />
+                     </effect>
+                  </Button>
                </children>
             </HBox>
 
-            <TableView fx:id="tvSolicitudes" prefHeight="250.0" VBox.vgrow="ALWAYS">
-              <columns>
-                <TableColumn fx:id="colFecha" prefWidth="77.0" text="Fecha" />
-                <TableColumn fx:id="colEmpleado" prefWidth="173.0" text="No. Empleado" />
-                <TableColumn fx:id="colArticulo" prefWidth="170.0" text="Artículo Solicitado" />
-                <TableColumn fx:id="colCantidad" prefWidth="60.0" text="Cantidad" />
-                <TableColumn fx:id="colUso" prefWidth="287.0" text="Uso / Justificación" />
-              </columns>
+            <TableView fx:id="tvUsuarios" VBox.vgrow="ALWAYS">
+               <columns>
+                  <TableColumn fx:id="colIdUsuario" prefWidth="80.0" text="ID Usuario" />
+                  <TableColumn fx:id="colNombre" prefWidth="220.0" text="Nombre Completo" />
+                  <TableColumn fx:id="colCorreo" prefWidth="220.0" text="Correo Electrónico" />
+                  <TableColumn fx:id="colRol" prefWidth="140.0" text="Rol" />
+                  <TableColumn fx:id="colFechaRegistro" prefWidth="110.0" text="Fecha Registro" />
+               </columns>
+               <effect>
+                  <DropShadow offsetX="-3.0" offsetY="3.0">
+                     <color>
+                        <Color opacity="0.1" />
+                     </color>
+                  </DropShadow>
+               </effect>
             </TableView>
 
-            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+            <HBox alignment="CENTER_LEFT" spacing="15.0">
                <children>
-                  <Button fx:id="btnExportarPDF" mnemonicParsing="false" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Exportar a PDF">
+                  <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#clicAgregar" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Agregar">
                      <effect>
-                        <InnerShadow color="#ffffff65" offsetY="8.0" />
-                     </effect></Button>
+                        <InnerShadow color="#ffffff40" offsetY="3.0" />
+                     </effect>
+                  </Button>
+                  <Button fx:id="btnModificar" mnemonicParsing="false" onAction="#clicModificar" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Modificar">
+                     <effect>
+                        <InnerShadow color="#ffffff40" offsetY="3.0" />
+                     </effect>
+                  </Button>
+                  <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#clicEliminar" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Eliminar">
+                     <effect>
+                        <InnerShadow color="#ffffff40" offsetY="3.0" />
+                     </effect>
+                  </Button>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button fx:id="btnRegresar" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="35.0" prefWidth="140.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar al Menú">
+                     <effect>
+                        <InnerShadow color="#ffffff40" offsetY="3.0" />
+                     </effect>
+                  </Button>
                </children>
-               <effect>
-                  <DropShadow color="#0000005a" offsetX="-3.0" offsetY="3.0" />
-               </effect>
             </HBox>
 
          </children>
