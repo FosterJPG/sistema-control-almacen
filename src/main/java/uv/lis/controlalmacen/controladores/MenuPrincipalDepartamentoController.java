@@ -46,12 +46,12 @@ public class MenuPrincipalDepartamentoController implements Initializable, MenuC
     @FXML
     private void clicCrearSolicitud(ActionEvent event) {
         try {
-            FXMLLoader loader = UtilidadesFX.cargarFXML("InicioSesion");
+            FXMLLoader loader = UtilidadesFX.cargarFXML("RegistroSolicitud");
             Parent vista = loader.load();
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
-            stage.setTitle("Crear solicitud");
+            stage.setTitle("Nueva Solicitud de Materiales");
             stage.setResizable(false);
 
             stage.setScene(escena);
