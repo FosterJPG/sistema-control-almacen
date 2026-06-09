@@ -7,40 +7,26 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.ListadoSolicitudesController">
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: #f8f9fa;"
+            xmlns="http://javafx.com/javafx/17.0.12"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="uv.lis.controlalmacen.controladores.ListadoSolicitudesController">
    <children>
 
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <menus>
-            <Menu mnemonicParsing="false" text="Ingresos">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Registrar factura" />
-                  <MenuItem mnemonicParsing="false" text="Consultar facturas" />
-                  <MenuItem mnemonicParsing="false" text="Generar reporte de entradas" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Items">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Registrar item (Catálogo)" />
-                  <MenuItem mnemonicParsing="false" text="Configurar stock en sucursal" />
-                  <MenuItem mnemonicParsing="false" text="Consultar items" />
-               </items>
-            </Menu>
             <Menu mnemonicParsing="false" text="Solicitudes">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Consultar solicitudes" />
-                  <MenuItem mnemonicParsing="false" text="Generar reporte de salidas" />
-               </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Pedidos">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Consultar bitácora" />
+                  <MenuItem mnemonicParsing="false" text="Solicitudes pendientes" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicRegresar" text="Regresar al menu" />
                </items>
             </Menu>
          </menus>
       </MenuBar>
 
-      <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
+      <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;"
+            AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0"
+            AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
          <effect>
             <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
          </effect>
@@ -51,63 +37,62 @@
 
             <VBox spacing="4.0">
                <children>
-                  <Label text="Historial de Solicitudes (Salidas)" textFill="#044c87">
-                     <font>
-                        <Font name="System Bold" size="22.0" />
-                     </font>
+                  <Label text="Solicitudes Pendientes de Entrega" textFill="#044c87">
+                     <font><Font name="System Bold" size="22.0" /></font>
                   </Label>
-                  <Label text="Consulte el registro histórico de los materiales entregados a los empleados de las sucursales." textFill="#666666">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
+                  <Label text="Selecciona una solicitud y presiona Atender para registrar la entrega de materiales." textFill="#666666">
+                     <font><Font size="13.0" /></font>
                   </Label>
                </children>
             </VBox>
 
             <Separator prefWidth="200.0" />
 
-            <HBox alignment="CENTER_LEFT" spacing="15.0">
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
                <children>
-                  <Label text="Filtrar por Fecha:" textFill="#044c87">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
+                  <Label text="Filtrar por fecha:" textFill="#044c87">
+                     <font><Font name="System Bold" size="13.0" /></font>
                   </Label>
                   <DatePicker fx:id="dpFechaFiltro" promptText="Seleccione una fecha" />
+                  <Button mnemonicParsing="false" onAction="#clicLimpiarFiltros"
+                          prefHeight="26.0" prefWidth="80.0"
+                          style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4;"
+                          text="Limpiar" />
                   <Region HBox.hgrow="ALWAYS" />
-                  <TextField fx:id="txtBuscar" prefWidth="260.0" promptText="Buscar por empleado o ítem..." />
+                  <TextField fx:id="txtBuscar" prefWidth="260.0" promptText="Buscar por empleado o no. solicitud..." />
                </children>
             </HBox>
 
             <TableView fx:id="tvSolicitudes" VBox.vgrow="ALWAYS">
                <columns>
-                  <TableColumn fx:id="colFecha" prefWidth="90.0" text="Fecha" />
-                  <TableColumn fx:id="colNoSolicitud" prefWidth="100.0" text="No. Solicitud" />
-                  <TableColumn fx:id="colEmpleado" prefWidth="180.0" text="Empleado" />
-                  <TableColumn fx:id="colArticulo" prefWidth="200.0" text="Artículo Solicitado" />
-                  <TableColumn fx:id="colCantidad" prefWidth="80.0" text="Cantidad" />
-                  <TableColumn fx:id="colUso" prefWidth="270.0" text="Uso / Justificación" />
+                  <TableColumn fx:id="colNoSolicitud" prefWidth="120.0" text="No. Solicitud" />
+                  <TableColumn fx:id="colFecha" prefWidth="120.0" text="Fecha" />
+                  <TableColumn fx:id="colEmpleado" prefWidth="280.0" text="Empleado Solicitante" />
+                  <TableColumn fx:id="colNoEmpleado" prefWidth="120.0" text="No. Empleado" />
                </columns>
+               <placeholder>
+                  <Label text="No hay solicitudes pendientes" textFill="#999999" />
+               </placeholder>
                <effect>
                   <DropShadow offsetX="-3.0" offsetY="3.0">
-                     <color>
-                        <Color opacity="0.1" />
-                     </color>
+                     <color><Color opacity="0.1" /></color>
                   </DropShadow>
                </effect>
             </TableView>
 
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
-                  <Button fx:id="btnExportarPDF" mnemonicParsing="false" prefHeight="35.0" prefWidth="160.0" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Exportar a PDF">
-                     <effect>
-                        <InnerShadow color="#ffffff65" offsetY="3.0" />
-                     </effect>
+                  <Button fx:id="btnRegresar" mnemonicParsing="false" onAction="#clicRegresar"
+                          prefHeight="35.0" prefWidth="160.0"
+                          style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                          text="Regresar al Menu">
+                     <effect><InnerShadow color="#ffffff65" offsetY="3.0" /></effect>
                   </Button>
-                  <Button fx:id="btnRegresar" mnemonicParsing="false" prefHeight="35.0" prefWidth="140.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar al Menú">
-                     <effect>
-                        <InnerShadow color="#ffffff40" offsetY="3.0" />
-                     </effect>
+                  <Button fx:id="btnAtender" mnemonicParsing="false" onAction="#clicAtender"
+                          prefHeight="35.0" prefWidth="200.0"
+                          style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                          text="Atender Solicitud">
+                     <effect><InnerShadow color="#ffffff65" offsetY="3.0" /></effect>
                   </Button>
                </children>
             </HBox>

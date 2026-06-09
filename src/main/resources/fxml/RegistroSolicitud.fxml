@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: #f8f9fa;"
+            xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="uv.lis.controlalmacen.controladores.RegistroSolicitudController">
+    <children>
+
+        <!-- Menú del rol DEPARTAMENTO -->
+        <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <menus>
+                <Menu mnemonicParsing="false" text="Solicitudes">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Nueva Solicitud" />
+                        <MenuItem mnemonicParsing="false" onAction="#clicRegresar" text="Regresar al menú" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+
+        <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;"
+              AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0"
+              AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="40.0">
+            <effect>
+                <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
+            </effect>
+            <padding>
+                <Insets bottom="20.0" left="25.0" right="25.0" top="20.0" />
+            </padding>
+            <children>
+
+                <Label text="Nueva Solicitud de Materiales">
+                    <font><Font name="System Bold" size="24.0" /></font>
+                </Label>
+                <Separator prefWidth="200.0" />
+
+                <HBox spacing="25.0" VBox.vgrow="ALWAYS">
+                    <children>
+
+                        <!-- Panel izquierdo: datos de la solicitud -->
+                        <VBox prefWidth="340.0" spacing="15.0"
+                              style="-fx-background-color: #f8f9fa; -fx-padding: 20; -fx-background-radius: 8; -fx-border-color: #dee2e6; -fx-border-radius: 8;">
+                            <children>
+                                <Label text="1. Datos de la Solicitud" textFill="#044c87">
+                                    <font><Font name="System Bold" size="16.0" /></font>
+                                </Label>
+                                <Separator />
+
+                                <GridPane hgap="10.0" vgap="15.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="NEVER" minWidth="90.0" />
+                                        <ColumnConstraints hgrow="ALWAYS" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label text="Fecha:" textFill="#495057">
+                                            <font><Font name="System Bold" size="13.0" /></font>
+                                        </Label>
+                                        <DatePicker fx:id="dp_fecha" prefWidth="200.0" promptText="Seleccione fecha..."
+                                                    GridPane.columnIndex="1" />
+
+                                        <Label text="Empleado:" textFill="#495057" GridPane.rowIndex="1">
+                                            <font><Font name="System Bold" size="13.0" /></font>
+                                        </Label>
+                                        <TextField fx:id="txt_empleado" editable="false"
+                                                   style="-fx-background-color: #e9ecef;"
+                                                   promptText="Cargado automáticamente"
+                                                   GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                                        <Label text="Sucursal:" textFill="#495057" GridPane.rowIndex="2">
+                                            <font><Font name="System Bold" size="13.0" /></font>
+                                        </Label>
+                                        <TextField fx:id="txt_sucursal" editable="false"
+                                                   style="-fx-background-color: #e9ecef;"
+                                                   promptText="Cargado automáticamente"
+                                                   GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    </children>
+                                </GridPane>
+                            </children>
+                        </VBox>
+
+                        <!-- Panel derecho: agregar ítems -->
+                        <VBox spacing="15.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="2. Materiales Solicitados" textFill="#044c87">
+                                    <font><Font name="System Bold" size="16.0" /></font>
+                                </Label>
+                                <Separator />
+
+                                <GridPane hgap="15.0" vgap="10.0">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="NEVER" minWidth="80.0" />
+                                        <ColumnConstraints hgrow="ALWAYS" />
+                                        <ColumnConstraints hgrow="NEVER" minWidth="80.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label text="Código:">
+                                            <font><Font name="System Bold" size="13.0" /></font>
+                                        </Label>
+                                        <TextField fx:id="txt_idItem" promptText="Ej: I001"
+                                                   GridPane.columnIndex="1" />
+                                        <Button mnemonicParsing="false" onAction="#clicBuscarItem"
+                                                prefHeight="25.0" prefWidth="70.0"
+                                                style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                                                text="Buscar"
+                                                GridPane.columnIndex="2">
+                                            <effect>
+                                                <InnerShadow offsetY="9.0">
+                                                    <color><Color blue="1.0" green="1.0" opacity="0.44" red="1.0" /></color>
+                                                </InnerShadow>
+                                            </effect>
+                                        </Button>
+
+                                        <Label text="Descripción:" GridPane.rowIndex="1">
+                                            <font><Font name="System Bold" size="13.0" /></font>
+                                        </Label>
+                                        <TextField fx:id="txt_descripcionItem" editable="false"
+                                                   style="-fx-background-color: #e9ecef;"
+                                                   GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                                        <Label text="Cantidad:" GridPane.rowIndex="2">
+                                            <font><Font name="System Bold" size="13.0" /></font>
+                                        </Label>
+                                        <TextField fx:id="txt_cantidad" promptText="0"
+                                                   GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    </children>
+                                </GridPane>
+
+                                <!-- Campo uso: ocupa ancho completo -->
+                                <Label text="Uso / Destino:">
+                                    <font><Font name="System Bold" size="13.0" /></font>
+                                </Label>
+                                <TextArea fx:id="txt_uso" promptText="Describe el uso que se dará al material..."
+                                          prefHeight="70.0" wrapText="true" />
+
+                                <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                                    <children>
+                                        <Button mnemonicParsing="false" onAction="#clicQuitarItem"
+                                                prefHeight="30.0" prefWidth="80.0"
+                                                style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                                                text="Quitar">
+                                            <effect>
+                                                <InnerShadow offsetY="9.0">
+                                                    <color><Color blue="1.0" green="1.0" opacity="0.44" red="1.0" /></color>
+                                                </InnerShadow>
+                                            </effect>
+                                        </Button>
+                                        <Button mnemonicParsing="false" onAction="#clicAgregarItem"
+                                                prefHeight="30.0" prefWidth="100.0"
+                                                style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                                                text="Agregar">
+                                            <effect>
+                                                <InnerShadow offsetY="9.0">
+                                                    <color><Color blue="1.0" green="1.0" opacity="0.44" red="1.0" /></color>
+                                                </InnerShadow>
+                                            </effect>
+                                        </Button>
+                                    </children>
+                                </HBox>
+
+                                <!-- Tabla de ítems acumulados -->
+                                <TableView fx:id="tv_items" prefHeight="200.0" VBox.vgrow="ALWAYS">
+                                    <columns>
+                                        <TableColumn fx:id="col_idItem" prefWidth="80.0" text="Código" />
+                                        <TableColumn fx:id="col_descripcion" prefWidth="220.0" text="Descripción" />
+                                        <TableColumn fx:id="col_cantidad" prefWidth="80.0" text="Cantidad" />
+                                        <TableColumn fx:id="col_uso" prefWidth="200.0" text="Uso / Destino" />
+                                    </columns>
+                                    <placeholder>
+                                        <Label text="Agrega al menos un ítem para continuar" />
+                                    </placeholder>
+                                </TableView>
+
+                            </children>
+                        </VBox>
+
+                    </children>
+                </HBox>
+
+                <!-- Botones de acción -->
+                <HBox alignment="CENTER_RIGHT" spacing="15.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#clicCancelar"
+                                prefHeight="35.0" prefWidth="120.0"
+                                style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                                text="Cancelar" />
+                        <Button mnemonicParsing="false" onAction="#clicGuardarSolicitud"
+                                prefHeight="35.0" prefWidth="200.0"
+                                style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                                text="Enviar Solicitud">
+                            <effect>
+                                <InnerShadow color="#ffffff4d" offsetY="10.0" />
+                            </effect>
+                        </Button>
+                    </children>
+                    <effect>
+                        <DropShadow color="#00000059" offsetX="-3.0" offsetY="3.0" />
+                    </effect>
+                </HBox>
+
+            </children>
+        </VBox>
+
+    </children>
+</AnchorPane>
