@@ -1,6 +1,7 @@
 package uv.lis.controlalmacen.modelo.dto;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,9 @@ public class Factura {
 
     private String razonSocial;
     private String telefono;
-    private List<DetallesFactura> detallesFactura;
+    private String direccion;
+
+    private List<DetallesFactura> detallesFactura = new ArrayList<>();
 
     public List<DetallesFactura> getDetallesFactura() {
         return detallesFactura;
@@ -68,5 +71,13 @@ public class Factura {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 }

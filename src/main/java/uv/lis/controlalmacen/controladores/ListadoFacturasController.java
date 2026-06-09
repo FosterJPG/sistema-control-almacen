@@ -12,18 +12,22 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import uv.lis.controlalmacen.modelo.dao.FacturaDAO;
 import uv.lis.controlalmacen.modelo.dto.Factura;
+import uv.lis.controlalmacen.utilidades.ExportadorPDF;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -225,22 +229,42 @@ public class ListadoFacturasController implements Initializable {
 
     @FXML
     public void clicVerDetalles(ActionEvent actionEvent) {
-        /*
-        TODO
-        1. ver si está seleccionada
-        2. cargar el modal
-         */
-        Factura facturaSeleccionada =  tv_facturas.getSelectionModel().getSelectedItem();
-        if (facturaSeleccionada == null) {
-            UtilidadesFX.mostrarAlertaSimple("Sin selección",
-                    "No hay una factura seleccionada para mostrar sus detalles",
-                    Alert.AlertType.WARNING);
-            return;
-        }
+        try {
+            Factura facturaSeleccionada = tv_facturas.getSelectionModel().getSelectedItem();
 
+            if (facturaSeleccionada == null) {
+                UtilidadesFX.mostrarAlertaSimple("Selección requerida",
+                        "Primero selecciona una factura para poder ver sus detalles.",
+                        Alert.AlertType.INFORMATION);
+                return;
+            }
+
+            Factura facturaCompleta = new  Factura();
+            if ( facturaSeleccionada.getDetallesFactura() == null
+                    || facturaSeleccionada.getDetallesFactura().isEmpty()) {
+                facturaCompleta = facturaDAO.buscarUno(facturaSeleccionada.getFolio());
+            }
+            if (facturaSeleccionada.getDetallesFactura() == null
+                    || facturaSeleccionada.getDetallesFactura().isEmpty()) {
+                cargarVistaDetallesFactura(facturaCompleta);
+            } else {
+                cargarVistaDetallesFactura(facturaSeleccionada);
+            }
+
+        } catch (SQLException e){
+            e.printStackTrace();
+        } catch (NullPointerException | ClassNotFoundException | IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void cargarVistaDetallesFactura(Factura factura) {
         try {
             FXMLLoader loader = UtilidadesFX.cargarFXML("DetallesFactura");
             Parent vista = loader.load();
+            DetallesFacturaController controller = loader.getController();
+            controller.inicializarInformacion(factura);
+
             Scene escena = new Scene(vista);
 
             Stage stage = new Stage();
@@ -251,28 +275,47 @@ public class ListadoFacturasController implements Initializable {
             stage.setScene(escena);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+        } catch (IOException e){
+            e.printStackTrace();
         }
     }
 
     @FXML
     public void clicGenerarReporte(ActionEvent actionEvent) {
+        List<Factura> facturasTabla = new ArrayList<Factura>(tv_facturas.getItems());
+
+        if (facturasTabla.isEmpty()) {
+            UtilidadesFX.mostrarAlertaSimple("Sin datos",
+                    "No hay facturas que exportar", Alert.AlertType.WARNING);
+            return;
+        }
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Guardar reporte de ingresos");
+        fileChooser.setInitialFileName("reporte-facturas.pdf");
+        fileChooser.getExtensionFilters().add(new  FileChooser.ExtensionFilter("PDF", "*.pdf"));
+
+        Stage stageActual = (Stage) txt_buscar.getScene().getWindow();
+        File archivo =  fileChooser.showSaveDialog(stageActual);
+
+        if (archivo == null) {
+            return;
+        }
+
         try {
-            FXMLLoader loader = UtilidadesFX.cargarFXML("ReporteIngresos");
-            Parent vista = loader.load();
-            Scene escena = new Scene(vista);
+            List <Factura> facturasConDetalles =new ArrayList<>();
 
-            Stage stage = new Stage();
-            stage.setTitle("Reporte ingresos");
-            stage.setResizable(false);
-            stage.centerOnScreen();
+            for (Factura f : facturasTabla) {
+                Factura facturaCompleta = facturaDAO.buscarUno(f.getFolio());
+                facturasConDetalles.add(facturaCompleta);
+            }
 
-            stage.setScene(escena);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-        } catch (IOException ex) {
-            ex.printStackTrace();
+            // TODO quitar el comentario en caso de exito
+            //ExportadorPDF.generarReporteIngresos(archivo.getAbsolutePath(), facturasConDetalles);
+        } catch (SQLException e){
+            e.printStackTrace();
+        } catch (NullPointerException | ClassNotFoundException | IOException e) {
+            e.printStackTrace();
         }
     }
 

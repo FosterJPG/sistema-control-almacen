@@ -1,6 +1,7 @@
 package uv.lis.controlalmacen.modelo.dao;
 
 import uv.lis.controlalmacen.db.ConnectionFactory;
+import uv.lis.controlalmacen.modelo.dto.DetallesFactura;
 import uv.lis.controlalmacen.modelo.dto.Factura;
 import uv.lis.controlalmacen.modelo.dto.Sesion;
 
@@ -110,10 +111,33 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
                 factura.setRazonSocial(rs.getString("razon_social"));
                 factura.setTelefono(rs.getString("telefono"));
                 factura.setNoSucursal(rs.getInt("no_sucursal"));
+                cargarDetalles(conn, factura);
             }
         }
 
         return factura;
+    }
+
+    public static void cargarDetalles(Connection conexion, Factura factura)
+            throws SQLException, ClassNotFoundException, IOException, NullPointerException {
+        String consulta = "SELECT descripcion, cantidad, costo_unitario, partida_presupuestal, domicilio_fiscal " +
+                "FROM vista_factura_detalle " +
+                "WHERE folio = ? AND no_sucursal = ?";
+        PreparedStatement ps = conexion.prepareStatement(consulta);
+        ps.setString(1, factura.getFolio());
+        ps.setInt(2, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            DetallesFactura detalle = new DetallesFactura();
+            detalle.setCantidad(rs.getInt("cantidad"));
+            detalle.setCostoUnitario(rs.getDouble("costo_unitario"));
+            detalle.setDescripcion(rs.getString("descripcion"));
+            detalle.setDescripcionPartida(rs.getString("partida_presupuestal"));
+
+            factura.getDetallesFactura().add(detalle);
+            factura.setDireccion(rs.getString("domicilio_fiscal"));
+        }
     }
 
     public List<Factura> buscarPorPartidaPresupuestal(String partidaBuscar)

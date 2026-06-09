@@ -31,7 +31,6 @@ public class ConnectionFactory {
         return DriverManager.getConnection(url, user, password);
     }
 
-    // TODO conexion para roles
     public static Connection crearParaRol(Rol rol) throws IOException, SQLException, ClassNotFoundException{
         String rutaProperties = determinarRutaProperties(rol);
 
