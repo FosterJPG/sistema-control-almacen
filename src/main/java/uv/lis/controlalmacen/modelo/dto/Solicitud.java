@@ -41,4 +41,10 @@ public class Solicitud {
 
     public List<DetallesSolicitud> getDetallesSolicitud() { return detallesSolicitud; }
     public void setDetallesSolicitud(List<DetallesSolicitud> detallesSolicitud) { this.detallesSolicitud = detallesSolicitud; }
+
+    public String getNombreCompleto() {
+        String n = nombreEmpleado != null ? nombreEmpleado : "";
+        String p = paternoEmpleado != null ? paternoEmpleado : "";
+        return (n + " " + p).trim();
+    }
 }

@@ -40,4 +40,9 @@ public class DetallesSolicitud {
     public void setUso(String uso) {
         this.uso = uso;
     }
+
+    private Integer existencias;
+
+    public Integer getExistencias() { return existencias; }
+    public void setExistencias(Integer existencias) { this.existencias = existencias; }
 }
