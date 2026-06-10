@@ -47,12 +47,7 @@
                            <content>
                               <HBox prefHeight="37.0" prefWidth="769.0" spacing="10.0" style="-fx-background-color: transparent;">
                                  <children>
-                                    <TextField fx:id="txt_partidaBusqueda" prefHeight="31.0" prefWidth="230.0" promptText="Partida presupuestal" />
-                                    <Button mnemonicParsing="false" onAction="#clicBuscarPorPartida" prefHeight="31.0" prefWidth="158.0" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar por partida">
-                                       <effect>
-                                          <InnerShadow color="#ffffff5c" offsetY="9.0" />
-                                       </effect>
-                                    </Button>
+                                    <ComboBox fx:id="cb_partidaBusqueda" prefHeight="31.0" prefWidth="214.0" />
                                     <DatePicker fx:id="dp_fechaInicial" prefHeight="31.0" prefWidth="157.0" promptText="Fecha inicio" />
                                     <DatePicker fx:id="dp_fechaFinal" prefHeight="31.0" prefWidth="158.0" promptText="Fecha final" />
                                  </children>
