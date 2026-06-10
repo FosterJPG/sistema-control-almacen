@@ -290,9 +290,14 @@ public class ListadoFacturasController implements Initializable {
                 facturasConDetalles.add(facturaCompleta);
             }
 
+            String partidaSeleccionada = null;
+
+            if (!txt_partidaBusqueda.getText().isEmpty()) {
+                partidaSeleccionada = txt_partidaBusqueda.getText();
+            }
             // TODO quitar el comentario en caso de exito
             ExportadorPDF.generarReporteIngresos(archivo.getAbsolutePath(), facturasConDetalles,
-                    dp_fechaInicial.getValue(), dp_fechaFinal.getValue());
+                    dp_fechaInicial.getValue(), dp_fechaFinal.getValue(), partidaSeleccionada);
         } catch (SQLException e){
             e.printStackTrace();
         } catch (NullPointerException | ClassNotFoundException | IOException e) {

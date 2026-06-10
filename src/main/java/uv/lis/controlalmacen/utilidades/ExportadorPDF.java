@@ -48,12 +48,17 @@ public class ExportadorPDF {
         }
     }
 
-    private static TreeMap<Integer, Map<String, List<DetalleAgrupado>>> agruparFacturasPorPartida(List<Factura> facturas) {
+    private static TreeMap<Integer, Map<String, List<DetalleAgrupado>>> agruparFacturasPorPartida(List<Factura> facturas,
+                                                                                                  String partidaFiltrada) {
 
         TreeMap<Integer, Map<String, List<DetalleAgrupado>>> partidas = new TreeMap<>();
 
         for (Factura factura : facturas) {
             for (DetallesFactura detalle : factura.getDetallesFactura()) {
+                if (partidaFiltrada != null && !partidaFiltrada.isBlank() && !detalle.getDescripcionPartida()
+                        .equalsIgnoreCase(partidaFiltrada)) {
+                    continue;
+                }
 
                 Integer codigoPartida = detalle.getCodigoPartida();
                 partidas.putIfAbsent( codigoPartida, new LinkedHashMap<>());
@@ -66,24 +71,8 @@ public class ExportadorPDF {
         return partidas;
     }
 
-    private static void imprimirAgrupacion(TreeMap<Integer, Map<String, List<DetalleAgrupado>>> partidas) {
-
-        for (Integer codigo : partidas.keySet()) {
-            System.out.println("\nPARTIDA " + codigo);
-
-            Map<String, List<DetalleAgrupado>> facturas = partidas.get(codigo);
-
-            for (String folio : facturas.keySet()) {
-                System.out.println("  Factura: " + folio);
-
-                for (DetalleAgrupado detalle : facturas.get(folio)) {
-                    System.out.println("      " + detalle.getDetalle().getDescripcion());
-                }
-            }
-        }
-    }
-
-    public static void generarReporteIngresos(String rutaPdf, List<Factura> facturas, LocalDate fechaInicio, LocalDate fechaFinal)
+    public static void generarReporteIngresos(String rutaPdf, List<Factura> facturas,
+                                              LocalDate fechaInicio, LocalDate fechaFinal, String partidaFiltrada)
             throws FileNotFoundException {
         PdfDocument pdf = new PdfDocument(new PdfWriter(rutaPdf));
 
@@ -94,7 +83,7 @@ public class ExportadorPDF {
 
         agregarPeriodo(documento, fechaInicio, fechaFinal);
 
-        TreeMap<Integer, Map<String, List<DetalleAgrupado>>> partidas = agruparFacturasPorPartida(facturas);
+        TreeMap<Integer, Map<String, List<DetalleAgrupado>>> partidas = agruparFacturasPorPartida(facturas, partidaFiltrada);
 
         double totalGeneral = 0;
 
@@ -160,7 +149,7 @@ public class ExportadorPDF {
             documento.add(logo);
         } catch (Exception ignored) {}
 
-        documento.add(new Paragraph(titulo).setBold().setFontSize(20).setTextAlignment(TextAlignment.CENTER).setMarginTop(10)
+        documento.add(new Paragraph(titulo).setBold().setFontSize(16).setTextAlignment(TextAlignment.CENTER).setMarginTop(10)
                 .setMarginBottom(20));
     }
 
@@ -184,19 +173,18 @@ public class ExportadorPDF {
                     DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         }
 
-        documento.add(new Paragraph("Periodo: " + periodo).setMarginBottom(20));
+        documento.add(new Paragraph("Periodo: " + periodo).setMarginBottom(10));
     }
 
     private static void agregarTituloPartida(Document documento,Integer codigo, String descripcion) {
         documento.add(new Paragraph("PARTIDA " + codigo + " - " + descripcion.toUpperCase()).setBold().setFontSize(14)
-                .setFontColor(COLOR_ENCABEZADO).setMarginTop(15).setMarginBottom(10));
+                .setFontColor(COLOR_ENCABEZADO).setMarginTop(8).setMarginBottom(5));
     }
 
     private static void agregarDatosFactura(Document documento,Factura factura) {
-        documento.add(new Paragraph("Factura: " + factura.getFolio()).setBold());
-        documento.add(new Paragraph("Proveedor: "+ factura.getRazonSocial()));
-
-        documento.add(new Paragraph("Fecha: "+ FORMATO_FECHA.format(factura.getFecha())).setMarginBottom(10));
+        documento.add(new Paragraph("Factura: " + factura.getFolio()).setBold().setMarginBottom(2));
+        documento.add(new Paragraph("Proveedor: "+ factura.getRazonSocial()).setMarginBottom(2));
+        documento.add(new Paragraph("Fecha: "+ FORMATO_FECHA.format(factura.getFecha())).setMarginBottom(8));
     }
 
     private static Table crearTablaDetalles() {
