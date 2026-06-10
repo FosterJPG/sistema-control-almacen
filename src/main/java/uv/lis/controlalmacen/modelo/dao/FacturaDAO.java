@@ -4,6 +4,7 @@ import uv.lis.controlalmacen.db.ConnectionFactory;
 import uv.lis.controlalmacen.modelo.dto.DetallesFactura;
 import uv.lis.controlalmacen.modelo.dto.Factura;
 import uv.lis.controlalmacen.modelo.dto.Sesion;
+import uv.lis.controlalmacen.utilidades.Constantes;
 
 import java.io.IOException;
 import java.sql.*;
@@ -31,6 +32,11 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
     public List<Factura> buscarTodos() throws SQLException, NullPointerException, IOException, ClassNotFoundException {
         List<Factura> lista = new ArrayList<>();
         try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+
+            if (conn == null) {
+                throw new SQLException(Constantes.MSJ_SIN_CONEXION);
+            }
+
             String query = "SELECT folio, fecha_factura, rfc, razon_social, telefono, no_sucursal FROM vista_facturas_lista " +
                     "WHERE no_sucursal = ? ";
             PreparedStatement ps = conn.prepareStatement(query);
@@ -47,7 +53,6 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
                 factura.setNoSucursal(rs.getInt("no_sucursal"));
                 lista.add(factura);
             }
-            // TODO exception en caso de lista vacia
         }
 
         return lista;
@@ -59,8 +64,9 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
         List<Factura> lista = new ArrayList<>();
 
         try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+
             if (conn == null) {
-                throw new SQLException("Error: No se pudo conectar a la base de datos");
+                throw new SQLException(Constantes.MSJ_SIN_CONEXION);
             }
 
             String consulta = "SELECT folio, fecha_factura, rfc, razon_social, telefono, no_sucursal FROM vista_facturas_lista " +
@@ -92,8 +98,9 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
         Factura factura  = new Factura();
 
         try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+
             if (conn == null) {
-                throw new SQLException("Error: No se pudo conectar a la base de datos");
+                throw new SQLException(Constantes.MSJ_SIN_CONEXION);
             }
 
             String consulta = "SELECT folio, fecha_factura, rfc, razon_social, telefono, no_sucursal FROM vista_facturas_lista " +
@@ -147,8 +154,9 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
         List<Factura> lista = new ArrayList<>();
 
         try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+
             if (conn == null) {
-                throw new SQLException("Error: No se pudo conectar a la base de datos");
+                throw new SQLException(Constantes.MSJ_SIN_CONEXION);
             }
 
             String consulta = "SELECT folio, fecha_factura, p.rfc, p.razon_social, p.telefono, no_sucursal FROM vista_facturas_partida vf " +
@@ -179,8 +187,9 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
         List<Factura> lista = new ArrayList<>();
 
         try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+
             if (conn == null) {
-                throw new SQLException("Error: No se pudo conectar a la base de datos");
+                throw new SQLException(Constantes.MSJ_SIN_CONEXION);
             }
 
             String consulta = "SELECT f.folio, f.fecha_factura, f.rfc, f.razon_social, f.telefono, f.no_sucursal FROM vista_facturas_lista f " +

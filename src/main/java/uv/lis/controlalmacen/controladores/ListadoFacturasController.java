@@ -1,9 +1,11 @@
 package uv.lis.controlalmacen.controladores;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,11 +18,15 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import uv.lis.controlalmacen.modelo.dao.FacturaDAO;
+import uv.lis.controlalmacen.modelo.dao.PartidaPresupuestalDAO;
 import uv.lis.controlalmacen.modelo.dto.Factura;
+import uv.lis.controlalmacen.modelo.dto.PartidaPresupuestal;
+import uv.lis.controlalmacen.utilidades.Constantes;
 import uv.lis.controlalmacen.utilidades.ExportadorPDF;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -32,10 +38,9 @@ import java.util.ResourceBundle;
 
 public class ListadoFacturasController implements Initializable {
 
-    private static final FacturaDAO facturaDAO = new  FacturaDAO();
-
+    // Atributos de JavaFX
     @FXML
-    private TextField txt_partidaBusqueda;
+    private ComboBox<String> cb_partidaBusqueda;
     @FXML
     private DatePicker dp_fechaInicial;
     @FXML
@@ -55,12 +60,24 @@ public class ListadoFacturasController implements Initializable {
     @FXML
     private TableColumn<Factura, String> col_telefono;
 
+    // Atributos de configuración del controller
     private ObservableList<Factura> facturas;
+    private static final FacturaDAO facturaDAO = new  FacturaDAO();
+
+    private final PartidaPresupuestalDAO partidaPresupuestalDAO = new PartidaPresupuestalDAO();
+    private final ObservableList<String> partidasPresupuestales = FXCollections.observableArrayList();
+    private FilteredList<String> partidasFiltradas;
+
+    private boolean seleccionandoPartida = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         configurarTabla();
+        configurarComboPartidas();
+
+        cargarPartidasPresupuestales();
         cargarInformacionTabla();
+
         dp_fechaFinal.setDisable(true);
         configurarSeleccionFecha();
     }
@@ -109,6 +126,62 @@ public class ListadoFacturasController implements Initializable {
                         aplicarFiltros());
     }
 
+    private void configurarComboPartidas() {
+
+        cb_partidaBusqueda.setEditable(true);
+
+        partidasFiltradas = new FilteredList<>(partidasPresupuestales, partida -> true);
+
+        cb_partidaBusqueda.setItems(partidasFiltradas);
+
+        cb_partidaBusqueda.valueProperty().addListener((obs, anterior, nuevo) -> {
+                if (nuevo == null) {
+                    return;
+                }
+
+                seleccionandoPartida = true;
+
+                Platform.runLater(() -> {
+                    cb_partidaBusqueda.getEditor().setText(nuevo);
+                    cb_partidaBusqueda.getEditor().positionCaret(nuevo.length());
+                    partidasFiltradas.setPredicate(partida -> true);
+                    aplicarFiltros();
+                    seleccionandoPartida = false;
+                });
+            }
+        );
+
+        cb_partidaBusqueda.getEditor().textProperty().addListener((obs, anterior, nuevo) -> {
+
+            if (seleccionandoPartida) {
+                return;
+            }
+
+            filtrarPartidas(nuevo);
+        });
+    }
+
+    private void filtrarPartidas(String textoBusqueda) {
+
+        String texto = textoBusqueda == null ? "" : textoBusqueda.trim().toLowerCase();
+
+        partidasFiltradas.setPredicate(partida -> {
+            if (texto.isEmpty()) {
+                return true;
+            }
+            return partida.toLowerCase().contains(texto);
+        });
+
+        if (cb_partidaBusqueda.isFocused() && !partidasFiltradas.isEmpty()) {
+
+            Platform.runLater(() -> {
+                if (!cb_partidaBusqueda.isShowing()) {
+                    cb_partidaBusqueda.show();
+                }
+            });
+        }
+    }
+
     private void cargarInformacionTabla() {
         try {
             facturas = FXCollections.observableArrayList();
@@ -116,8 +189,35 @@ public class ListadoFacturasController implements Initializable {
             facturas.addAll(facturasBD);
             tv_facturas.setItems(facturas);
 
-        } catch (SQLException | IOException | ClassNotFoundException e) {
-            // TODO Errores
+        } catch (SQLException e) {
+            UtilidadesFX.mostrarAlertaSimple("Error al consultar",
+                    e.getMessage(),
+                    Alert.AlertType.ERROR);
+        } catch (IOException | ClassNotFoundException | NullPointerException e) {
+            UtilidadesFX.mostrarAlertaSimple("Error al cargar",
+                    Constantes.MSJ_ERROR_CARGA_DATOS,
+                    Alert.AlertType.ERROR);
+        }
+    }
+
+    private void cargarPartidasPresupuestales() {
+        try {
+            List<PartidaPresupuestal> partidasBD = partidaPresupuestalDAO.buscarTodos();
+            partidasPresupuestales.clear();
+
+            for (PartidaPresupuestal partida : partidasBD) {
+                partidasPresupuestales.add(partida.getDescripcionPartida());
+            }
+
+        } catch (SQLException ex) {
+            UtilidadesFX.mostrarAlertaSimple("Error al consultar",
+                    ex.getMessage(),
+                    Alert.AlertType.ERROR);
+        } catch (NullPointerException | IOException | ClassNotFoundException ex) {
+            UtilidadesFX.mostrarAlertaSimple("Error al cargar",
+                    "Lo sentimos, las partidas presupuestales no pueden ser cargadas en este momento, " +
+                            "por favor inténtelo más tarde.",
+                    Alert.AlertType.WARNING);
         }
     }
 
@@ -126,7 +226,8 @@ public class ListadoFacturasController implements Initializable {
         //cargarInformacionTabla();
         dp_fechaFinal.setValue(null);
         dp_fechaInicial.setValue(null);
-        txt_partidaBusqueda.setText("");
+        cb_partidaBusqueda.setValue(null);
+        cb_partidaBusqueda.getEditor().clear();
         txt_buscar.setText("");
         aplicarFiltros();
     }
@@ -142,21 +243,20 @@ public class ListadoFacturasController implements Initializable {
             Factura factura = facturaDAO.buscarUno(folioBuscar);
             facturas.add(factura);
             tv_facturas.setItems(facturas);
-        } catch (SQLException e){
-            e.printStackTrace();
-        } catch (NullPointerException | ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            UtilidadesFX.mostrarAlertaSimple("Error al consultar",
+                    e.getMessage(),
+                    Alert.AlertType.ERROR);
+        } catch (IOException | ClassNotFoundException | NullPointerException e) {
+            UtilidadesFX.mostrarAlertaSimple("Error al cargar",
+                    Constantes.MSJ_ERROR_CARGA_DATOS,
+                    Alert.AlertType.ERROR);
         }
-    }
-
-    @FXML
-    public void clicBuscarPorPartida(ActionEvent actionEvent) {
-        aplicarFiltros();
     }
 
     private void aplicarFiltros() {
         try {
-            String partidaBuscar = txt_partidaBusqueda.getText();
+            String partidaBuscar = cb_partidaBusqueda.getEditor().getText();
 
             boolean hayPartida = partidaBuscar != null && !partidaBuscar.isBlank();
 
@@ -180,9 +280,13 @@ public class ListadoFacturasController implements Initializable {
             tv_facturas.setItems(facturas);
 
         } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (NullPointerException | ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+            UtilidadesFX.mostrarAlertaSimple("Error al consultar",
+                    e.getMessage(),
+                    Alert.AlertType.ERROR);
+        } catch (IOException | ClassNotFoundException | NullPointerException e) {
+            UtilidadesFX.mostrarAlertaSimple("Error al cargar",
+                    Constantes.MSJ_ERROR_CARGA_DATOS,
+                    Alert.AlertType.ERROR);
         }
     }
 
@@ -231,10 +335,14 @@ public class ListadoFacturasController implements Initializable {
                 cargarVistaDetallesFactura(facturaSeleccionada);
             }
 
-        } catch (SQLException e){
-            e.printStackTrace();
-        } catch (NullPointerException | ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            UtilidadesFX.mostrarAlertaSimple("Error al cargar",
+                    e.getMessage(),
+                    Alert.AlertType.ERROR);
+        } catch (IOException | ClassNotFoundException | NullPointerException e) {
+            UtilidadesFX.mostrarAlertaSimple("Error al cargar",
+                    Constantes.MSJ_ERROR_CARGA_DATOS,
+                    Alert.AlertType.ERROR);
         }
     }
 
@@ -292,16 +400,29 @@ public class ListadoFacturasController implements Initializable {
 
             String partidaSeleccionada = null;
 
-            if (!txt_partidaBusqueda.getText().isEmpty()) {
-                partidaSeleccionada = txt_partidaBusqueda.getText();
+            if (!cb_partidaBusqueda.getEditor().getText().isEmpty()) {
+                partidaSeleccionada = cb_partidaBusqueda.getEditor().getText();
             }
-            // TODO quitar el comentario en caso de exito
+
             ExportadorPDF.generarReporteIngresos(archivo.getAbsolutePath(), facturasConDetalles,
                     dp_fechaInicial.getValue(), dp_fechaFinal.getValue(), partidaSeleccionada);
-        } catch (SQLException e){
-            e.printStackTrace();
-        } catch (NullPointerException | ClassNotFoundException | IOException e) {
-            e.printStackTrace();
+
+            UtilidadesFX.mostrarAlertaSimple("Exportación exitosa",
+                    "Reporte guardado en:\n" + archivo.getAbsolutePath(),
+                    Alert.AlertType.INFORMATION);
+        } catch (SQLException e) {
+            UtilidadesFX.mostrarAlertaSimple("Error al consultar",
+                    e.getMessage(),
+                    Alert.AlertType.ERROR);
+        } catch (FileNotFoundException e) {
+                UtilidadesFX.mostrarAlertaSimple("Error al generar formato",
+                        "Lo sentimos, no pudimos generar el reporte de ingresos por un problema con el archivo. " +
+                                "Intente nuevamente más tarde",
+                        Alert.AlertType.ERROR);
+        } catch (IOException | ClassNotFoundException | NullPointerException e) {
+            UtilidadesFX.mostrarAlertaSimple("Error al cargar",
+                    Constantes.MSJ_ERROR_CARGA_DATOS,
+                    Alert.AlertType.ERROR);
         }
     }
 
