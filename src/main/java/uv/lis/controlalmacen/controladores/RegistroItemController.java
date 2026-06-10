@@ -21,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -43,6 +44,12 @@ public class RegistroItemController implements Initializable {
     @FXML
     private ComboBox<PartidaPresupuestal> cb_partidaPresupuestal;
 
+    @FXML
+    private Label txt_titulo;
+
+    @FXML
+    private Label txt_descripcionVentana;
+
     private final ItemDAO itemDAO = new ItemDAO();
     private final PartidaPresupuestalDAO partidaPresupuestalDAO = new PartidaPresupuestalDAO();
 
@@ -55,6 +62,7 @@ public class RegistroItemController implements Initializable {
 
     private boolean esEdicion = false;
     private Item itemEdicion;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -73,6 +81,8 @@ public class RegistroItemController implements Initializable {
         esEdicion = true;
         itemEdicion = item;
 
+        txt_titulo.setText("Editar Item");
+        txt_descripcionVentana.setText("Actualice la información del item elegido");
         txt_codigo.setText(item.getIdItem());
         txt_codigo.setDisable(true);
 
@@ -215,7 +225,7 @@ public class RegistroItemController implements Initializable {
     }
 
     @FXML
-    private void clicRegistrar(ActionEvent event) {
+    private void clicGuardar(ActionEvent event) {
         String codigo = txt_codigo.getText().trim().toUpperCase();
         String descripcion = txt_descripcion.getText().trim();
         PartidaPresupuestal partidaSeleccionada = obtenerPartidaSeleccionada();
@@ -313,4 +323,5 @@ public class RegistroItemController implements Initializable {
     private void clicCancelar(ActionEvent event) {
         ((Stage)txt_codigo.getScene().getWindow()).close();
     }
+
 }

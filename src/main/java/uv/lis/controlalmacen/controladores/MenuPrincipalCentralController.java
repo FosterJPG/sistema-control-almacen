@@ -59,9 +59,9 @@ public class MenuPrincipalCentralController implements Initializable, MenuContro
             Stage stage = (Stage) lblBienvenida.getScene().getWindow();
             stage.setTitle("Control de Almacén - GLOBAL FINANCE");
             stage.setResizable(false);
+            stage.setScene(escena);
             stage.centerOnScreen();
             Sesion.cerrarSesion();
-            stage.setScene(escena);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

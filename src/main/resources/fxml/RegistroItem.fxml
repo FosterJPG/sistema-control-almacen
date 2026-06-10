@@ -35,12 +35,12 @@
 
             <VBox spacing="2.0">
                <children>
-                  <Label text="Registro de Nuevo Ítem" textFill="#1a365d">
+                  <Label fx:id="txt_titulo" text="Registro de Nuevo Ítem" textFill="#1a365d">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label text="Llene los campos para dar de alta un producto." textFill="#666666" wrapText="true">
+                  <Label fx:id="txt_descripcionVentana" text="Llene los campos para dar de alta un producto." textFill="#666666" wrapText="true">
                      <font>
                         <Font size="13.0" />
                      </font>
@@ -91,7 +91,7 @@
             <HBox alignment="CENTER_RIGHT" spacing="10.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#clicCancelar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" />
-                  <Button mnemonicParsing="false" onAction="#clicRegistrar" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Registrar Ítem">
+                  <Button mnemonicParsing="false" onAction="#clicGuardar" prefHeight="30.0" prefWidth="120.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Guardar">
                      <effect>
                         <InnerShadow color="#ffffff6d" offsetY="3.0" />
                      </effect>

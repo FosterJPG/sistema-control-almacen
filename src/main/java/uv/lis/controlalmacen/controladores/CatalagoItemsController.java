@@ -410,6 +410,7 @@ public class CatalagoItemsController implements Initializable {
             stage.centerOnScreen();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.showAndWait();
+            cargarInformacionItems();
 
         } catch (IOException ex) {
             UtilidadesFX.mostrarAlertaSimple(
