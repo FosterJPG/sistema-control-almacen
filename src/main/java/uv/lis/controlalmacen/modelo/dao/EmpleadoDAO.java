@@ -30,7 +30,7 @@ public class EmpleadoDAO implements OperacionesCatalogoDAO<Empleado, Integer>{
     }
 
     @Override
-    public List<Empleado> buscarTodos() throws SQLException, NullPointerException, ClassNotFoundException {
+    public List<Empleado> buscarTodos() throws SQLException, NullPointerException, IOException, ClassNotFoundException {
         return List.of();
     }
 

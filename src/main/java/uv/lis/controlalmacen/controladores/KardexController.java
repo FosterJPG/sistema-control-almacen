@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 import uv.lis.controlalmacen.modelo.dao.KardexDAO;
 import uv.lis.controlalmacen.modelo.dto.ItemAlmacenado;
 import uv.lis.controlalmacen.modelo.dto.Kardex;
+import uv.lis.controlalmacen.modelo.dto.Sesion;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
 public class KardexController implements Initializable {
@@ -56,7 +57,9 @@ public class KardexController implements Initializable {
     public void cargarKardexItem(ItemAlmacenado item){
         try {
             kardexItem = FXCollections.observableArrayList();
-            List<Kardex> kardexItemsBD = KardexDAO.buscarKardexItem(item.getIdItem());
+            int noSucursal = Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal();
+
+            List<Kardex> kardexItemsBD = KardexDAO.buscarKardexItem(item.getIdItem(), noSucursal);
             kardexItem.addAll(kardexItemsBD);
             tv_kardex.setItems(kardexItem);
             lb_descripcion.setText(item.getDescripcionItem());
@@ -73,6 +76,7 @@ public class KardexController implements Initializable {
         }
     }
 
+    //NAVEGABILIDAD
     @FXML
     private void clicRegresar(ActionEvent event) {
         ((Stage) tv_kardex.getScene().getWindow()).close();

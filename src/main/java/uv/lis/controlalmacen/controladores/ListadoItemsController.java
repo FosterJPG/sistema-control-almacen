@@ -1,6 +1,5 @@
 package uv.lis.controlalmacen.controladores;
 
-import com.mysql.cj.conf.PropertyDefinition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -16,8 +15,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import uv.lis.controlalmacen.modelo.dao.ItemAlmacenadoDAO;
-import uv.lis.controlalmacen.modelo.dao.PartidaPresupuestalDAO;
-import uv.lis.controlalmacen.modelo.dto.Item;
 import uv.lis.controlalmacen.modelo.dto.ItemAlmacenado;
 import uv.lis.controlalmacen.modelo.dto.PartidaPresupuestal;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;

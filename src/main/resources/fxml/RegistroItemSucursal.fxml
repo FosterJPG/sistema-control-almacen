@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -7,7 +8,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.RegistroItemSucursalController">
+<AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.RegistroItemSucursalController">
     <children>
 
         <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -32,7 +33,7 @@
          </menus>
         </MenuBar>
 
-        <VBox layoutX="150.0" layoutY="70.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="70.0">
+        <VBox alignment="CENTER_LEFT" layoutX="150.0" layoutY="70.0" spacing="20.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="70.0">
             <effect>
                 <DropShadow color="#00000026" offsetX="0.0" offsetY="5.0" radius="15.0" />
             </effect>
@@ -57,16 +58,15 @@
                 </VBox>
                 <Separator prefWidth="200.0" />
 
-                <GridPane hgap="20.0" vgap="25.0" VBox.vgrow="ALWAYS">
+                <GridPane hgap="20.0" prefHeight="276.0" prefWidth="614.0" vgap="25.0" VBox.vgrow="ALWAYS">
                     <columnConstraints>
                         <ColumnConstraints hgrow="NEVER" minWidth="160.0" />
                         <ColumnConstraints hgrow="ALWAYS" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="42.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="19.0" minHeight="6.0" prefHeight="6.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
 
@@ -76,45 +76,59 @@
                             </font>
                         </Label>
 
-                        <Label text="Descripcion:" textFill="#495057" GridPane.rowIndex="1">
+                        <Label text="Descripcion:" textFill="#495057" GridPane.rowIndex="2">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="txt_descripcion" maxWidth="453.0" prefHeight="25.0" prefWidth="453.0" promptText="Ej: Lapicero Azul Zebra" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-                        <Label text="Stock Mínimo:" textFill="#495057" GridPane.rowIndex="2">
-                            <font>
-                                <Font name="System Bold" size="14.0" />
-                            </font>
-                        </Label>
-                        <TextField fx:id="txt_stockMinimo" maxWidth="150.0" promptText="Ej: 10" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-
-                        <Label text="Stock Máximo:" textFill="#495057" GridPane.rowIndex="3">
-                            <font>
-                                <Font name="System Bold" size="14.0" />
-                            </font>
-                        </Label>
-                        <TextField fx:id="txt_stockMaximo" maxWidth="150.0" promptText="Ej: 200" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                  <TextField fx:id="txt_idItem" maxWidth="524.0" prefHeight="25.0" prefWidth="524.0" promptText="Ej: I001" GridPane.columnIndex="1" />
+                        <TextField fx:id="txt_descripcion" maxWidth="453.0" prefHeight="25.0" prefWidth="453.0" promptText="Ej: Lapicero Azul Zebra" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="txt_idItem" maxWidth="524.0" prefHeight="25.0" prefWidth="300.0" promptText="Ej: I001" GridPane.columnIndex="1" />
+                  <Button mnemonicParsing="false" onAction="#clicBuscar" prefHeight="13.0" prefWidth="115.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <effect>
+                        <InnerShadow offsetY="8.0">
+                           <color>
+                              <Color blue="1.0" green="1.0" opacity="0.48051947355270386" red="1.0" />
+                           </color>
+                        </InnerShadow>
+                     </effect>
+                  </Button>
 
                     </children>
                 </GridPane>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="txt_noEncontrado" prefHeight="17.0" prefWidth="438.0" textFill="#bc1c1c" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="25.0" prefWidth="312.0" />
+            <GridPane hgap="20.0" prefHeight="212.0" prefWidth="587.0" vgap="25.0">
+               <children>
+                  <Label text="Stock Mínimo:" textFill="#495057">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txt_stockMinimo" maxWidth="150.0" promptText="Ej: 10" GridPane.columnIndex="1" />
+                  <Label text="Stock Máximo:" textFill="#495057" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txt_stockMaximo" maxWidth="150.0" promptText="Ej: 200" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="NEVER" minWidth="160.0" />
+                  <ColumnConstraints hgrow="ALWAYS" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+            </GridPane>
 
                 <Separator prefWidth="200.0" />
 
                 <HBox alignment="CENTER_RIGHT" spacing="15.0">
-                    <children>
-                        <Button mnemonicParsing="false" onAction="#clicCancelar" prefHeight="35.0" prefWidth="87.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" />
-                        <Button mnemonicParsing="false" onAction="#clicGuardar" prefHeight="35.0" prefWidth="115.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Guardar">
-                     <effect>
-                        <InnerShadow offsetY="8.0">
-                           <color>
-                              <Color red="1.0" green="1.0" blue="1.0" opacity="0.48051947355270386" />
-                           </color>
-                        </InnerShadow>
-                     </effect></Button>
-                    </children>
                <effect>
                   <DropShadow offsetX="-3.0" offsetY="3.0">
                      <color>
@@ -122,6 +136,18 @@
                      </color>
                   </DropShadow>
                </effect>
+               <children>
+                        <Button mnemonicParsing="false" onAction="#clicCancelar" prefHeight="35.0" prefWidth="87.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Cancelar" />
+                        <Button mnemonicParsing="false" onAction="#clicGuardar" prefHeight="35.0" prefWidth="115.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Guardar">
+                     <effect>
+                        <InnerShadow offsetY="8.0">
+                           <color>
+                              <Color blue="1.0" green="1.0" opacity="0.48051947355270386" red="1.0" />
+                           </color>
+                        </InnerShadow>
+                     </effect>
+                  </Button>
+               </children>
                 </HBox>
 
             </children>

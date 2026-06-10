@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class SucursalesController implements Initializable {
+public class CatalogoSucursalesController implements Initializable {
 
     @FXML private TableView<Sucursal> tv_listado;
     @FXML private TableColumn<Sucursal, Integer> col_noSucursal;

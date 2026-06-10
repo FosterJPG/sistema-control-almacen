@@ -19,4 +19,9 @@ public class PartidaPresupuestal {
     public void setDescripcionPartida(String descripcionPartida) {
         this.descripcionPartida = descripcionPartida;
     }
+
+    @Override
+    public String toString() {
+        return descripcionPartida;
+    }
 }

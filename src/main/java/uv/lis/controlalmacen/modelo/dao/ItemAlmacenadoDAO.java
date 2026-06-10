@@ -38,7 +38,7 @@ public class ItemAlmacenadoDAO implements OperacionesCatalogoDAO<ItemAlmacenado,
     }
 
     @Override
-    public List<ItemAlmacenado> buscarTodos() throws SQLException, NullPointerException, ClassNotFoundException, IOException {
+    public List<ItemAlmacenado> buscarTodos() throws SQLException, NullPointerException, IOException, ClassNotFoundException {
         List<ItemAlmacenado> lista = new ArrayList<>();
 
         try(Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())){

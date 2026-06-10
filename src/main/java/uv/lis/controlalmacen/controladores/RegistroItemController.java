@@ -2,6 +2,8 @@ package uv.lis.controlalmacen.controladores;
 
 import java.io.IOException;
 
+import javafx.application.Platform;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 
@@ -21,88 +23,238 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import uv.lis.controlalmacen.modelo.dao.ItemDAO;
 import uv.lis.controlalmacen.modelo.dao.PartidaPresupuestalDAO;
 import uv.lis.controlalmacen.modelo.dto.Item;
 import uv.lis.controlalmacen.modelo.dto.PartidaPresupuestal;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
+import static uv.lis.controlalmacen.utilidades.Constantes.MSJ_ERROR_CARGA_DATOS;
+
 public class RegistroItemController implements Initializable {
 
     @FXML
+    private TextField txt_codigo;
+
+    @FXML
     private TextField txt_descripcion;
+
     @FXML
     private ComboBox<PartidaPresupuestal> cb_partidaPresupuestal;
-    
-    private ObservableList<PartidaPresupuestal> partidasPresupuestales;
-    
-    ItemDAO itemDAO = new ItemDAO();
-    PartidaPresupuestalDAO partidaPresupuestalDAO = new PartidaPresupuestalDAO();
-    
+
+    private final ItemDAO itemDAO = new ItemDAO();
+    private final PartidaPresupuestalDAO partidaPresupuestalDAO = new PartidaPresupuestalDAO();
+
+    private final ObservableList<PartidaPresupuestal> partidasPresupuestales =
+            FXCollections.observableArrayList();
+
+    private FilteredList<PartidaPresupuestal> partidasFiltradas;
+
+    private boolean seleccionandoPartida = false;
+
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle){
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        configurarComboPartidasPresupuestales();
         cargarInformacionPartidasPresupuestales();
     }
-        
-    private void cargarInformacionPartidasPresupuestales(){
-        try{
-            partidasPresupuestales = FXCollections.observableArrayList();
-            List<PartidaPresupuestal> partidasPresupuestalesDB = partidaPresupuestalDAO.buscarTodos();
-            partidasPresupuestales.addAll(partidasPresupuestalesDB);
-            cb_partidaPresupuestal.setItems(partidasPresupuestales);
-        }catch(SQLException ex){
-            UtilidadesFX.mostrarAlertaSimple("Error al consultar", 
-                                            ex.getMessage(), 
-                                            Alert.AlertType.ERROR);
-        }catch(NullPointerException n){
-            UtilidadesFX.mostrarAlertaSimple("Error al cargar", 
-                            "Lo sentimos, las partidas presupuestales "
-                            + "no pueden ser cargada en este momento,"
-                            + "porfavor inténtelo más tade", 
-                    Alert.AlertType.WARNING);
+
+    private void configurarComboPartidasPresupuestales() {
+        cb_partidaPresupuestal.setEditable(true);
+
+        partidasFiltradas = new FilteredList<>(partidasPresupuestales, partida -> true);
+        cb_partidaPresupuestal.setItems(partidasFiltradas);
+
+        cb_partidaPresupuestal.setConverter(new StringConverter<PartidaPresupuestal>() {
+            @Override
+            public String toString(PartidaPresupuestal partidaPresupuestal) {
+                if (partidaPresupuestal == null) {
+                    return "";
+                }
+                return partidaPresupuestal.getDescripcionPartida();
+            }
+
+            @Override
+            public PartidaPresupuestal fromString(String descripcion) {
+                return buscarPartidaPorDescripcionExacta(descripcion);
+            }
+        });
+
+        cb_partidaPresupuestal.valueProperty().addListener((observable, valorAnterior, valorNuevo) -> {
+            if (valorNuevo == null) {
+                return;
+            }
+
+            seleccionandoPartida = true;
+
+            Platform.runLater(() -> {
+                String descripcion = valorNuevo.getDescripcionPartida();
+                cb_partidaPresupuestal.getEditor().setText(descripcion);
+                cb_partidaPresupuestal.getEditor().positionCaret(descripcion.length());
+                partidasFiltradas.setPredicate(partida -> true);
+                seleccionandoPartida = false;
+            });
+        });
+
+        cb_partidaPresupuestal.getEditor().textProperty().addListener((observable, valorAnterior, valorNuevo) -> {
+            if (seleccionandoPartida) {
+                return;
+            }
+
+            filtrarPartidasPresupuestales(valorNuevo);
+        });
+    }
+
+    private void cargarInformacionPartidasPresupuestales() {
+        try {
+            List<PartidaPresupuestal> partidasPresupuestalesDB =
+                    partidaPresupuestalDAO.buscarTodos();
+
+            partidasPresupuestales.setAll(partidasPresupuestalesDB);
+
+        } catch (SQLException | IOException | ClassNotFoundException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al consultar",
+                    ex.getMessage(),
+                    Alert.AlertType.ERROR
+            );
+        } catch (NullPointerException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al cargar",
+                    "Lo sentimos, las partidas presupuestales no pueden ser cargadas en este momento, por favor inténtelo más tarde.",
+                    Alert.AlertType.WARNING
+            );
         }
+    }
+
+    private void filtrarPartidasPresupuestales(String textoBusqueda) {
+        String texto = textoBusqueda == null ? "" : textoBusqueda.trim().toLowerCase();
+
+        partidasFiltradas.setPredicate(partida -> {
+            if (texto.isEmpty()) {
+                return true;
+            }
+
+            return partida.getDescripcionPartida()
+                    .toLowerCase()
+                    .contains(texto);
+        });
+
+        if (cb_partidaPresupuestal.isFocused() && !partidasFiltradas.isEmpty()) {
+            Platform.runLater(() -> {
+                if (!cb_partidaPresupuestal.isShowing()) {
+                    cb_partidaPresupuestal.show();
+                }
+            });
+        }
+    }
+
+    private PartidaPresupuestal buscarPartidaPorDescripcionExacta(String descripcion) {
+        if (descripcion == null || descripcion.trim().isEmpty()) {
+            return null;
+        }
+
+        String descripcionBuscada = descripcion.trim();
+
+        for (PartidaPresupuestal partidaPresupuestal : partidasPresupuestales) {
+            if (partidaPresupuestal.getDescripcionPartida().equalsIgnoreCase(descripcionBuscada)) {
+                return partidaPresupuestal;
+            }
+        }
+
+        return null;
+    }
+
+    private PartidaPresupuestal obtenerPartidaSeleccionada() {
+        PartidaPresupuestal partidaSeleccionada = cb_partidaPresupuestal.getValue();
+        String textoEditor = cb_partidaPresupuestal.getEditor().getText();
+
+        if (partidaSeleccionada != null
+                && textoEditor != null
+                && partidaSeleccionada.getDescripcionPartida().equalsIgnoreCase(textoEditor.trim())) {
+            return partidaSeleccionada;
+        }
+
+        return buscarPartidaPorDescripcionExacta(textoEditor);
     }
 
     @FXML
     private void clicRegistrar(ActionEvent event) {
-        Item item = new Item();
-        item.setDescripcionItem(txt_descripcion.getText());
-        configurarSeleccionPartidaPresupuestal(item);
-        
-        try{
-            if(itemDAO.registrar(item)){
-            UtilidadesFX.mostrarAlertaSimple("Registro existoso", 
-                                            "El item se ha registrado en"
-                                            + " el catálogo correctamente", 
-                                            Alert.AlertType.INFORMATION);
-            }
-        }catch(SQLException ex){
-            UtilidadesFX.mostrarAlertaSimple("Error al registrar", 
-                                            ex.getMessage(), 
-                                            Alert.AlertType.ERROR);
-        }catch(NullPointerException n){
-            UtilidadesFX.mostrarAlertaSimple("Error al cargar", 
-                            "Lo sentimos, las partidas presupuestales "
-                            + "no pueden ser cargada en este momento,"
-                            + "porfavor inténtelo más tade", 
-                    Alert.AlertType.WARNING);
+        String codigo = txt_codigo.getText().trim().toUpperCase();
+        String descripcion = txt_descripcion.getText().trim();
+        PartidaPresupuestal partidaSeleccionada = obtenerPartidaSeleccionada();
+
+        if (codigo.isEmpty()) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Datos incompletos",
+                    "Ingrese el código del ítem.",
+                    Alert.AlertType.WARNING
+            );
+            return;
         }
-        
+
+        if (descripcion.isEmpty()) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Datos incompletos",
+                    "Ingrese la descripción del ítem.",
+                    Alert.AlertType.WARNING
+            );
+            return;
+        }
+
+        if (partidaSeleccionada == null) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Datos incompletos",
+                    "Seleccione una partida presupuestal válida.",
+                    Alert.AlertType.WARNING
+            );
+            return;
+        }
+
+        Item item = new Item();
+        item.setIdItem(codigo);
+        item.setDescripcionItem(descripcion);
+        item.setCodigoPartidaPresupuestal(partidaSeleccionada.getCodigo());
+
+        try {
+            if (itemDAO.registrar(item)) {
+                UtilidadesFX.mostrarAlertaSimple(
+                        "Registro exitoso",
+                        "El ítem se ha registrado en el catálogo correctamente.",
+                        Alert.AlertType.INFORMATION
+                );
+
+                limpiarCampos();
+            }
+
+        } catch (SQLException | IOException | ClassNotFoundException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al registrar",
+                    ex.getMessage(),
+                    Alert.AlertType.ERROR
+            );
+        } catch (NullPointerException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al cargar",
+                    "Lo sentimos, el ítem no puede ser registrado en este momento, por favor inténtelo más tarde.",
+                    Alert.AlertType.WARNING
+            );
+        }
     }
-    
-    
-    private void configurarSeleccionPartidaPresupuestal(Item item){
-        cb_partidaPresupuestal.valueProperty().addListener(new ChangeListener<PartidaPresupuestal>(){
-            @Override
-            public void changed(ObservableValue<? extends PartidaPresupuestal> observable, PartidaPresupuestal oldValue, PartidaPresupuestal newValue) {
-               if(newValue != null){
-                   item.setCodigoPartidaPresupuestal(newValue.getCodigo());
-               } 
-            } 
-        });
+
+    private void limpiarCampos() {
+        txt_codigo.clear();
+        txt_descripcion.clear();
+
+        seleccionandoPartida = true;
+
+        cb_partidaPresupuestal.getSelectionModel().clearSelection();
+        cb_partidaPresupuestal.setValue(null);
+        cb_partidaPresupuestal.getEditor().clear();
+        partidasFiltradas.setPredicate(partida -> true);
+
+        seleccionandoPartida = false;
     }
-    
-    
         
     //MÉTODOS DE NAVEGABILIDAD
         
@@ -122,87 +274,5 @@ public class RegistroItemController implements Initializable {
         }catch(IOException e){
             e.printStackTrace();
         }
-    }    
-    
-    @FXML
-    public void clicRegistrarFactura(ActionEvent actionEvent) {
-        try{
-            FXMLLoader loader = UtilidadesFX.cargarFXML("RegistroFactura");
-            Parent vista = loader.load();
-            Scene escena = new Scene(vista);
-
-            Stage stage = (Stage) txt_descripcion.getScene().getWindow();
-            stage.setTitle("Registrar Factura");
-            stage.setResizable(false);
-            stage.centerOnScreen();
-            
-            stage.setScene(escena);
-            stage.show();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
     }
-
-    @FXML
-    public void clicConsultarFacturas(ActionEvent actionEvent) {
-        try{
-            FXMLLoader loader = UtilidadesFX.cargarFXML("ListadoFacturas");
-            Parent vista = loader.load();
-            Scene escena = new Scene(vista);
-
-            Stage stage = (Stage) txt_descripcion.getScene().getWindow();
-            stage.setTitle("Consultar Factura");
-            stage.setResizable(false);
-            stage.centerOnScreen();
-            
-            stage.setScene(escena);
-            stage.show();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void clicRegistrarItem(ActionEvent actionEvent) {
-        try{
-            FXMLLoader loader = UtilidadesFX.cargarFXML("RegistroItem");
-            Parent vista = loader.load();
-            Scene escena = new Scene(vista);
-
-            Stage stage = (Stage) txt_descripcion.getScene().getWindow();
-            stage.setTitle("Registrar Item");
-            stage.setResizable(false);
-            stage.centerOnScreen();
-            
-            stage.setScene(escena);
-            stage.show();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    @FXML
-    public void clicConsultarItems(ActionEvent actionEvent) {
-        //
-    }
-
-    @FXML
-    public void clicConsultarBitacora(ActionEvent actionEvent) {
-        try{
-            FXMLLoader loader = UtilidadesFX.cargarFXML("BitacoraPedidos");
-            Parent vista = loader.load();
-            Scene escena = new Scene(vista);
-
-            Stage stage = (Stage) txt_descripcion.getScene().getWindow();
-            stage.setTitle("Consultar Bitacora");
-            stage.setResizable(false);
-            stage.centerOnScreen();
-            
-            stage.setScene(escena);
-            stage.show();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
 }

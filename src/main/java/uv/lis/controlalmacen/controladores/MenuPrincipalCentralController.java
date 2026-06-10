@@ -35,8 +35,8 @@ public class MenuPrincipalCentralController implements Initializable, MenuContro
             Stage stage = (Stage) lblBienvenida.getScene().getWindow();
             stage.setTitle(titulo);
             stage.setResizable(false);
-            stage.centerOnScreen();
             stage.setScene(escena);
+            stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

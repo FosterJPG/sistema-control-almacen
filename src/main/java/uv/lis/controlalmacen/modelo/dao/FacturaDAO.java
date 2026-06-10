@@ -8,7 +8,6 @@ import uv.lis.controlalmacen.modelo.dto.Sesion;
 import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
     }
 
     @Override
-    public List<Factura> buscarTodos() throws SQLException, NullPointerException, ClassNotFoundException, IOException {
+    public List<Factura> buscarTodos() throws SQLException, NullPointerException, IOException, ClassNotFoundException {
         List<Factura> lista = new ArrayList<>();
         try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
             String query = "SELECT folio, fecha_factura, rfc, razon_social, telefono, no_sucursal FROM vista_facturas_lista " +
