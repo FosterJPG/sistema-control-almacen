@@ -56,7 +56,7 @@
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect></Button>
-                  <Button mnemonicParsing="false" onAction="#clicConsultarFacturas" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: ##6c757d; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar facturas">
+                  <Button mnemonicParsing="false" onAction="#clicConsultarFacturas" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #dfe4e8; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar facturas">
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect></Button>
@@ -89,7 +89,7 @@
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect></Button>
-                  <Button mnemonicParsing="false" onAction="#clicConsultarItems" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: ##6c757d; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar items">
+                  <Button mnemonicParsing="false" onAction="#clicConsultarItems" prefHeight="35.0" prefWidth="180.0" style="-fx-background-color: #dfe4e8; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar items">
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect></Button>
@@ -118,14 +118,14 @@
                      </font>
                   </Label>
                   <Separator prefWidth="150.0" />
-                  <Button mnemonicParsing="false" onAction="#clicConsultarBitacora" prefHeight="35.0" prefWidth="205.0" style="-fx-background-color: #044c87; -fx-text-fill: #ffffff; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar bitacora de pedidos" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#clicConsultarBitacora" prefHeight="35.0" prefWidth="205.0" style="-fx-background-color: #044c87; -fx-text-fill: #ffffff; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar pedidos" textFill="WHITE">
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect>
                      <font>
                         <Font name="System Bold" size="11.0" />
                      </font></Button>
-                  <Button mnemonicParsing="false" onAction="#clicConsultarSolicitudes" prefHeight="35.0" prefWidth="205.0" style="-fx-background-color: ##6c757d; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar reporte de solicitudes">
+                  <Button mnemonicParsing="false" onAction="#clicConsultarSolicitudes" prefHeight="35.0" prefWidth="205.0" style="-fx-background-color: #dfe4e8; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Consultar solicitudes">
                      <effect>
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect>
@@ -143,7 +143,7 @@
                <children>
                   <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../imagenes/usuario (1).png" />
+                        <Image url="@../imagenes/usuario%20(1).png" />
                      </image>
                      <effect>
                         <DropShadow color="#00000043" />

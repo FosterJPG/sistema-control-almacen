@@ -16,112 +16,257 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author macol
- */
-public class ItemAlmacenadoDAO implements OperacionesCatalogoDAO<ItemAlmacenado,String>{
+import static uv.lis.controlalmacen.utilidades.Constantes.MSJ_SIN_CONEXION;
+
+public class ItemAlmacenadoDAO implements OperacionesCatalogoDAO<ItemAlmacenado, String> {
 
     @Override
-    public boolean registrar(ItemAlmacenado itemAlmacenado) throws SQLException, NullPointerException, ClassNotFoundException {
-        return true;
-    }
+    public boolean registrar(ItemAlmacenado itemAlmacenado)
+            throws SQLException, NullPointerException, IOException, ClassNotFoundException {
 
-    @Override
-    public boolean eliminar(ItemAlmacenado itemAlmacenado) throws SQLException, NullPointerException, ClassNotFoundException {
-        return true;
-    }
-
-    @Override
-    public boolean actualizar(ItemAlmacenado itemAlmacenado) throws SQLException, NullPointerException, ClassNotFoundException {
-        return true;
-    }
-
-    @Override
-    public List<ItemAlmacenado> buscarTodos() throws SQLException, NullPointerException, IOException, ClassNotFoundException {
-        List<ItemAlmacenado> lista = new ArrayList<>();
-
-        try(Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())){
-            if(conn != null) {
-                String consulta = "SELECT id_item, descripcion, existencias, stock_max, stock_min "
-                        + "FROM vista_items_almacenados WHERE no_sucursal = ?;";
-                PreparedStatement sentencia = conn.prepareStatement(consulta);
-                sentencia.setInt(1, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
-
-                ResultSet resultado = sentencia.executeQuery();
-                while (resultado.next()) {
-                    ItemAlmacenado itemAlmacenado = new ItemAlmacenado();
-                    itemAlmacenado.setIdItem(resultado.getString("id_item"));
-                    itemAlmacenado.setDescripcionItem(resultado.getString("descripcion"));
-                    itemAlmacenado.setExistencias(resultado.getInt("existencias"));
-                    itemAlmacenado.setStockMax(resultado.getInt("stock_max"));
-                    itemAlmacenado.setStockMin(resultado.getInt("stock_min"));
-                    lista.add(itemAlmacenado);
-                }
-                return lista;
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) {
+                throw new SQLException(MSJ_SIN_CONEXION);
             }
-            throw new SQLException("No hay conexión con el almacenamiento de información");
+
+            String consulta = "INSERT INTO almacena(id_item, no_sucursal, existencias, stock_min, stock_max) " +
+                    "VALUES (?, ?, ?, ?, ?)";
+
+            PreparedStatement sentencia = conn.prepareStatement(consulta);
+            sentencia.setString(1, itemAlmacenado.getIdItem());
+            sentencia.setInt(2, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
+            sentencia.setInt(3, itemAlmacenado.getExistencias());
+            sentencia.setInt(4, itemAlmacenado.getStockMin());
+            sentencia.setInt(5, itemAlmacenado.getStockMax());
+
+            return sentencia.executeUpdate() > 0;
         }
     }
 
     @Override
-    public ItemAlmacenado buscarUno(String id) throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+    public boolean eliminar(ItemAlmacenado itemAlmacenado)
+            throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) {
+                throw new SQLException(MSJ_SIN_CONEXION);
+            }
+
+            String consulta = "DELETE FROM almacena WHERE id_item = ? AND no_sucursal = ?";
+
+            PreparedStatement sentencia = conn.prepareStatement(consulta);
+            sentencia.setString(1, itemAlmacenado.getIdItem());
+            sentencia.setInt(2, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
+
+            return sentencia.executeUpdate() > 0;
+        }
+    }
+
+    @Override
+    public boolean actualizar(ItemAlmacenado itemAlmacenado)
+            throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) {
+                throw new SQLException(MSJ_SIN_CONEXION);
+            }
+
+            String consulta = "UPDATE almacena " +
+                    "SET existencias = ?, stock_min = ?, stock_max = ? " +
+                    "WHERE id_item = ? AND no_sucursal = ?";
+
+            PreparedStatement sentencia = conn.prepareStatement(consulta);
+            sentencia.setInt(1, itemAlmacenado.getExistencias());
+            sentencia.setInt(2, itemAlmacenado.getStockMin());
+            sentencia.setInt(3, itemAlmacenado.getStockMax());
+            sentencia.setString(4, itemAlmacenado.getIdItem());
+            sentencia.setInt(5, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
+
+            return sentencia.executeUpdate() > 0;
+        }
+    }
+
+    @Override
+    public List<ItemAlmacenado> buscarTodos()
+            throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+
+        List<ItemAlmacenado> lista = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) {
+                throw new SQLException(MSJ_SIN_CONEXION);
+            }
+
+            String consulta = "SELECT id_item, descripcion, codigo, partida_presupuestal, existencias, stock_max, stock_min " +
+                    "FROM vista_items_almacenados WHERE no_sucursal = ?";
+
+            PreparedStatement sentencia = conn.prepareStatement(consulta);
+            sentencia.setInt(1, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
+
+            ResultSet resultado = sentencia.executeQuery();
+
+            while (resultado.next()) {
+                ItemAlmacenado itemAlmacenado = new ItemAlmacenado();
+                itemAlmacenado.setIdItem(resultado.getString("id_item"));
+                itemAlmacenado.setDescripcionItem(resultado.getString("descripcion"));
+                itemAlmacenado.setCodigoPartidaPresupuestal(resultado.getInt("codigo"));
+                itemAlmacenado.setDescripcionPartida(resultado.getString("partida_presupuestal"));
+                itemAlmacenado.setExistencias(resultado.getInt("existencias"));
+                itemAlmacenado.setStockMax(resultado.getInt("stock_max"));
+                itemAlmacenado.setStockMin(resultado.getInt("stock_min"));
+                lista.add(itemAlmacenado);
+            }
+        }
+
+        return lista;
+    }
+
+    @Override
+    public ItemAlmacenado buscarUno(String id)
+            throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+
         ItemAlmacenado itemBuscado = new ItemAlmacenado();
 
-        try(Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())){
-            if(conn != null) {
-                String consulta = "SELECT id_item, descripcion, existencias, stock_max, stock_min "
-                        + "FROM vista_items_almacenados WHERE no_sucursal = ? AND id_item = ?;";
-
-                PreparedStatement sentencia = conn.prepareStatement(consulta);
-                sentencia.setInt(1, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
-                sentencia.setString(2,id);
-
-                ResultSet resultado = sentencia.executeQuery();
-                if(resultado.next()) {
-                    itemBuscado.setIdItem(resultado.getString("id_item"));
-                    itemBuscado.setDescripcionItem(resultado.getString("descripcion"));
-                    itemBuscado.setExistencias(resultado.getInt("existencias"));
-                    itemBuscado.setStockMax(resultado.getInt("stock_max"));
-                    itemBuscado.setStockMin(resultado.getInt("stock_min"));
-                }
-                return itemBuscado;
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) {
+                throw new SQLException(MSJ_SIN_CONEXION);
             }
-            throw new SQLException("No hay conexión con el almacenamiento de información");
+
+            String consulta = "SELECT id_item, descripcion, codigo, partida_presupuestal, existencias, stock_max, stock_min " +
+                    "FROM vista_items_almacenados WHERE no_sucursal = ? AND id_item = ?";
+
+            PreparedStatement sentencia = conn.prepareStatement(consulta);
+            sentencia.setInt(1, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
+            sentencia.setString(2, id);
+
+            ResultSet resultado = sentencia.executeQuery();
+
+            if (resultado.next()) {
+                itemBuscado.setIdItem(resultado.getString("id_item"));
+                itemBuscado.setDescripcionItem(resultado.getString("descripcion"));
+                itemBuscado.setCodigoPartidaPresupuestal(resultado.getInt("codigo"));
+                itemBuscado.setDescripcionPartida(resultado.getString("partida_presupuestal"));
+                itemBuscado.setExistencias(resultado.getInt("existencias"));
+                itemBuscado.setStockMax(resultado.getInt("stock_max"));
+                itemBuscado.setStockMin(resultado.getInt("stock_min"));
+            }
         }
+
+        return itemBuscado;
     }
 
+    public List<ItemAlmacenado> buscarPorStock(String stock)
+            throws SQLException, NullPointerException, IOException, ClassNotFoundException {
 
-    public List<ItemAlmacenado> buscarPorStock(String stock) throws SQLException, NullPointerException, IOException, ClassNotFoundException {
         List<ItemAlmacenado> lista = new ArrayList<>();
-        String consulta;
 
-        if("Sobre el máximo".equals(stock)){
-            consulta = "SELECT id_item, item, existencias, stock_min, stock_max " +
-                    "FROM vista_stock_maximo WHERE no_sucursal = ?;";
-        }else{
-            consulta = "SELECT id_item, item, existencias, stock_min, stock_max " +
-                    "FROM vista_stock_minimo WHERE no_sucursal = ?;";
-        }
-
-        try(Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())){
-            if(conn != null) {
-                PreparedStatement sentencia = conn.prepareStatement(consulta);
-                sentencia.setInt(1, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
-
-                ResultSet resultado = sentencia.executeQuery();
-                while (resultado.next()) {
-                    ItemAlmacenado itemAlmacenado = new ItemAlmacenado();
-                    itemAlmacenado.setIdItem(resultado.getString("id_item"));
-                    itemAlmacenado.setDescripcionItem(resultado.getString("item"));
-                    itemAlmacenado.setExistencias(resultado.getInt("existencias"));
-                    itemAlmacenado.setStockMax(resultado.getInt("stock_max"));
-                    itemAlmacenado.setStockMin(resultado.getInt("stock_min"));
-                    lista.add(itemAlmacenado);
-                }
-                return lista;
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) {
+                throw new SQLException(MSJ_SIN_CONEXION);
             }
-            throw new SQLException("No hay conexión con el almacenamiento de información");
+
+            String consulta;
+
+            if ("Sobre el máximo".equals(stock)) {
+                consulta = "SELECT id_item, descripcion, codigo, partida_presupuestal, existencias, stock_max, stock_min " +
+                        "FROM vista_items_almacenados " +
+                        "WHERE no_sucursal = ? AND existencias > stock_max";
+            } else {
+                consulta = "SELECT id_item, descripcion, codigo, partida_presupuestal, existencias, stock_max, stock_min " +
+                        "FROM vista_items_almacenados " +
+                        "WHERE no_sucursal = ? AND existencias < stock_min";
+            }
+
+            PreparedStatement sentencia = conn.prepareStatement(consulta);
+            sentencia.setInt(1, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
+
+            ResultSet resultado = sentencia.executeQuery();
+
+            while (resultado.next()) {
+                ItemAlmacenado itemAlmacenado = new ItemAlmacenado();
+                itemAlmacenado.setIdItem(resultado.getString("id_item"));
+                itemAlmacenado.setDescripcionItem(resultado.getString("descripcion"));
+                itemAlmacenado.setCodigoPartidaPresupuestal(resultado.getInt("codigo"));
+                itemAlmacenado.setDescripcionPartida(resultado.getString("partida_presupuestal"));
+                itemAlmacenado.setExistencias(resultado.getInt("existencias"));
+                itemAlmacenado.setStockMax(resultado.getInt("stock_max"));
+                itemAlmacenado.setStockMin(resultado.getInt("stock_min"));
+                lista.add(itemAlmacenado);
+            }
         }
+
+        return lista;
+    }
+
+    public List<ItemAlmacenado> buscarPorDescripcion(String descripcion)
+            throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+
+        List<ItemAlmacenado> lista = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) {
+                throw new SQLException(MSJ_SIN_CONEXION);
+            }
+
+            String consulta = "SELECT id_item, descripcion, codigo, partida_presupuestal, existencias, stock_max, stock_min " +
+                    "FROM vista_items_almacenados " +
+                    "WHERE no_sucursal = ? AND descripcion LIKE ?";
+
+            PreparedStatement sentencia = conn.prepareStatement(consulta);
+            sentencia.setInt(1, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
+            sentencia.setString(2, "%" + descripcion + "%");
+
+            ResultSet resultado = sentencia.executeQuery();
+
+            while (resultado.next()) {
+                ItemAlmacenado itemAlmacenado = new ItemAlmacenado();
+                itemAlmacenado.setIdItem(resultado.getString("id_item"));
+                itemAlmacenado.setDescripcionItem(resultado.getString("descripcion"));
+                itemAlmacenado.setCodigoPartidaPresupuestal(resultado.getInt("codigo"));
+                itemAlmacenado.setDescripcionPartida(resultado.getString("partida_presupuestal"));
+                itemAlmacenado.setExistencias(resultado.getInt("existencias"));
+                itemAlmacenado.setStockMax(resultado.getInt("stock_max"));
+                itemAlmacenado.setStockMin(resultado.getInt("stock_min"));
+                lista.add(itemAlmacenado);
+            }
+        }
+
+        return lista;
+    }
+
+    public List<ItemAlmacenado> buscarPorPartida(Integer codigoPartida)
+            throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+
+        List<ItemAlmacenado> lista = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) {
+                throw new SQLException(MSJ_SIN_CONEXION);
+            }
+
+            String consulta = "SELECT id_item, descripcion, codigo, partida_presupuestal, existencias, stock_max, stock_min " +
+                    "FROM vista_items_almacenados " +
+                    "WHERE no_sucursal = ? AND codigo = ?";
+
+            PreparedStatement sentencia = conn.prepareStatement(consulta);
+            sentencia.setInt(1, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
+            sentencia.setInt(2, codigoPartida);
+
+            ResultSet resultado = sentencia.executeQuery();
+
+            while (resultado.next()) {
+                ItemAlmacenado itemAlmacenado = new ItemAlmacenado();
+                itemAlmacenado.setIdItem(resultado.getString("id_item"));
+                itemAlmacenado.setDescripcionItem(resultado.getString("descripcion"));
+                itemAlmacenado.setCodigoPartidaPresupuestal(resultado.getInt("codigo"));
+                itemAlmacenado.setDescripcionPartida(resultado.getString("partida_presupuestal"));
+                itemAlmacenado.setExistencias(resultado.getInt("existencias"));
+                itemAlmacenado.setStockMax(resultado.getInt("stock_max"));
+                itemAlmacenado.setStockMin(resultado.getInt("stock_min"));
+                lista.add(itemAlmacenado);
+            }
+        }
+
+        return lista;
     }
 }

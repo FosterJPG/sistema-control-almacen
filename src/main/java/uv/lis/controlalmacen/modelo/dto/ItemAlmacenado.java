@@ -1,19 +1,21 @@
 package uv.lis.controlalmacen.modelo.dto;
 
 public class ItemAlmacenado {
-    private String descripcionItem;
+
     private String idItem;
+    private String descripcionItem;
+    private Integer codigoPartidaPresupuestal;
+    private String descripcionPartida;
     private Integer existencias;
     private Integer stockMin;
     private Integer stockMax;
-    private String descricionPartida;
 
-    public String getDescricionPartida() {
-        return descricionPartida;
+    public String getIdItem() {
+        return idItem;
     }
 
-    public void setDescricionPartida(String descricionPartida) {
-        this.descricionPartida = descricionPartida;
+    public void setIdItem(String idItem) {
+        this.idItem = idItem;
     }
 
     public String getDescripcionItem() {
@@ -24,6 +26,22 @@ public class ItemAlmacenado {
         this.descripcionItem = descripcionItem;
     }
 
+    public Integer getCodigoPartidaPresupuestal() {
+        return codigoPartidaPresupuestal;
+    }
+
+    public void setCodigoPartidaPresupuestal(Integer codigoPartidaPresupuestal) {
+        this.codigoPartidaPresupuestal = codigoPartidaPresupuestal;
+    }
+
+    public String getDescripcionPartida() {
+        return descripcionPartida;
+    }
+
+    public void setDescripcionPartida(String descripcionPartida) {
+        this.descripcionPartida = descripcionPartida;
+    }
+
     public Integer getExistencias() {
         return existencias;
     }
@@ -32,12 +50,12 @@ public class ItemAlmacenado {
         this.existencias = existencias;
     }
 
-    public String getIdItem() {
-        return idItem;
+    public Integer getStockMin() {
+        return stockMin;
     }
 
-    public void setIdItem(String idItem) {
-        this.idItem = idItem;
+    public void setStockMin(Integer stockMin) {
+        this.stockMin = stockMin;
     }
 
     public Integer getStockMax() {
@@ -46,13 +64,5 @@ public class ItemAlmacenado {
 
     public void setStockMax(Integer stockMax) {
         this.stockMax = stockMax;
-    }
-
-    public Integer getStockMin() {
-        return stockMin;
-    }
-
-    public void setStockMin(Integer stockMin) {
-        this.stockMin = stockMin;
     }
 }

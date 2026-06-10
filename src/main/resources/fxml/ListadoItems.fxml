@@ -68,27 +68,38 @@
             <Separator prefWidth="200.0" />
 
             <HBox alignment="CENTER_LEFT" spacing="15.0">
-               <children>
-                  <Label text="Filtro:">
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
-                  </Label>
-                  <ComboBox fx:id="cb_filtroStock" prefWidth="180.0" promptText="Nivel de Stock" visibleRowCount="3" />
-                  <ComboBox fx:id="cb_partidaPresupuestal" editable="true" prefWidth="150.0" promptText="Partida Presupuestal" />
-                  
-                  <Region HBox.hgrow="ALWAYS" />
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clicBuscarItemAlmacenado" prefHeight="13.0" prefWidth="59.0" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar" /> <TextField fx:id="txt_buscarIdProducto" prefWidth="250.0" promptText="Buscar producto por código" />
-               </children>
-            </HBox>
+                <children>
+
+                   <ComboBox fx:id="cb_filtroBusqueda" prefWidth="130.0" promptText="Buscar por" />
+
+                   <TextField fx:id="txt_buscarIdProducto" prefWidth="210.0" />
+
+                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clicBuscarItemAlmacenado" prefHeight="25.0" prefWidth="47.0" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="🔍" />
+
+                   <Region HBox.hgrow="ALWAYS" />
+                </children>
+             </HBox>
+            <TitledPane animated="false" expanded="false" style="-fx-background-color: white; -fx-border-color: white; -fx-background-insets: 0; -fx-border-insets: 0;" text="Filtros">
+               <content>
+                  <HBox prefHeight="55.0" prefWidth="769.0" spacing="10.0" style="-fx-background-color: transparent;">
+                     <children>
+      
+                         <ComboBox fx:id="cb_filtroStock" prefHeight="25.0" prefWidth="142.0" promptText="Nivel de Stock" visibleRowCount="3" />
+      
+                         <ComboBox fx:id="cb_partidaPresupuestal" editable="true" prefWidth="180.0" promptText="Buscar partida" />
+                     </children>
+                  </HBox>
+               </content>
+            </TitledPane>
 
             <TableView fx:id="tv_inventario" prefHeight="250.0" VBox.vgrow="ALWAYS">
               <columns>
-                <TableColumn fx:id="col_idItem" prefWidth="112.0" text="Código" />
-                <TableColumn fx:id="col_descripcion" prefWidth="319.0" text="Descripción" />
-                <TableColumn fx:id="col_existencias" prefWidth="103.0" text="Existencias" />
-                <TableColumn fx:id="col_stockMin" prefWidth="127.0" text="Stock Mínimo" />
-                <TableColumn fx:id="col_stockMax" prefWidth="106.0" text="Stock Máximo" />
+                <TableColumn fx:id="col_idItem" prefWidth="71.0" text="Código" />
+                  <TableColumn fx:id="col_partida" prefWidth="158.0" text="Partida Presupuestal" />
+                <TableColumn fx:id="col_descripcion" prefWidth="291.0" text="Descripción" />
+                <TableColumn fx:id="col_existencias" prefWidth="78.0" text="Existencias" />
+                <TableColumn fx:id="col_stockMin" prefWidth="84.0" text="Stock Mínimo" />
+                <TableColumn fx:id="col_stockMax" prefWidth="90.0" text="Stock Máximo" />
               </columns>
             </TableView>
 
