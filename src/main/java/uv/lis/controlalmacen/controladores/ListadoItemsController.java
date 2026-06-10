@@ -50,6 +50,8 @@ public class ListadoItemsController implements Initializable {
     private ObservableList<ItemAlmacenado> itemsAlmacenados;
 
     ItemAlmacenadoDAO itemAlmacenadoDAO = new ItemAlmacenadoDAO();
+    @FXML
+    private ComboBox<?> cb_partidaPresupuestal;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -153,9 +155,9 @@ public class ListadoItemsController implements Initializable {
                 Stage stage = new Stage();
                 stage.setTitle("Kárdex");
                 stage.setResizable(false);
-                stage.centerOnScreen();
-
                 stage.setScene(escena);
+
+                stage.centerOnScreen();
                 stage.initModality(Modality.APPLICATION_MODAL);
                 stage.showAndWait();
             } catch (IOException e) {
@@ -284,6 +286,10 @@ public class ListadoItemsController implements Initializable {
         }catch(IOException ex){
             ex.printStackTrace();
         }
+    }
+
+    @FXML
+    private void clicExportar(ActionEvent event) {
     }
 
 }

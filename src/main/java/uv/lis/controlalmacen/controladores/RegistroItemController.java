@@ -53,10 +53,32 @@ public class RegistroItemController implements Initializable {
 
     private boolean seleccionandoPartida = false;
 
+    private boolean esEdicion = false;
+    private Item itemEdicion;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         configurarComboPartidasPresupuestales();
         cargarInformacionPartidasPresupuestales();
+    }
+
+    public void inicializarRegistro() {
+        esEdicion = false;
+        itemEdicion = null;
+
+        txt_codigo.setDisable(false);
+    }
+
+    public void inicializarEdicion(Item item) {
+        esEdicion = true;
+        itemEdicion = item;
+
+        txt_codigo.setText(item.getIdItem());
+        txt_codigo.setDisable(true);
+
+        txt_descripcion.setText(item.getDescripcionItem());
+
+        seleccionarPartidaPorCodigo(item.getCodigoPartidaPresupuestal());
     }
 
     private void configurarComboPartidasPresupuestales() {
@@ -112,16 +134,16 @@ public class RegistroItemController implements Initializable {
 
             partidasPresupuestales.setAll(partidasPresupuestalesDB);
 
-        } catch (SQLException | IOException | ClassNotFoundException ex) {
+        } catch (SQLException ex) {
             UtilidadesFX.mostrarAlertaSimple(
                     "Error al consultar",
                     ex.getMessage(),
                     Alert.AlertType.ERROR
             );
-        } catch (NullPointerException ex) {
+        } catch (NullPointerException | IOException | ClassNotFoundException ex) {
             UtilidadesFX.mostrarAlertaSimple(
-                    "Error al cargar",
-                    "Lo sentimos, las partidas presupuestales no pueden ser cargadas en este momento, por favor inténtelo más tarde.",
+                    "Error al cargar partidas presupuestales",
+                    MSJ_ERROR_CARGA_DATOS,
                     Alert.AlertType.WARNING
             );
         }
@@ -178,6 +200,20 @@ public class RegistroItemController implements Initializable {
         return buscarPartidaPorDescripcionExacta(textoEditor);
     }
 
+    private void seleccionarPartidaPorCodigo(Integer codigo) {
+        if (codigo == null) {
+            return;
+        }
+
+        for (PartidaPresupuestal partida : partidasPresupuestales) {
+            if (partida.getCodigo().equals(codigo)) {
+                cb_partidaPresupuestal.getSelectionModel().select(partida);
+                cb_partidaPresupuestal.getEditor().setText(partida.getDescripcionPartida());
+                return;
+            }
+        }
+    }
+
     @FXML
     private void clicRegistrar(ActionEvent event) {
         String codigo = txt_codigo.getText().trim().toUpperCase();
@@ -216,27 +252,42 @@ public class RegistroItemController implements Initializable {
         item.setDescripcionItem(descripcion);
         item.setCodigoPartidaPresupuestal(partidaSeleccionada.getCodigo());
 
+
         try {
-            if (itemDAO.registrar(item)) {
+            boolean operacionExitosa;
+
+            if (esEdicion) {
+                operacionExitosa = itemDAO.actualizar(item);
+            } else {
+                operacionExitosa = itemDAO.registrar(item);
+            }
+
+            if (operacionExitosa) {
                 UtilidadesFX.mostrarAlertaSimple(
-                        "Registro exitoso",
-                        "El ítem se ha registrado en el catálogo correctamente.",
+                        esEdicion ? "Actualización exitosa" : "Registro exitoso",
+                        esEdicion
+                                ? "El ítem se ha actualizado correctamente."
+                                : "El ítem se ha registrado correctamente.",
                         Alert.AlertType.INFORMATION
                 );
+            }
 
+            if(esEdicion){
+                ((Stage)txt_codigo.getScene().getWindow()).close();
+            }else{
                 limpiarCampos();
             }
 
-        } catch (SQLException | IOException | ClassNotFoundException ex) {
+        } catch (SQLException ex) {
             UtilidadesFX.mostrarAlertaSimple(
                     "Error al registrar",
                     ex.getMessage(),
                     Alert.AlertType.ERROR
             );
-        } catch (NullPointerException ex) {
+        } catch (NullPointerException | IOException | ClassNotFoundException ex) {
             UtilidadesFX.mostrarAlertaSimple(
-                    "Error al cargar",
-                    "Lo sentimos, el ítem no puede ser registrado en este momento, por favor inténtelo más tarde.",
+                    "Error al subir la información del item",
+                    MSJ_ERROR_CARGA_DATOS,
                     Alert.AlertType.WARNING
             );
         }
@@ -256,23 +307,10 @@ public class RegistroItemController implements Initializable {
         seleccionandoPartida = false;
     }
         
-    //MÉTODOS DE NAVEGABILIDAD
+    //NAVEGABILIDAD
         
     @FXML
     private void clicCancelar(ActionEvent event) {
-        try{
-            FXMLLoader loader = UtilidadesFX.cargarFXML("MenuPrincipalEncargado");
-            Parent vista = loader.load();
-            Scene escena = new Scene(vista);
-            
-            Stage stage = (Stage) txt_descripcion.getScene().getWindow();
-            stage.setTitle("Menu Principal");
-            stage.centerOnScreen();
-            
-            stage.setScene(escena);
-            stage.show();
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+        ((Stage)txt_codigo.getScene().getWindow()).close();
     }
 }

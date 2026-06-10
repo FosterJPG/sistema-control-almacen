@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -7,7 +8,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.CatalagoItemsController">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.CatalagoItemsController">
    <children>
 
       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -50,18 +51,17 @@
 
             <Separator prefWidth="200.0" />
 
-            <HBox alignment="CENTER_LEFT" spacing="15.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="656.0" spacing="15.0">
                <children>
-                  <Label text="Filtrar por Partida:" textFill="#044c87">
+                  <Label text="Filtrar:" textFill="#044c87">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <ComboBox fx:id="cbPartidaPresupuestal" prefHeight="30.0" prefWidth="220.0" promptText="Todas las partidas..." />
+                  <ComboBox fx:id="cb_filtro" prefHeight="25.0" prefWidth="108.0" promptText="Buscar por..." />
+                  <ComboBox fx:id="cb_partidaPresupuestal" editable="true" prefHeight="30.0" prefWidth="214.0" promptText="Todas las partidas..." />
 
-                  <Region HBox.hgrow="ALWAYS" />
-
-                  <TextField fx:id="txtBuscar" prefHeight="30.0" prefWidth="205.0" promptText="Buscar por descripción..." />
+                  <TextField fx:id="txt_buscar" prefHeight="30.0" prefWidth="266.0" promptText="Buscar por código" />
 
                   <Button mnemonicParsing="false" onAction="#clicBuscar" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar">
                      <effect>
@@ -71,11 +71,11 @@
                </children>
             </HBox>
 
-            <TableView fx:id="tv_listado" prefHeight="250.0" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tv_listado" prefHeight="291.0" prefWidth="768.0" VBox.vgrow="ALWAYS">
                <columns>
-                  <TableColumn fx:id="col_idItem" prefWidth="80.0" text="ID Ítem" />
-                  <TableColumn fx:id="col_descripcion" prefWidth="420.0" text="Descripción del Producto" />
-                  <TableColumn fx:id="col_partida" prefWidth="267.0" text="Partida Presupuestal" />
+                  <TableColumn fx:id="col_idItem" prefWidth="80.0" text="Código" />
+                  <TableColumn fx:id="col_descripcion" prefWidth="336.0" text="Descripción" />
+                  <TableColumn fx:id="col_partida" prefWidth="351.0" text="Partida Presupuestal" />
                </columns>
                <effect>
                   <DropShadow offsetX="-3.0" offsetY="3.0">

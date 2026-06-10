@@ -134,4 +134,66 @@ public class ItemDAO implements OperacionesCatalogoDAO<Item, String>{
 
         return item;
     }
+
+    public List<Item> buscarPorPartida(Integer codigoPartida)
+            throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+
+        List<Item> items = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) {
+                throw new SQLException(MSJ_SIN_CONEXION);
+            }
+
+            String consulta = "SELECT id_item, item, codigo, partida_presupuestal " +
+                    "FROM vista_items_catalogo WHERE codigo = ? ORDER BY id_item";
+
+            PreparedStatement sentencia = conn.prepareStatement(consulta);
+            sentencia.setInt(1, codigoPartida);
+
+            ResultSet resultado = sentencia.executeQuery();
+
+            while (resultado.next()) {
+                Item item = new Item();
+                item.setIdItem(resultado.getString("id_item"));
+                item.setDescripcionItem(resultado.getString("item"));
+                item.setCodigoPartidaPresupuestal(resultado.getInt("codigo"));
+                item.setDescripcionPartida(resultado.getString("partida_presupuestal"));
+                items.add(item);
+            }
+        }
+
+        return items;
+    }
+
+    public List<Item> buscarPorDescripcion(String descripcionItem)
+            throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+
+        List<Item> items = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) {
+                throw new SQLException(MSJ_SIN_CONEXION);
+            }
+
+            String consulta = "SELECT id_item, item, codigo, partida_presupuestal " +
+                    "FROM vista_items_catalogo WHERE item LIKE ? ORDER BY id_item";
+
+            PreparedStatement sentencia = conn.prepareStatement(consulta);
+            sentencia.setString(1, "%" + descripcionItem + "%");
+
+            ResultSet resultado = sentencia.executeQuery();
+
+            while (resultado.next()) {
+                Item item = new Item();
+                item.setIdItem(resultado.getString("id_item"));
+                item.setDescripcionItem(resultado.getString("item"));
+                item.setCodigoPartidaPresupuestal(resultado.getInt("codigo"));
+                item.setDescripcionPartida(resultado.getString("partida_presupuestal"));
+                items.add(item);
+            }
+        }
+
+        return items;
+    }
 }
