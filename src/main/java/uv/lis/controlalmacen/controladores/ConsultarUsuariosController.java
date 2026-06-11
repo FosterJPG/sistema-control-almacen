@@ -83,7 +83,6 @@ public class ConsultarUsuariosController implements Initializable {
         ));
         cbRol.setValue("Todos los roles");
         cbRol.valueProperty().addListener((obs, ant, nuevo) -> aplicarFiltro());
-        txtBuscar.textProperty().addListener((obs, ant, nuevo) -> aplicarFiltro());
     }
 
     private void aplicarFiltro() {
