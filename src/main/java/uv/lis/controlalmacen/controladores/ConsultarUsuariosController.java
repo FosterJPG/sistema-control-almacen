@@ -135,8 +135,29 @@ public class ConsultarUsuariosController implements Initializable {
 
     @FXML
     private void clicModificar(ActionEvent event) {
-        UtilidadesFX.mostrarAlertaSimple("No disponible",
-                "La modificación de usuarios no está habilitada en esta versión.", Alert.AlertType.INFORMATION);
+        Usuario seleccionado = tvUsuarios.getSelectionModel().getSelectedItem();
+        if (seleccionado == null) {
+            UtilidadesFX.mostrarAlertaSimple("Sin selección",
+                    "Selecciona un usuario de la tabla para modificarlo.", Alert.AlertType.WARNING);
+            return;
+        }
+        try {
+            FXMLLoader loader = UtilidadesFX.cargarFXML("EditarUsuario");
+            Parent vista = loader.load();
+            EditarUsuarioController controller = loader.getController();
+            controller.cargarUsuario(seleccionado);
+            Stage modal = new Stage();
+            modal.setTitle("Modificar Usuario");
+            modal.setResizable(false);
+            modal.setScene(new Scene(vista));
+            modal.initModality(Modality.APPLICATION_MODAL);
+            modal.initOwner(tvUsuarios.getScene().getWindow());
+            modal.centerOnScreen();
+            modal.showAndWait();
+            cargarUsuarios();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

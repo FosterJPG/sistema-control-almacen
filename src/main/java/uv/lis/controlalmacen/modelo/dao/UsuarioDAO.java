@@ -70,6 +70,29 @@ public class UsuarioDAO {
         }
     }
 
+    public boolean actualizar(String idUsuario, byte[] passwordHash, int idRol)
+            throws SQLException, IOException, ClassNotFoundException {
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) throw new SQLException(MSJ_SIN_CONEXION);
+            if (passwordHash != null) {
+                try (PreparedStatement ps = conn.prepareStatement(
+                        "UPDATE usuario SET id_rol = ?, contrasenia = ? WHERE id_usuario = ?")) {
+                    ps.setInt(1, idRol);
+                    ps.setBytes(2, passwordHash);
+                    ps.setString(3, idUsuario);
+                    return ps.executeUpdate() > 0;
+                }
+            } else {
+                try (PreparedStatement ps = conn.prepareStatement(
+                        "UPDATE usuario SET id_rol = ? WHERE id_usuario = ?")) {
+                    ps.setInt(1, idRol);
+                    ps.setString(2, idUsuario);
+                    return ps.executeUpdate() > 0;
+                }
+            }
+        }
+    }
+
     private Usuario mapear(ResultSet rs) throws SQLException {
         Empleado empleado = new Empleado();
         empleado.setNoEmpleado(rs.getInt("no_empleado"));
