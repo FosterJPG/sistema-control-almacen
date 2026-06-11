@@ -42,7 +42,15 @@ public class DetallesSolicitud {
     }
 
     private Integer existencias;
+    private Integer codigoPartida;
+    private String descripcionPartida;
 
     public Integer getExistencias() { return existencias; }
     public void setExistencias(Integer existencias) { this.existencias = existencias; }
+
+    public Integer getCodigoPartida() { return codigoPartida; }
+    public void setCodigoPartida(Integer codigoPartida) { this.codigoPartida = codigoPartida; }
+
+    public String getDescripcionPartida() { return descripcionPartida; }
+    public void setDescripcionPartida(String descripcionPartida) { this.descripcionPartida = descripcionPartida; }
 }

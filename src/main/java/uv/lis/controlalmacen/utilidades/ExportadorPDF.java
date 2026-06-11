@@ -15,7 +15,9 @@ import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import uv.lis.controlalmacen.modelo.dto.DetallesFactura;
+import uv.lis.controlalmacen.modelo.dto.DetallesSolicitud;
 import uv.lis.controlalmacen.modelo.dto.Factura;
+import uv.lis.controlalmacen.modelo.dto.Solicitud;
 
 import java.io.FileNotFoundException;
 import java.text.DateFormat;
@@ -138,6 +140,88 @@ public class ExportadorPDF {
         documento.add(new Paragraph("TOTAL GENERAL DEL REPORTE: "+ String.format("$%,.2f", totalGeneral)).setBold()
                 .setFontSize(16).setTextAlignment(TextAlignment.RIGHT));
         documento.close();
+    }
+
+    public static void generarReporteEgresos(String rutaPdf, List<Solicitud> solicitudes,
+                                             LocalDate fechaInicio, LocalDate fechaFinal, String partidaFiltrada)
+            throws FileNotFoundException {
+        PdfDocument pdf = new PdfDocument(new PdfWriter(rutaPdf));
+        Document documento = new Document(pdf, PageSize.A4.rotate());
+        documento.setMargins(40, 40, 40, 40);
+
+        agregarLogoYTitulo(documento, "REPORTE DE EGRESOS");
+        agregarPeriodo(documento, fechaInicio, fechaFinal);
+
+        TreeMap<Integer, Map<Integer, List<DetallesSolicitud>>> partidas = new TreeMap<>();
+        Map<Integer, Solicitud> porNumero = new LinkedHashMap<>();
+
+        for (Solicitud solicitud : solicitudes) {
+            if (solicitud.getDetallesSolicitud() == null) continue;
+            porNumero.put(solicitud.getNoSolicitud(), solicitud);
+            for (DetallesSolicitud d : solicitud.getDetallesSolicitud()) {
+                if (partidaFiltrada != null && !partidaFiltrada.isBlank()
+                        && !d.getDescripcionPartida().equalsIgnoreCase(partidaFiltrada)) continue;
+                Integer codigo = d.getCodigoPartida();
+                partidas.putIfAbsent(codigo, new LinkedHashMap<>());
+                partidas.get(codigo).putIfAbsent(solicitud.getNoSolicitud(), new ArrayList<>());
+                partidas.get(codigo).get(solicitud.getNoSolicitud()).add(d);
+            }
+        }
+
+        int totalGeneral = 0;
+
+        for (Integer codigoPartida : partidas.keySet()) {
+            Map<Integer, List<DetallesSolicitud>> solicitudesPartida = partidas.get(codigoPartida);
+            String descripcionPartida = solicitudesPartida.values().iterator().next().get(0).getDescripcionPartida();
+
+            agregarTituloPartida(documento, codigoPartida, descripcionPartida);
+
+            int totalPartida = 0;
+
+            for (Integer noSolicitud : solicitudesPartida.keySet()) {
+                List<DetallesSolicitud> detalles = solicitudesPartida.get(noSolicitud);
+                Solicitud solicitud = porNumero.get(noSolicitud);
+
+                agregarDatosSolicitud(documento, solicitud);
+
+                Table tabla = crearTablaEgresos();
+                int subtotal = 0;
+                for (DetallesSolicitud d : detalles) {
+                    tabla.addCell(crearCelda(d.getDescripcionItem() != null ? d.getDescripcionItem() : ""));
+                    tabla.addCell(crearCelda(String.valueOf(d.getCantidad())));
+                    tabla.addCell(crearCelda(d.getUso() != null ? d.getUso() : ""));
+                    subtotal += d.getCantidad();
+                }
+                documento.add(tabla);
+                documento.add(new Paragraph("Subtotal solicitud-partida: " + subtotal + " unidades")
+                        .setBold().setTextAlignment(TextAlignment.RIGHT).setMarginBottom(15));
+                totalPartida += subtotal;
+            }
+
+            documento.add(new Paragraph("TOTAL PARTIDA " + descripcionPartida.toUpperCase() + ": "
+                    + totalPartida + " unidades")
+                    .setBold().setFontColor(COLOR_ENCABEZADO).setTextAlignment(TextAlignment.RIGHT).setMarginBottom(20));
+            totalGeneral += totalPartida;
+        }
+
+        documento.add(new Paragraph("TOTAL GENERAL DEL REPORTE: " + totalGeneral + " unidades")
+                .setBold().setFontSize(16).setTextAlignment(TextAlignment.RIGHT));
+        documento.close();
+    }
+
+    private static void agregarDatosSolicitud(Document documento, Solicitud solicitud) {
+        documento.add(new Paragraph("Solicitud #" + solicitud.getNoSolicitud()).setBold().setMarginBottom(2));
+        documento.add(new Paragraph("Solicitante: " + solicitud.getNombreCompleto()).setMarginBottom(2));
+        documento.add(new Paragraph("Fecha: " + FORMATO_FECHA.format(solicitud.getFechaSolicitud())).setMarginBottom(8));
+    }
+
+    private static Table crearTablaEgresos() {
+        Table tabla = new Table(new float[]{6, 2, 4});
+        tabla.setWidth(UnitValue.createPercentValue(100));
+        tabla.addHeaderCell(crearHeaderTabla("Descripción"));
+        tabla.addHeaderCell(crearHeaderTabla("Cantidad"));
+        tabla.addHeaderCell(crearHeaderTabla("Uso / Destino"));
+        return tabla;
     }
 
     private static void agregarLogoYTitulo(Document documento, String titulo) {

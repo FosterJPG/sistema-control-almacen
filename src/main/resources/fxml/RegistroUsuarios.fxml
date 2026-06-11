@@ -6,76 +6,71 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<fx:root id="AnchorPane" prefHeight="400.0" prefWidth="600.0" type="AnchorPane" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.RegistroUsuariosController">
+<AnchorPane prefHeight="460.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.RegistroUsuariosController">
    <children>
-
-       <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-           <menus>
-               <Menu mnemonicParsing="false" text="Ingresos">
-                   <items>
-                       <MenuItem mnemonicParsing="false" text="Registrar factura" />
-                       <MenuItem mnemonicParsing="false" text="Consultar facturas" />
-                   </items>
-               </Menu>
-               <Menu mnemonicParsing="false" text="Items">
-                   <items>
-                       <MenuItem mnemonicParsing="false" text="Registrar item" />
-                       <MenuItem mnemonicParsing="false" text="Consultar items" />
-                   </items>
-               </Menu>
-               <Menu mnemonicParsing="false" text="Pedidos">
-                   <items>
-                       <MenuItem mnemonicParsing="false" text="Consultar bitácora" />
-                   </items>
-               </Menu>
-           </menus>
-       </MenuBar>
-
-      <VBox layoutX="115.0" layoutY="61.0" prefHeight="319.0" prefWidth="370.0" style="-fx-background-color: white; -fx-background-radius: 10;;">
+      <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <effect>
+            <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
+         </effect>
+         <padding>
+            <Insets bottom="25.0" left="30.0" right="30.0" top="20.0" />
+         </padding>
          <children>
-            <Label prefHeight="87.0" prefWidth="324.0" text="Gestión de Credenciales de Acceso">
-               <font>
-                  <Font name="System Bold" size="20.0" />
-               </font>
+
+            <Label text="Gestión de Credenciales de Acceso" textFill="#044c87">
+               <font><Font name="System Bold" size="18.0" /></font>
             </Label>
-            <Label prefHeight="86.0" prefWidth="330.0" text="Seleccione un empleado y asigne un identificador numérico único y su contraseña" textAlignment="CENTER" wrapText="true" />
-            <GridPane alignment="CENTER" prefHeight="187.0" prefWidth="324.0">
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints maxHeight="36.0" minHeight="10.0" prefHeight="31.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="37.0" minHeight="11.0" prefHeight="34.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="39.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="29.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
+            <Label text="Seleccione un empleado y asígnele un usuario y contraseña." textFill="#666666" wrapText="true">
+               <font><Font size="13.0" /></font>
+            </Label>
+
+            <Separator />
+
+            <GridPane hgap="15.0" vgap="12.0">
+               <columnConstraints>
+                  <ColumnConstraints halignment="RIGHT" minWidth="140.0" prefWidth="140.0" />
+                  <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
+               </columnConstraints>
                <children>
-                  <ComboBox prefWidth="150.0" GridPane.halignment="RIGHT" />
-                  <Label text="Empleado:" />
-                  <Label text="ID de Usuario:" GridPane.rowIndex="2" />
-                  <Label prefHeight="17.0" prefWidth="185.0" text="Rol de Usuario:" GridPane.rowIndex="1" />
-                  <ComboBox prefWidth="150.0" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                  <TextField maxWidth="-Infinity" prefHeight="25.0" prefWidth="148.0" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                  <PasswordField maxWidth="-Infinity" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                  <Label text="Contraseña:" GridPane.rowIndex="3" />
-                  <Label text="Confirmar Contraseña:" GridPane.rowIndex="4" />
-                  <PasswordField maxWidth="-Infinity" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                  <Label text="Empleado:" GridPane.rowIndex="0">
+                     <font><Font name="System Bold" size="13.0" /></font>
+                  </Label>
+                  <ComboBox fx:id="cbEmpleado" prefHeight="30.0" prefWidth="270.0" promptText="Seleccionar empleado..." GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                  <Label text="Rol de usuario:" GridPane.rowIndex="1">
+                     <font><Font name="System Bold" size="13.0" /></font>
+                  </Label>
+                  <ComboBox fx:id="cbRol" prefHeight="30.0" prefWidth="270.0" promptText="Seleccionar rol..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                  <Label text="ID de usuario:" GridPane.rowIndex="2">
+                     <font><Font name="System Bold" size="13.0" /></font>
+                  </Label>
+                  <TextField fx:id="txtIdUsuario" prefHeight="30.0" prefWidth="270.0" promptText="Ej: JuanP22-7" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                  <Label text="Contraseña:" GridPane.rowIndex="3">
+                     <font><Font name="System Bold" size="13.0" /></font>
+                  </Label>
+                  <PasswordField fx:id="pfPassword" prefHeight="30.0" prefWidth="270.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                  <Label text="Confirmar contraseña:" GridPane.rowIndex="4">
+                     <font><Font name="System Bold" size="13.0" /></font>
+                  </Label>
+                  <PasswordField fx:id="pfConfirmar" prefHeight="30.0" prefWidth="270.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                </children>
             </GridPane>
-            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+
+            <HBox alignment="CENTER_RIGHT" spacing="10.0">
                <children>
-                  <Button alignment="TOP_LEFT" mnemonicParsing="false" text="Limpiar" />
-                  <Button mnemonicParsing="false" text="Finalizar Registro" />
+                  <Button mnemonicParsing="false" onAction="#clicLimpiar" prefHeight="32.0" prefWidth="100.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Limpiar" />
+                  <Button mnemonicParsing="false" onAction="#clicGuardar" prefHeight="32.0" prefWidth="150.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Finalizar Registro">
+                     <effect>
+                        <InnerShadow color="#ffffff40" offsetY="3.0" />
+                     </effect>
+                  </Button>
                </children>
             </HBox>
+
          </children>
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
-         <effect>
-            <DropShadow color="#00000047" offsetX="2.0" offsetY="5.0" />
-         </effect>
       </VBox>
    </children>
-</fx:root>
+</AnchorPane>

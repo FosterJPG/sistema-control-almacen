@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="700.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.ConsultarSolicitudesController">
+   <children>
+      <VBox layoutX="19.0" layoutY="40.0" prefHeight="637.0" prefWidth="813.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="23.0" AnchorPane.leftAnchor="19.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="40.0">
+         <effect>
+            <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
+         </effect>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <children>
+
+            <Label styleClass="label-titulo" text="Consulta de Solicitudes (Egresos)">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label text="Historial completo de solicitudes de materiales realizadas por departamentos." textFill="#666666" />
+
+            <Separator prefWidth="200.0" />
+            <VBox spacing="5.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" minHeight="50.0" spacing="15.0">
+                     <children>
+                        <TextField fx:id="txt_buscar" prefHeight="31.0" prefWidth="169.0" promptText="No. de solicitud" />
+                        <Button mnemonicParsing="false" onAction="#clicBuscarPorNumero" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="&#128269;">
+                           <effect>
+                              <InnerShadow color="#ffffff5c" offsetY="9.0" />
+                           </effect>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#clicVerTodos" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Ver todos" />
+                     </children>
+                  </HBox>
+                  <Accordion>
+                    <panes>
+                      <TitledPane animated="false" style="-fx-background-color: white; -fx-border-color: white; -fx-background-insets: 0; -fx-border-insets: 0;" text="Filtros">
+                           <content>
+                              <HBox prefHeight="37.0" prefWidth="769.0" spacing="10.0" style="-fx-background-color: transparent;">
+                                 <children>
+                                    <ComboBox fx:id="cb_partida" prefHeight="31.0" prefWidth="214.0" promptText="Partida presupuestal" />
+                                    <DatePicker fx:id="dp_fechaInicial" prefHeight="31.0" prefWidth="157.0" promptText="Fecha inicio" />
+                                    <DatePicker fx:id="dp_fechaFinal" prefHeight="31.0" prefWidth="158.0" promptText="Fecha final" />
+                                 </children>
+                              </HBox>
+                           </content>
+                      </TitledPane>
+                    </panes>
+                  </Accordion>
+               </children>
+            </VBox>
+
+            <TableView fx:id="tv_solicitudes" prefHeight="250.0" VBox.vgrow="ALWAYS">
+              <columns>
+                <TableColumn fx:id="col_noSolicitud" prefWidth="100.0" text="No. Solicitud" />
+                <TableColumn fx:id="col_fecha" prefWidth="120.0" text="Fecha" />
+                <TableColumn fx:id="col_empleado" prefWidth="220.0" text="Solicitante" />
+                <TableColumn fx:id="col_departamento" prefWidth="340.0" text="Departamento" />
+              </columns>
+            </TableView>
+
+            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#clicGenerarReporte" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Generar reporte de egresos">
+                     <effect>
+                        <InnerShadow color="#00000021" height="11.0" offsetY="-8.0" radius="7.5" />
+                     </effect>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#clicRegresar" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar" />
+               </children>
+               <effect>
+                  <DropShadow color="#0000006f" offsetX="-3.0" offsetY="3.0" />
+               </effect>
+            </HBox>
+
+         </children>
+      </VBox>
+      <MenuBar layoutY="-2.0" prefHeight="32.0" prefWidth="850.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="Solicitudes">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Consultar solicitudes" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</AnchorPane>
