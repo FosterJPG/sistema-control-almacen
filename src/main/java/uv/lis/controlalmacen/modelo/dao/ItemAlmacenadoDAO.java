@@ -85,7 +85,7 @@ public class ItemAlmacenadoDAO implements OperacionesCatalogoDAO<ItemAlmacenado,
             }
 
             String consulta = "SELECT COUNT(*) AS total " +
-                    "FROM vista_bitacora_bajas " +
+                    "FROM bitacora_bajas " +
                     "WHERE id_item = ? AND no_sucursal = ?";
 
             PreparedStatement sentencia = conn.prepareStatement(consulta);
@@ -250,11 +250,13 @@ public class ItemAlmacenadoDAO implements OperacionesCatalogoDAO<ItemAlmacenado,
             String consulta;
 
             if ("Sobre el máximo".equals(stock)) {
-                consulta = "SELECT id_item, item, codigo, partida_presupuestal, existencias, stock_min, stock_max " +
-                        "FROM vista_stock_maximo WHERE no_sucursal = ?";
+                consulta = "SELECT a.id_item, i.descripcion AS item, a.existencias, a.stock_min, a.stock_max " +
+                        "FROM almacena a JOIN item i ON a.id_item = i.id_item " +
+                        "WHERE a.no_sucursal = ? AND a.existencias > a.stock_max";
             } else {
-                consulta = "SELECT id_item, item, codigo, partida_presupuestal, existencias, stock_min, stock_max " +
-                        "FROM vista_stock_minimo WHERE no_sucursal = ?";
+                consulta = "SELECT a.id_item, i.descripcion AS item, a.existencias, a.stock_min, a.stock_max " +
+                        "FROM almacena a JOIN item i ON a.id_item = i.id_item " +
+                        "WHERE a.no_sucursal = ? AND a.existencias < a.stock_min";
             }
 
             PreparedStatement sentencia = conn.prepareStatement(consulta);
@@ -266,8 +268,6 @@ public class ItemAlmacenadoDAO implements OperacionesCatalogoDAO<ItemAlmacenado,
                 ItemAlmacenado itemAlmacenado = new ItemAlmacenado();
                 itemAlmacenado.setIdItem(resultado.getString("id_item"));
                 itemAlmacenado.setDescripcionItem(resultado.getString("item"));
-                itemAlmacenado.setCodigoPartidaPresupuestal(resultado.getInt("codigo"));
-                itemAlmacenado.setDescripcionPartida(resultado.getString("partida_presupuestal"));
                 itemAlmacenado.setExistencias(resultado.getInt("existencias"));
                 itemAlmacenado.setStockMax(resultado.getInt("stock_max"));
                 itemAlmacenado.setStockMin(resultado.getInt("stock_min"));
