@@ -32,6 +32,7 @@ import java.util.ResourceBundle;
 
 public class RegistroSolicitudController implements Initializable {
 
+    @FXML private Label lb_errorMaterial;
     @FXML private DatePicker dp_fecha;
     @FXML private TextField txt_empleado;
     @FXML private TextField txt_sucursal;
@@ -78,17 +79,19 @@ public class RegistroSolicitudController implements Initializable {
 
     @FXML
     private void clicBuscarItem(ActionEvent event) {
+        limpiarErrorMaterial();
         String id = txt_idItem.getText().trim();
         if (id.isEmpty()) {
-            UtilidadesFX.mostrarAlertaSimple("Campo vacío", "Ingresa el código del ítem.", Alert.AlertType.WARNING);
+            mostrarErrorMaterial("Ingrese el código del ítem.");
+            txt_descripcionItem.clear();
             return;
         }
         try {
             ItemAlmacenado item = itemAlmacenadoDAO.buscarUno(id);
-            if (item.getIdItem() == null) {
-                UtilidadesFX.mostrarAlertaSimple("No encontrado",
-                        "No existe un ítem con el código \"" + id + "\" en esta sucursal.", Alert.AlertType.WARNING);
+            if (item == null || item.getIdItem() == null) {
+                mostrarErrorMaterial("No existe un ítem con ese código en esta sucursal.");
                 txt_descripcionItem.clear();
+                return;
             } else {
                 txt_descripcionItem.setText(item.getDescripcionItem());
             }
@@ -100,19 +103,29 @@ public class RegistroSolicitudController implements Initializable {
 
     @FXML
     private void clicAgregarItem(ActionEvent event) {
+        limpiarErrorMaterial();
         String id = txt_idItem.getText().trim();
         String descripcion = txt_descripcionItem.getText().trim();
         String cantidadStr = txt_cantidad.getText().trim();
         String uso = txt_uso.getText().trim();
 
-        if (id.isEmpty() || descripcion.isEmpty()) {
-            UtilidadesFX.mostrarAlertaSimple("Datos incompletos",
-                    "Busca un ítem válido antes de agregarlo.", Alert.AlertType.WARNING);
+        if (id == null || id.trim().isEmpty()) {
+            mostrarErrorMaterial("Ingrese el código del ítem.");
             return;
         }
-        if (cantidadStr.isEmpty() || uso.isEmpty()) {
-            UtilidadesFX.mostrarAlertaSimple("Datos incompletos",
-                    "La cantidad y el uso son obligatorios.", Alert.AlertType.WARNING);
+
+        if (descripcion == null || descripcion.trim().isEmpty()) {
+            mostrarErrorMaterial("Busque un ítem válido antes de agregarlo.");
+            return;
+        }
+
+        if (cantidadStr == null || cantidadStr.trim().isEmpty()) {
+            mostrarErrorMaterial("Ingrese la cantidad solicitada.");
+            return;
+        }
+
+        if (uso == null || uso.trim().isEmpty()) {
+            mostrarErrorMaterial("Ingrese el uso o destino del material.");
             return;
         }
 
@@ -121,16 +134,14 @@ public class RegistroSolicitudController implements Initializable {
             cantidad = Integer.parseInt(cantidadStr);
             if (cantidad <= 0) throw new NumberFormatException();
         } catch (NumberFormatException e) {
-            UtilidadesFX.mostrarAlertaSimple("Cantidad inválida",
-                    "La cantidad debe ser un número entero positivo.", Alert.AlertType.WARNING);
+            mostrarErrorMaterial("La cantidad debe ser un número entero positivo.");
             return;
         }
 
         // Verificar que el ítem no esté ya en la lista
         boolean duplicado = listaItems.stream().anyMatch(d -> d.getIdItem().equals(id));
         if (duplicado) {
-            UtilidadesFX.mostrarAlertaSimple("Ítem duplicado",
-                    "El ítem \"" + id + "\" ya está en la lista.", Alert.AlertType.WARNING);
+            mostrarErrorMaterial("El ítem ya fue agregado a la solicitud.");
             return;
         }
 
@@ -146,10 +157,10 @@ public class RegistroSolicitudController implements Initializable {
 
     @FXML
     private void clicQuitarItem(ActionEvent event) {
+        limpiarErrorMaterial();
         DetallesSolicitud seleccionado = tv_items.getSelectionModel().getSelectedItem();
         if (seleccionado == null) {
-            UtilidadesFX.mostrarAlertaSimple("Sin selección",
-                    "Selecciona un ítem de la tabla para quitarlo.", Alert.AlertType.WARNING);
+            mostrarErrorMaterial("Seleccione un ítem de la tabla para quitarlo.");
             return;
         }
         listaItems.remove(seleccionado);
@@ -158,13 +169,11 @@ public class RegistroSolicitudController implements Initializable {
     @FXML
     private void clicGuardarSolicitud(ActionEvent event) {
         if (dp_fecha.getValue() == null) {
-            UtilidadesFX.mostrarAlertaSimple("Fecha requerida",
-                    "Selecciona la fecha de la solicitud.", Alert.AlertType.WARNING);
+            mostrarErrorMaterial("Seleccione la fecha de la solicitud.");
             return;
         }
         if (listaItems.isEmpty()) {
-            UtilidadesFX.mostrarAlertaSimple("Sin ítems",
-                    "Agrega al menos un ítem antes de enviar la solicitud.", Alert.AlertType.WARNING);
+            mostrarErrorMaterial("Agregue al menos un ítem antes de enviar la solicitud.");
             return;
         }
 
@@ -186,6 +195,14 @@ public class RegistroSolicitudController implements Initializable {
             UtilidadesFX.mostrarAlertaSimple("Error de conexión",
                     "No se pudo conectar a la base de datos.", Alert.AlertType.ERROR);
         }
+    }
+
+    private void mostrarErrorMaterial(String mensaje) {
+        lb_errorMaterial.setText(mensaje);
+    }
+
+    private void limpiarErrorMaterial() {
+        lb_errorMaterial.setText("");
     }
 
     @FXML
@@ -239,6 +256,7 @@ public class RegistroSolicitudController implements Initializable {
         txt_descripcionItem.clear();
         txt_cantidad.clear();
         txt_uso.clear();
+        limpiarErrorMaterial();
         txt_idItem.requestFocus();
     }
 }

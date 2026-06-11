@@ -273,13 +273,82 @@ public class SolicitudDAO {
         return lista;
     }
 
-    public void aprobar(int noSolicitud) throws SQLException, IOException, ClassNotFoundException {
+    public void aprobar(int noSolicitud, List<DetallesSolicitud> detalles)
+            throws SQLException, IOException, ClassNotFoundException {
+
+        String consultaVerificarSolicitud =
+                "SELECT aprobada FROM solicitud WHERE no_solicitud = ? FOR UPDATE";
+
+        String consultaActualizarCantidadEntregada =
+                "UPDATE detalles_solicitud "
+                        + "SET cantidad_entregada = ? "
+                        + "WHERE no_solicitud = ? "
+                        + "AND id_item = ?";
+
+        String consultaAprobarSolicitud =
+                "UPDATE solicitud SET aprobada = TRUE WHERE no_solicitud = ?";
+
         try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
-            if (conn == null) throw new SQLException("No se pudo conectar a la base de datos");
-            try (PreparedStatement ps = conn.prepareStatement(
-                    "UPDATE solicitud SET aprobada = TRUE WHERE no_solicitud = ?")) {
-                ps.setInt(1, noSolicitud);
-                ps.executeUpdate();
+
+            if (conn == null) {
+                throw new SQLException("No se pudo conectar a la base de datos");
+            }
+
+            try {
+                conn.setAutoCommit(false);
+
+                try (PreparedStatement psVerificar = conn.prepareStatement(consultaVerificarSolicitud)) {
+                    psVerificar.setInt(1, noSolicitud);
+
+                    try (ResultSet rs = psVerificar.executeQuery()) {
+                        if (!rs.next()) {
+                            throw new SQLException("La solicitud no existe.");
+                        }
+
+                        if (rs.getBoolean("aprobada")) {
+                            throw new SQLException("La solicitud ya fue aprobada anteriormente.");
+                        }
+                    }
+                }
+
+                try (PreparedStatement psDetalle = conn.prepareStatement(consultaActualizarCantidadEntregada)) {
+                    for (DetallesSolicitud detalle : detalles) {
+
+                        int cantidadEntregar = detalle.getCantidadEntregar() != null
+                                ? detalle.getCantidadEntregar()
+                                : 0;
+
+                        psDetalle.setInt(1, cantidadEntregar);
+                        psDetalle.setInt(2, noSolicitud);
+                        psDetalle.setString(3, detalle.getIdItem());
+
+                        int filasAfectadas = psDetalle.executeUpdate();
+
+                        if (filasAfectadas == 0) {
+                            throw new SQLException("No se pudo actualizar la cantidad entregada del ítem: "
+                                    + detalle.getIdItem());
+                        }
+                    }
+                }
+
+                try (PreparedStatement psSolicitud = conn.prepareStatement(consultaAprobarSolicitud)) {
+                    psSolicitud.setInt(1, noSolicitud);
+
+                    int filasAfectadas = psSolicitud.executeUpdate();
+
+                    if (filasAfectadas == 0) {
+                        throw new SQLException("No se pudo aprobar la solicitud.");
+                    }
+                }
+
+                conn.commit();
+
+            } catch (SQLException e) {
+                conn.rollback();
+                throw e;
+
+            } finally {
+                conn.setAutoCommit(true);
             }
         }
     }

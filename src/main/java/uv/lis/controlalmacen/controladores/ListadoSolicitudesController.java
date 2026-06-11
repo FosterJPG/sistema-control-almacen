@@ -116,15 +116,16 @@ public class ListadoSolicitudesController implements Initializable {
             AceptarSolicitudModalController controller = loader.getController();
             controller.cargarSolicitud(seleccionada);
 
-            Stage modal = new Stage();
-            modal.setTitle("Atender Solicitud #" + seleccionada.getNoSolicitud());
-            modal.setScene(new Scene(vista));
-            modal.setResizable(false);
-            modal.initModality(Modality.APPLICATION_MODAL);
-            modal.initOwner(tvSolicitudes.getScene().getWindow());
-            modal.showAndWait();
+            Stage ventana = new Stage();
+            ventana.setTitle("Atender Solicitud #" + seleccionada.getNoSolicitud());
+            ventana.setScene(new Scene(vista));
+            ventana.setResizable(false);
 
-            cargarSolicitudes();
+            ventana.setOnHidden(e -> {
+                cargarSolicitudes();
+            });
+
+            ventana.show();
         } catch (IOException e) {
             e.printStackTrace();
         }

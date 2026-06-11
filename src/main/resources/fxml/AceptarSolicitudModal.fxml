@@ -81,7 +81,7 @@
                         <TableColumn fx:id="colDescripcion" prefWidth="164.0" text="Descripción del Artículo" />
                         <TableColumn fx:id="colStockActual" prefWidth="140.0" text="Stock Actual" />
                         <TableColumn fx:id="colCantSolicitada" prefWidth="99.0" text="Cant. Solicitada" />
-                        <TableColumn fx:id="colCantEntregar" prefWidth="116.0" style="-fx-font-weight: bold; -fx-background-color: #e8f4f8;" text="Cant. a Entregar" />
+                        <TableColumn fx:id="colCantEntregar" prefWidth="116.0" text="Cant. a Entregar" />
                   <TableColumn fx:id="colUso" prefWidth="196.0" text="Uso" />
                     </columns>
                     <placeholder>
@@ -95,15 +95,6 @@
                     <children>
 
                         <HBox HBox.hgrow="ALWAYS" />
-
-                        <Button fx:id="btnRechazar" mnemonicParsing="false" onAction="#clicRechazar" prefHeight="35.0" prefWidth="120.0" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4;" text="Rechazar">
-                     <effect>
-                        <InnerShadow offsetY="9.0">
-                           <color>
-                              <Color blue="1.0" green="1.0" opacity="0.4761904776096344" red="1.0" />
-                           </color>
-                        </InnerShadow>
-                     </effect></Button>
                         <Button fx:id="btnProcesarEntrega" mnemonicParsing="false" onAction="#clicAceptar" prefHeight="35.0" prefWidth="200.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 4;" text="Aceptar">
                      <effect>
                         <InnerShadow offsetY="9.0">
