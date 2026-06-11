@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import uv.lis.controlalmacen.logica.CargadorEscenas;
 import uv.lis.controlalmacen.modelo.dao.PartidaPresupuestalDAO;
 import uv.lis.controlalmacen.modelo.dao.SolicitudDAO;
 import uv.lis.controlalmacen.modelo.dto.DetallesSolicitud;
@@ -271,12 +272,13 @@ public class ConsultarSolicitudesController implements Initializable {
     @FXML
     public void clicRegresar(ActionEvent event) {
         try {
-            FXMLLoader loader = UtilidadesFX.cargarFXML("MenuPrincipalEncargado");
+            String fxmlMenu = CargadorEscenas.cargarEscenarSegunRol(Sesion.getUsuarioActual().getRol());
+            FXMLLoader loader = UtilidadesFX.cargarFXML(fxmlMenu);
             Parent vista = loader.load();
             MenuController controller = loader.getController();
             controller.cargarDatos();
             Stage stage = (Stage) txt_buscar.getScene().getWindow();
-            stage.setTitle("Menu principal");
+            stage.setTitle("Menú principal");
             stage.setResizable(false);
             stage.setScene(new Scene(vista));
             stage.centerOnScreen();

@@ -53,6 +53,21 @@
                         <InnerShadow color="#ffffff40" offsetY="3.0" />
                      </effect>
                   </Button>
+      
+                      <HBox alignment="CENTER_RIGHT" prefHeight="25.0" prefWidth="338.0" spacing="15.0">
+                          <children>
+                              <Button mnemonicParsing="false" onAction="#clicFacturas" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Facturas">
+                                  <effect>
+                              <InnerShadow color="#ffffff40" offsetY="3.0" />
+                           </effect>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#clicSolicitudes" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Solicitudes">
+                                  <effect>
+                              <InnerShadow color="#ffffff40" offsetY="3.0" />
+                           </effect>
+                              </Button>
+                          </children>
+                      </HBox>
                     </children>
                 </HBox>
 
@@ -86,6 +101,8 @@
                         </Button>
                     </children>
                 </HBox>
+
+                <Separator />
 
             </children>
         </VBox>

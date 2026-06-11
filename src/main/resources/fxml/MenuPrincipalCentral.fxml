@@ -35,13 +35,13 @@
          <font><Font name="System Bold" size="24.0" /></font>
       </Label>
 
-      <!-- Contenedor principal con dos secciones lado a lado -->
+      <!-- Contenedor principal -->
       <HBox spacing="20.0"
             AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="40.0"
             AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="75.0">
 
-         <!-- ===================== SECCIÓN CATÁLOGOS (izquierda) ===================== -->
-         <VBox alignment="TOP_CENTER" spacing="20.0" prefWidth="580.0"
+         <!-- ===================== SECCIÓN CATÁLOGOS ===================== -->
+         <VBox alignment="TOP_CENTER" spacing="20.0" HBox.hgrow="ALWAYS"
                style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #e0e0e0; -fx-border-radius: 15;">
             <effect>
                <DropShadow color="#00000026" offsetX="0.0" offsetY="5.0" radius="15.0" />
@@ -172,65 +172,6 @@
                      </Button>
                   </children>
                </HBox>
-
-            </children>
-         </VBox>
-
-         <!-- ===================== SECCIÓN CONSULTAS (derecha) ===================== -->
-         <VBox alignment="TOP_CENTER" spacing="20.0" prefWidth="360.0"
-               style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-color: #e0e0e0; -fx-border-radius: 15;">
-            <effect>
-               <DropShadow color="#00000026" offsetX="0.0" offsetY="5.0" radius="15.0" />
-            </effect>
-            <padding>
-               <Insets bottom="25.0" left="20.0" right="20.0" top="20.0" />
-            </padding>
-            <children>
-
-               <!-- Título Consultas -->
-               <Label text="Consultas" textFill="#1a365d">
-                  <font><Font name="System Bold" size="18.0" /></font>
-               </Label>
-
-               <Separator />
-
-               <Label text="Consulte y gestione documentos del sistema." textFill="#888888" wrapText="true">
-                  <font><Font size="13.0" /></font>
-               </Label>
-
-               <!-- Facturas -->
-               <Button fx:id="btnFacturas" mnemonicParsing="false" onAction="#clicFacturas" prefHeight="135.0" prefWidth="145.0"
-                       style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
-                  <graphic>
-                     <VBox alignment="CENTER" spacing="12.0">
-                        <children>
-                           <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                              <image><Image url="@../imagenes/factura.png" /></image>
-                           </ImageView>
-                           <Label text="Facturas" textFill="#1a365d">
-                              <font><Font name="System Bold" size="14.0" /></font>
-                           </Label>
-                        </children>
-                     </VBox>
-                  </graphic>
-               </Button>
-
-               <!-- Solicitudes -->
-               <Button fx:id="btnSolicitudes" mnemonicParsing="false" onAction="#clicSolicitudes" prefHeight="135.0" prefWidth="145.0"
-                       style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
-                  <graphic>
-                     <VBox alignment="CENTER" spacing="12.0">
-                        <children>
-                           <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
-                              <image><Image url="@../imagenes/solicitud.png" /></image>
-                           </ImageView>
-                           <Label text="Solicitudes" textFill="#1a365d">
-                              <font><Font name="System Bold" size="14.0" /></font>
-                           </Label>
-                        </children>
-                     </VBox>
-                  </graphic>
-               </Button>
 
             </children>
          </VBox>
