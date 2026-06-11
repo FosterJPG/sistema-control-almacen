@@ -137,12 +137,12 @@ public class CatalogoPartidasController implements Initializable {
             FXMLLoader loader = UtilidadesFX.cargarFXML("RegistroPartida");
             Parent vista = loader.load();
 
-            //RegistroPartidaController controller = loader.getController();
+            RegistroPartidaController controller = loader.getController();
 
             if (esEdicion) {
-                //controller.inicializarEdicion(partidaPresupuestal);
+                controller.inicializarEdicion(partidaPresupuestal);
             } else {
-                //controller.inicializarRegistro();
+                controller.inicializarRegistro();
             }
 
             Scene escena = new Scene(vista);

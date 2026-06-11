@@ -9,58 +9,152 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import uv.lis.controlalmacen.modelo.dao.PartidaPresupuestalDAO;
 import uv.lis.controlalmacen.modelo.dto.PartidaPresupuestal;
+import uv.lis.controlalmacen.utilidades.Constantes;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class RegistroPartidaController implements Initializable {
 
-    @FXML private Label lbl_titulo;
-    @FXML private TextField txt_descripcion;
+    @FXML
+    private Label lbl_titulo;
+    @FXML
+    private TextField txt_descripcion;
+    @FXML
+    private Label lbl_mensajeError;
 
-    private PartidaPresupuestal partidaEditar;
-    private final PartidaPresupuestalDAO dao = new PartidaPresupuestalDAO();
+    private final PartidaPresupuestalDAO partidaPresupuestalDAO = new PartidaPresupuestalDAO();
+
+    private boolean esEdicion = false;
+    private PartidaPresupuestal partidaEdicion;
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {}
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        lbl_mensajeError.setWrapText(true);
+        lbl_mensajeError.setText("");
+    }
 
-    public void setPartida(PartidaPresupuestal partida) {
-        this.partidaEditar = partida;
+    public void inicializarRegistro() {
+        esEdicion = false;
+        partidaEdicion = null;
+
+        lbl_titulo.setText("Registrar Partida Presupuestal");
+        txt_descripcion.clear();
+        lbl_mensajeError.setText("");
+    }
+
+    public void inicializarEdicion(PartidaPresupuestal partidaPresupuestal) {
+        if (partidaPresupuestal == null) {
+            return;
+        }
+
+        esEdicion = true;
+        partidaEdicion = partidaPresupuestal;
+
         lbl_titulo.setText("Modificar Partida Presupuestal");
-        txt_descripcion.setText(partida.getDescripcionPartida());
+        txt_descripcion.setText(partidaPresupuestal.getDescripcionPartida());
+        lbl_mensajeError.setText("");
     }
 
     @FXML
     private void clicGuardar(ActionEvent event) {
-        String descripcion = txt_descripcion.getText().trim();
+        lbl_mensajeError.setText("");
+
+        String descripcion = obtenerDescripcion();
+
         if (descripcion.isEmpty()) {
-            UtilidadesFX.mostrarAlertaSimple("Campo vacío", "La descripción no puede estar vacía.", Alert.AlertType.WARNING);
+            lbl_mensajeError.setText("Ingrese la descripción de la partida presupuestal.");
             return;
         }
+
+        if (esEdicion) {
+            guardarEdicion(descripcion);
+        } else {
+            guardarRegistro(descripcion);
+        }
+    }
+
+    private void guardarRegistro(String descripcion) {
         try {
-            if (partidaEditar == null) {
-                PartidaPresupuestal nueva = new PartidaPresupuestal();
-                nueva.setDescripcionPartida(descripcion);
-                dao.registrar(nueva);
-                UtilidadesFX.mostrarAlertaSimple("Registrada", "Partida registrada correctamente.", Alert.AlertType.INFORMATION);
-            } else {
-                partidaEditar.setDescripcionPartida(descripcion);
-                dao.actualizar(partidaEditar);
-                UtilidadesFX.mostrarAlertaSimple("Actualizada", "Partida actualizada correctamente.", Alert.AlertType.INFORMATION);
+            PartidaPresupuestal partidaPresupuestal = new PartidaPresupuestal();
+            partidaPresupuestal.setDescripcionPartida(descripcion);
+
+            if (partidaPresupuestalDAO.registrar(partidaPresupuestal)) {
+                UtilidadesFX.mostrarAlertaSimple(
+                        "Registro exitoso",
+                        "La partida presupuestal se registró correctamente.",
+                        Alert.AlertType.INFORMATION
+                );
+
+                ((Stage) txt_descripcion.getScene().getWindow()).close();
             }
-            cerrar();
-        } catch (Exception e) {
-            UtilidadesFX.mostrarAlertaSimple("Error", "No se pudo guardar la partida:\n" + e.getMessage(), Alert.AlertType.ERROR);
+
+        } catch (SQLException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al registrar",
+                    ex.getMessage(),
+                    Alert.AlertType.WARNING
+            );
+
+        } catch (NullPointerException | ClassNotFoundException | IOException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al cargar partida a registrar",
+                    Constantes.MSJ_ERROR_CARGA_DATOS,
+                    Alert.AlertType.WARNING
+            );
+        }
+    }
+
+    private void guardarEdicion(String descripcion) {
+        if (partidaEdicion == null || partidaEdicion.getCodigo() == null) {
+            lbl_mensajeError.setText("No hay una partida presupuestal seleccionada para modificar.");
+            return;
+        }
+
+        try {
+            PartidaPresupuestal partidaPresupuestal = new PartidaPresupuestal();
+            partidaPresupuestal.setCodigo(partidaEdicion.getCodigo());
+            partidaPresupuestal.setDescripcionPartida(descripcion);
+
+            if (partidaPresupuestalDAO.actualizar(partidaPresupuestal)) {
+                UtilidadesFX.mostrarAlertaSimple(
+                        "Actualización exitosa",
+                        "La partida presupuestal se actualizó correctamente.",
+                        Alert.AlertType.INFORMATION
+                );
+
+                ((Stage) txt_descripcion.getScene().getWindow()).close();
+            }
+
+        }catch (SQLException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al editar",
+                    ex.getMessage(),
+                    Alert.AlertType.WARNING
+            );
+
+        } catch (NullPointerException | ClassNotFoundException | IOException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al cargar partida a editar",
+                    Constantes.MSJ_ERROR_CARGA_DATOS,
+                    Alert.AlertType.WARNING
+            );
         }
     }
 
     @FXML
     private void clicCancelar(ActionEvent event) {
-        cerrar();
+        ((Stage) txt_descripcion.getScene().getWindow()).close();
     }
 
-    private void cerrar() {
-        ((Stage) txt_descripcion.getScene().getWindow()).close();
+    private String obtenerDescripcion() {
+        if (txt_descripcion.getText() == null) {
+            return "";
+        }
+
+        return txt_descripcion.getText().trim();
     }
 }

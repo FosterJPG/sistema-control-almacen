@@ -41,6 +41,8 @@
                                    promptText="Ej. Material de oficina" HBox.hgrow="ALWAYS" />
                     </children>
                 </HBox>
+                
+                <Label fx:id="lbl_mensajeError" prefHeight="25.0" wrapText="true" textFill="#b50202" />
 
                 <HBox alignment="CENTER_RIGHT" spacing="10.0">
                     <children>
