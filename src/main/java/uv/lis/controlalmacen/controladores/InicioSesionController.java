@@ -64,9 +64,7 @@ public class InicioSesionController implements Initializable {
             Sesion.setUsuarioActual(usuarioLogin);
             cargarEscena(rutaMenu);
         } catch (NoSuchAlgorithmException | SQLException | IOException | ClassNotFoundException ex) {
-            UtilidadesFX.mostrarAlertaSimple("Error", "Ocurrió un error al intentar iniciar sesion. " +
-                    "Causa (Para el dev.): " + ex.getMessage(), Alert.AlertType.ERROR);
-            // ESTO DE CAUSA PARA EL DEV SE VA A QUITAR, ES DE MIENTRAS POR SI NOS SALE UN ERROR Y SABER
+            UtilidadesFX.mostrarAlertaSimple("Error", "Ocurrió un error al intentar iniciar sesión. Por favor, inténtelo de nuevo.", Alert.AlertType.ERROR);
         } catch (UsuarioNoEncontradoException ex) {
             UtilidadesFX.mostrarAlertaSimple("Error", ex.getMessage(), Alert.AlertType.ERROR);
         }

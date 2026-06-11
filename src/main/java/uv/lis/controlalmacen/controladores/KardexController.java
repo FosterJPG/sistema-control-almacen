@@ -71,7 +71,7 @@ public class KardexController implements Initializable {
             UtilidadesFX.mostrarAlertaSimple("Error al cargar",
                     "Lo sentimos, los kardex items de la sucursal "
                             + "no pueden ser cargados en este momento,"
-                            + "porfavor inténtelo más tade",
+                            + " por favor inténtelo más tarde",
                     Alert.AlertType.WARNING);
         }
     }

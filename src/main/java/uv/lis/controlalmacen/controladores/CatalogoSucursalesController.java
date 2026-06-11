@@ -258,6 +258,8 @@ public class CatalogoSucursalesController implements Initializable {
             Sesion.getUsuarioActual().getEmpleado().setDepartamento(departamento);
             FXMLLoader loader = UtilidadesFX.cargarFXML("ListadoFacturas");
             Parent vista = loader.load();
+            ListadoFacturasController controller = loader.getController();
+            controller.setOrigenCatalogoSucursales(true);
             Stage stage = (Stage) tv_listado.getScene().getWindow();
             stage.setTitle("Listado de Facturas");
             stage.setResizable(false);
@@ -265,7 +267,7 @@ public class CatalogoSucursalesController implements Initializable {
             stage.centerOnScreen();
             stage.show();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            UtilidadesFX.mostrarAlertaSimple("Error de navegación", "No se pudo abrir el listado de facturas.", Alert.AlertType.ERROR);
         }
     }
 
@@ -282,6 +284,8 @@ public class CatalogoSucursalesController implements Initializable {
             Sesion.getUsuarioActual().getEmpleado().setDepartamento(departamento);
             FXMLLoader loader = UtilidadesFX.cargarFXML("ConsultarSolicitudes");
             Parent vista = loader.load();
+            ConsultarSolicitudesController controller = loader.getController();
+            controller.setOrigenCatalogoSucursales(true);
             Stage stage = (Stage) tv_listado.getScene().getWindow();
             stage.setTitle("Consultar Solicitudes");
             stage.setResizable(false);
@@ -289,7 +293,7 @@ public class CatalogoSucursalesController implements Initializable {
             stage.centerOnScreen();
             stage.show();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            UtilidadesFX.mostrarAlertaSimple("Error de navegación", "No se pudo abrir las solicitudes.", Alert.AlertType.ERROR);
         }
     }
 
