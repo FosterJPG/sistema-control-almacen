@@ -152,7 +152,7 @@ public class MenuPrincipalEncargadoController implements Initializable, MenuCont
     @FXML
     public void clicGestorEmpleados(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = UtilidadesFX.cargarFXML("GestorEmpleados");
+            FXMLLoader loader = UtilidadesFX.cargarFXML("CatalogoEmpleados");
             Parent vista = loader.load();
             Scene escena = new Scene(vista);
 
