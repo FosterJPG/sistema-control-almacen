@@ -46,6 +46,10 @@ public class ItemDAO implements OperacionesCatalogoDAO<Item, String>{
                 throw new SQLException(MSJ_SIN_CONEXION);
             }
 
+            if (estaAlmacenado(conn, item.getIdItem())){
+                throw new SQLException("No se puede eliminar el item del catalogo porque ha sido almacenado.");
+            }
+
             String consulta = "DELETE FROM item WHERE id_item = ?";
 
             PreparedStatement sentencia = conn.prepareStatement(consulta);
@@ -54,6 +58,20 @@ public class ItemDAO implements OperacionesCatalogoDAO<Item, String>{
             return sentencia.executeUpdate() > 0;
 
         }
+    }
+
+    private boolean estaAlmacenado(Connection conn, String codigoItem) throws SQLException {
+
+        String consulta = "SELECT COUNT(*) AS total FROM almacena WHERE id_item = ?";
+        PreparedStatement sentencia = conn.prepareStatement(consulta);
+        sentencia.setString(1, codigoItem);
+
+        ResultSet rs = sentencia.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("total") > 0;
+        }
+
+        return false;
     }
 
     @Override
