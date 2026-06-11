@@ -228,7 +228,9 @@ public class RegistroSolicitudController implements Initializable {
             } catch (Exception ignored) {}
         }
         if (!alertas.isEmpty()) {
-            UtilidadesFX.mostrarAlertaStockMinimo(alertas);
+            UtilidadesFX.mostrarAlertaStock("Alerta de stock",
+                    "Los siguientes ítems quedaron por debajo del stock mínimo:",
+                    alertas);
         }
     }
 

@@ -12,23 +12,54 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
-    @Override
-    public boolean registrar(Factura factura) throws SQLException, NullPointerException, ClassNotFoundException {
-        return false;
+public class FacturaDAO {
+
+    public boolean registrar(Factura factura)
+            throws SQLException, NullPointerException, ClassNotFoundException, IOException {
+
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) {
+                throw new SQLException(Constantes.MSJ_SIN_CONEXION);
+            }
+
+            try (PreparedStatement drop = conn.prepareStatement(
+                    "DROP TEMPORARY TABLE IF EXISTS temp_items_factura")) {
+                drop.executeUpdate();
+            }
+
+            try (PreparedStatement create = conn.prepareStatement(
+                    "CREATE TEMPORARY TABLE temp_items_factura (" +
+                            "id_item VARCHAR(5) NOT NULL, " +
+                            "cantidad INT NOT NULL, " +
+                            "costo DOUBLE NOT NULL" +
+                            ")")) {
+                create.executeUpdate();
+            }
+
+            String insertTemp = "INSERT INTO temp_items_factura(id_item, cantidad, costo) VALUES (?, ?, ?)";
+
+            try (PreparedStatement psTemp = conn.prepareStatement(insertTemp)) {
+                for (DetallesFactura detalle : factura.getDetallesFactura()) {
+                    psTemp.setString(1, detalle.getIdItem());
+                    psTemp.setInt(2, detalle.getCantidad());
+                    psTemp.setDouble(3, detalle.getCostoUnitario());
+                    psTemp.executeUpdate();
+                }
+            }
+
+            try (CallableStatement cs = conn.prepareCall("{CALL registrar_factura(?, ?, ?, ?)}")) {
+                cs.setString(1, factura.getFolio());
+                cs.setDate(2, new java.sql.Date(factura.getFecha().getTime()));
+                cs.setString(3, factura.getRfc());
+                cs.setInt(4, factura.getNoSucursal());
+                cs.execute();
+            }
+
+            return true;
+        }
     }
 
-    @Override
-    public boolean eliminar(Factura factura) throws SQLException, NullPointerException, ClassNotFoundException {
-        return false;
-    }
 
-    @Override
-    public boolean actualizar(Factura factura) throws SQLException, NullPointerException, ClassNotFoundException {
-        return false;
-    }
-
-    @Override
     public List<Factura> buscarTodos() throws SQLException, NullPointerException, IOException, ClassNotFoundException {
         List<Factura> lista = new ArrayList<>();
         try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
@@ -92,9 +123,10 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
         return lista;
     }
 
-    @Override
+
     public Factura buscarUno(String folio)
             throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+
         Factura factura  = new Factura();
 
         try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
@@ -217,5 +249,26 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
         }
 
         return lista;
+    }
+
+    public boolean existeFolio(String folio)
+            throws SQLException, ClassNotFoundException, IOException, NullPointerException{
+
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) {
+                throw new SQLException(Constantes.MSJ_SIN_CONEXION);
+            }
+
+            String consulta = "SELECT folio FROM factura WHERE folio = ?";
+            PreparedStatement ps = conn.prepareStatement(consulta);
+            ps.setString(1, folio);
+            ResultSet rs = ps.executeQuery();
+
+            if  (rs.next()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
