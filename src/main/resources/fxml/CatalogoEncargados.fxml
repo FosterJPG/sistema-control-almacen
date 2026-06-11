@@ -30,28 +30,6 @@
 <AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.CatalogoEncargadosController">
     <children>
 
-        <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <menus>
-                <Menu mnemonicParsing="false" text="Ingresos">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Registrar factura" />
-                        <MenuItem mnemonicParsing="false" text="Consultar facturas" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Personal">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Registrar empleado" />
-                        <MenuItem mnemonicParsing="false" text="Consultar empleados" />
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Pedidos">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Consultar bitácora" />
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
-
         <VBox layoutY="37.0" prefHeight="543.0" prefWidth="810.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="37.0">
             <effect>
                 <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />

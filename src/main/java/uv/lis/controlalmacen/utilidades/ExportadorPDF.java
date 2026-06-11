@@ -265,7 +265,7 @@ public class ExportadorPDF {
         for (DetallesSolicitud d : detalles) {
             tabla.addCell(crearCelda(d.getIdItem() != null ? d.getIdItem() : ""));
             tabla.addCell(crearCelda(d.getDescripcionItem() != null ? d.getDescripcionItem() : ""));
-            tabla.addCell(crearCeldaCentrada(String.valueOf(d.getCantidad())));
+            tabla.addCell(crearCeldaCentrada(String.valueOf(d.getCantidadEntregar())));
             tabla.addCell(crearCelda(d.getUso() != null ? d.getUso() : ""));
         }
 

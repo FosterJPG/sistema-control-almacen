@@ -9,6 +9,11 @@ public class DetallesSolicitud {
     private Integer cantidad;
     private String uso;
 
+    private Integer cantidadEntregar;
+    private Integer existencias;
+    private Integer codigoPartida;
+    private String descripcionPartida;
+
     public Integer getCantidad() {
         return cantidad;
     }
@@ -41,10 +46,6 @@ public class DetallesSolicitud {
         this.uso = uso;
     }
 
-    private Integer existencias;
-    private Integer codigoPartida;
-    private String descripcionPartida;
-
     public Integer getExistencias() { return existencias; }
     public void setExistencias(Integer existencias) { this.existencias = existencias; }
 
@@ -53,4 +54,12 @@ public class DetallesSolicitud {
 
     public String getDescripcionPartida() { return descripcionPartida; }
     public void setDescripcionPartida(String descripcionPartida) { this.descripcionPartida = descripcionPartida; }
+
+    public Integer getCantidadEntregar() {
+        return cantidadEntregar;
+    }
+
+    public void setCantidadEntregar(Integer cantidadEntregar) {
+        this.cantidadEntregar = cantidadEntregar;
+    }
 }
