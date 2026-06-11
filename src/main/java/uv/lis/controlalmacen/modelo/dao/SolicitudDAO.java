@@ -12,6 +12,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -118,6 +119,130 @@ public class SolicitudDAO {
             }
         }
         return lista;
+    }
+
+    public List<Solicitud> buscarTodas(int noSucursal) throws SQLException, IOException, ClassNotFoundException {
+        List<Solicitud> lista = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) throw new SQLException("No se pudo conectar a la base de datos");
+            String sql = "SELECT no_solicitud, fecha, no_empleado, nombre, paterno, no_sucursal, departamento " +
+                         "FROM vista_solicitudes_lista WHERE no_sucursal = ? ORDER BY fecha DESC";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, noSucursal);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    lista.add(mapearSolicitud(rs));
+                }
+            }
+        }
+        return lista;
+    }
+
+    public List<Solicitud> buscarPorPartida(String partida, int noSucursal)
+            throws SQLException, IOException, ClassNotFoundException {
+        List<Solicitud> lista = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) throw new SQLException("No se pudo conectar a la base de datos");
+            String sql = "SELECT DISTINCT vsp.no_solicitud, vsp.fecha, vsp.no_empleado, vsp.nombre, vsp.paterno, " +
+                         "vsp.no_sucursal, vsp.departamento " +
+                         "FROM vista_solicitudes_partida vsp " +
+                         "WHERE vsp.no_sucursal = ? AND vsp.partida_presupuestal LIKE ? ORDER BY vsp.fecha DESC";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, noSucursal);
+                ps.setString(2, "%" + partida + "%");
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    lista.add(mapearSolicitud(rs));
+                }
+            }
+        }
+        return lista;
+    }
+
+    public List<Solicitud> buscarPorFecha(LocalDate inicio, LocalDate fin, int noSucursal)
+            throws SQLException, IOException, ClassNotFoundException {
+        List<Solicitud> lista = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) throw new SQLException("No se pudo conectar a la base de datos");
+            String sql = "SELECT no_solicitud, fecha, no_empleado, nombre, paterno, no_sucursal, departamento " +
+                         "FROM vista_solicitudes_lista WHERE no_sucursal = ? AND fecha BETWEEN ? AND ? " +
+                         "ORDER BY fecha DESC";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, noSucursal);
+                ps.setDate(2, Date.valueOf(inicio));
+                ps.setDate(3, Date.valueOf(fin));
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    lista.add(mapearSolicitud(rs));
+                }
+            }
+        }
+        return lista;
+    }
+
+    public List<Solicitud> buscarPorPartidaYFecha(String partida, LocalDate inicio, LocalDate fin, int noSucursal)
+            throws SQLException, IOException, ClassNotFoundException {
+        List<Solicitud> lista = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) throw new SQLException("No se pudo conectar a la base de datos");
+            String sql = "SELECT DISTINCT vsp.no_solicitud, vsp.fecha, vsp.no_empleado, vsp.nombre, vsp.paterno, " +
+                         "vsp.no_sucursal, vsp.departamento " +
+                         "FROM vista_solicitudes_partida vsp " +
+                         "WHERE vsp.no_sucursal = ? AND vsp.partida_presupuestal LIKE ? " +
+                         "AND vsp.fecha BETWEEN ? AND ? ORDER BY vsp.fecha DESC";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, noSucursal);
+                ps.setString(2, "%" + partida + "%");
+                ps.setDate(3, Date.valueOf(inicio));
+                ps.setDate(4, Date.valueOf(fin));
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    lista.add(mapearSolicitud(rs));
+                }
+            }
+        }
+        return lista;
+    }
+
+    public List<DetallesSolicitud> buscarDetalleConPartida(int noSolicitud)
+            throws SQLException, IOException, ClassNotFoundException {
+        List<DetallesSolicitud> lista = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) throw new SQLException("No se pudo conectar a la base de datos");
+            String sql = "SELECT vsd.id_item, vsd.descripcion, vsd.cantidad, vsd.uso, " +
+                         "pp.codigo AS codigo_partida, pp.descripcion_partida " +
+                         "FROM vista_solicitud_detalle vsd " +
+                         "JOIN item i ON i.id_item = vsd.id_item " +
+                         "JOIN partida_presupuestal pp ON pp.codigo = i.codigo " +
+                         "WHERE vsd.no_solicitud = ?";
+            try (PreparedStatement ps = conn.prepareStatement(sql)) {
+                ps.setInt(1, noSolicitud);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    DetallesSolicitud d = new DetallesSolicitud();
+                    d.setIdItem(rs.getString("id_item"));
+                    d.setDescripcionItem(rs.getString("descripcion"));
+                    d.setCantidad(rs.getInt("cantidad"));
+                    d.setUso(rs.getString("uso"));
+                    d.setCodigoPartida(rs.getInt("codigo_partida"));
+                    d.setDescripcionPartida(rs.getString("descripcion_partida"));
+                    lista.add(d);
+                }
+            }
+        }
+        return lista;
+    }
+
+    private Solicitud mapearSolicitud(ResultSet rs) throws SQLException {
+        Solicitud s = new Solicitud();
+        s.setNoSolicitud(rs.getInt("no_solicitud"));
+        s.setFechaSolicitud(rs.getDate("fecha"));
+        s.setNoEmpleado(rs.getInt("no_empleado"));
+        s.setNombreEmpleado(rs.getString("nombre"));
+        s.setPaternoEmpleado(rs.getString("paterno"));
+        s.setNoSucursal(rs.getInt("no_sucursal"));
+        try { s.setDescripcionDepto(rs.getString("departamento")); } catch (SQLException ignored) {}
+        return s;
     }
 
     public void aprobar(int noSolicitud) throws SQLException, IOException, ClassNotFoundException {
