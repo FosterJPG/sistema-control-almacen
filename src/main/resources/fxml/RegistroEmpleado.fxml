@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="650.0" prefWidth="500.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.RegistroEmpleadoController">
+<AnchorPane prefHeight="720.0" prefWidth="500.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.RegistroEmpleadoController">
     <children>
         <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #dee2e6; -fx-border-radius: 12;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
             <effect>
@@ -19,84 +19,84 @@
 
                 <VBox spacing="2.0">
                     <children>
-                        <Label text="Registro de Nuevo Empleado" textFill="#1a365d">
-                            <font>
-                                <Font name="System Bold" size="18.0" />
-                            </font>
+                        <Label fx:id="lbl_titulo" text="Registro de Nuevo Empleado" textFill="#1a365d">
+                            <font><Font name="System Bold" size="18.0" /></font>
                         </Label>
                         <Label text="Llene los campos para registrar al personal y asignarlo a un departamento." textFill="#666666" wrapText="true">
-                            <font>
-                                <Font size="13.0" />
-                            </font>
+                            <font><Font size="13.0" /></font>
                         </Label>
                     </children>
                 </VBox>
 
                 <Separator prefWidth="200.0" />
 
-                <VBox alignment="CENTER" prefHeight="426.0" prefWidth="428.0" VBox.vgrow="ALWAYS">
+                <GridPane hgap="10.0" vgap="12.0" maxWidth="450.0"
+                          style="-fx-background-color: #f8f9fa; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #dee2e6; -fx-border-radius: 8;">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="130.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="180.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
                     <children>
-                        <GridPane hgap="10.0" maxWidth="450.0" style="-fx-background-color: #f8f9fa; -fx-padding: 15; -fx-background-radius: 8; -fx-border-color: #dee2e6; -fx-border-radius: 8;" vgap="15.0">
-                            <columnConstraints>
-                                <ColumnConstraints halignment="RIGHT" hgrow="NEVER" minWidth="130.0" />
-                                <ColumnConstraints hgrow="ALWAYS" minWidth="180.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                            </rowConstraints>
-                            <children>
 
-                                <Label text="No. Empleado:" textFill="#495057">
-                                    <font><Font name="System Bold" size="13.0" /></font>
-                                </Label>
-                                <TextField fx:id="txt_noEmpleado" prefHeight="30.0" promptText="Ej. 12" GridPane.columnIndex="1" />
+                        <Label text="Nombre(s):" textFill="#495057">
+                            <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <TextField fx:id="txt_nombre" prefHeight="30.0" promptText="Ej. Juan Carlos" GridPane.columnIndex="1" />
 
-                                <Label text="Nombre(s):" textFill="#495057" GridPane.rowIndex="1">
-                                    <font><Font name="System Bold" size="13.0" /></font>
-                                </Label>
-                                <TextField fx:id="txt_nombre" prefHeight="30.0" promptText="Ej. Juan Carlos" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Apellido Paterno:" textFill="#495057" GridPane.rowIndex="1">
+                            <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <TextField fx:id="txt_paterno" prefHeight="30.0" promptText="Ej. Pérez" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                                <Label text="Apellido Paterno:" textFill="#495057" GridPane.rowIndex="2">
-                                    <font><Font name="System Bold" size="13.0" /></font>
-                                </Label>
-                                <TextField fx:id="txt_paterno" prefHeight="30.0" promptText="Ej. Pérez" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label text="Apellido Materno:" textFill="#495057" GridPane.rowIndex="2">
+                            <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <TextField fx:id="txt_materno" prefHeight="30.0" promptText="Opcional" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                                <Label text="Apellido Materno:" textFill="#495057" GridPane.rowIndex="3">
-                                    <font><Font name="System Bold" size="13.0" /></font>
-                                </Label>
-                                <TextField fx:id="txt_materno" prefHeight="30.0" promptText="Ej. López" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Dirección:" textFill="#495057" GridPane.rowIndex="3">
+                            <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <TextField fx:id="txt_direccion" prefHeight="30.0" promptText="Ej. Av. Revolución 123" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-                                <Label text="Correo Electrónico:" textFill="#495057" GridPane.rowIndex="4">
-                                    <font><Font name="System Bold" size="13.0" /></font>
-                                </Label>
-                                <TextField fx:id="txt_correo" prefHeight="30.0" promptText="Ej. jperez@empresa.com" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="Teléfono:" textFill="#495057" GridPane.rowIndex="4">
+                            <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <TextField fx:id="txt_telefono" prefHeight="30.0" promptText="10 dígitos" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-                                <Label text="Puesto:" textFill="#495057" GridPane.rowIndex="5">
-                                    <font><Font name="System Bold" size="13.0" /></font>
-                                </Label>
-                                <ComboBox fx:id="cb_puesto" prefHeight="30.0" prefWidth="300.0" promptText="Seleccione puesto..." GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label text="Correo Electrónico:" textFill="#495057" GridPane.rowIndex="5">
+                            <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <TextField fx:id="txt_correo" prefHeight="30.0" promptText="Opcional: usuario@ejemplo.com" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-                                <Label text="Sucursal Base:" textFill="#495057" GridPane.rowIndex="6">
-                                    <font><Font name="System Bold" size="13.0" /></font>
-                                </Label>
-                                <ComboBox fx:id="cb_sucursal" prefHeight="30.0" prefWidth="300.0" promptText="Seleccione sucursal..." GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label text="Puesto:" textFill="#495057" GridPane.rowIndex="6">
+                            <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <ComboBox fx:id="cb_puesto" prefHeight="30.0" prefWidth="300.0" promptText="Seleccione puesto..." GridPane.columnIndex="1" GridPane.rowIndex="6" />
 
-                                <Label text="Departamento:" textFill="#495057" GridPane.rowIndex="7">
-                                    <font><Font name="System Bold" size="13.0" /></font>
-                                </Label>
-                                <ComboBox fx:id="cb_departamento" prefHeight="30.0" prefWidth="300.0" promptText="Seleccione departamento..." GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                        <Label text="Sucursal Base:" textFill="#495057" GridPane.rowIndex="7">
+                            <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <ComboBox fx:id="cb_sucursal" prefHeight="30.0" prefWidth="300.0" promptText="Seleccione sucursal..." GridPane.columnIndex="1" GridPane.rowIndex="7" />
 
-                            </children>
-                        </GridPane>
+                        <Label text="Departamento:" textFill="#495057" GridPane.rowIndex="8">
+                            <font><Font name="System Bold" size="13.0" /></font>
+                        </Label>
+                        <ComboBox fx:id="cb_departamento" prefHeight="30.0" prefWidth="300.0" promptText="Seleccione departamento..." GridPane.columnIndex="1" GridPane.rowIndex="8" />
+
                     </children>
-                </VBox>
+                </GridPane>
 
                 <HBox alignment="CENTER_RIGHT" spacing="10.0">
                     <children>

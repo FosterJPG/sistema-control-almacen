@@ -31,11 +31,10 @@ public class PartidaPresupuestalDAO implements OperacionesCatalogoDAO<PartidaPre
                 throw new SQLException(MSJ_SIN_CONEXION);
             }
 
-            String consulta = "INSERT INTO partida_presupuestal(codigo, descripcion_partida) VALUES (?, ?)";
+            String consulta = "INSERT INTO partida_presupuestal(descripcion_partida) VALUES (?)";
 
             PreparedStatement sentencia = conn.prepareStatement(consulta);
-            sentencia.setInt(1, partidaPresupuestal.getCodigo());
-            sentencia.setString(2, partidaPresupuestal.getDescripcionPartida());
+            sentencia.setString(1, partidaPresupuestal.getDescripcionPartida());
 
             return sentencia.executeUpdate() > 0;
         }

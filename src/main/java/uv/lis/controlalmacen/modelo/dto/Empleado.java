@@ -82,4 +82,10 @@ public class Empleado {
     public void setPuesto(Puesto puesto) {
         this.puesto = puesto;
     }
+
+    public String getNombreCompleto() {
+        String completo = nombre + " " + paterno;
+        if (materno != null && !materno.isBlank()) completo += " " + materno;
+        return completo;
+    }
 }
