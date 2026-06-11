@@ -35,12 +35,13 @@ public class MenuPrincipalSalidasController implements Initializable, MenuContro
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //TODO
+        lb_nombreEmpleado.setText("Bienvenido: " + Sesion.getUsuarioActual().getEmpleado().getNombre());
+        lb_nombreSucursal.setText("Sucursal: " + Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNombre());
     }
 
     @Override
     public void cargarDatos(){
-        lb_nombreEmpleado.setText("Bienvenido: " + Sesion.getUsuarioActual().getEmpleado().getNombre());
+
     }
     
     @FXML
