@@ -77,6 +77,8 @@
                    <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clicBuscarItemAlmacenado" prefHeight="25.0" prefWidth="47.0" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="🔍" />
 
                    <Region HBox.hgrow="ALWAYS" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clicEditarItemSucursal" prefHeight="25.0" prefWidth="87.0" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Editar" />
+                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#clicDarDeBaja" prefHeight="25.0" prefWidth="105.0" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Dar de baja" />
                 </children>
              </HBox>
             <TitledPane animated="false" expanded="false" style="-fx-background-color: white; -fx-border-color: white; -fx-background-insets: 0; -fx-border-insets: 0;" text="Filtros">

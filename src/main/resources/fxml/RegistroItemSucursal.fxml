@@ -59,11 +59,11 @@
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </Label>
-                        <TextField fx:id="txt_descripcion" maxWidth="453.0" prefHeight="25.0" prefWidth="453.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="txt_descripcion" editable="false" maxWidth="453.0" prefHeight="25.0" prefWidth="453.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <HBox prefHeight="45.0" prefWidth="438.0" spacing="20.0" GridPane.columnIndex="1">
                      <children>
                         <TextField fx:id="txt_idItem" maxWidth="524.0" prefHeight="25.0" prefWidth="261.0" promptText="Ej: I001" />
-                        <Button mnemonicParsing="false" onAction="#clicBuscar" prefHeight="13.0" prefWidth="115.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar">
+                        <Button fx:id="btn_buscar" mnemonicParsing="false" onAction="#clicBuscar" prefHeight="13.0" prefWidth="115.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar">
                            <effect>
                               <InnerShadow offsetY="8.0">
                                  <color>
@@ -79,13 +79,13 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txt_descripcion1" maxWidth="453.0" prefHeight="25.0" prefWidth="453.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="txt_partidaPresupuestal" editable="false" maxWidth="453.0" prefHeight="25.0" prefWidth="453.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
                     </children>
                 </GridPane>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="txt_noEncontrado" prefHeight="17.0" prefWidth="438.0" textFill="#bc1c1c" />
+                  <Label fx:id="txt_noEncontrado" maxWidth="600.0" prefWidth="600.0" textFill="#bc1c1c" wrapText="true" />
                </children>
             </HBox>
             <GridPane hgap="20.0" prefHeight="212.0" prefWidth="587.0" vgap="25.0">
@@ -112,6 +112,11 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
+            <HBox alignment="TOP_CENTER" minHeight="45.0" prefWidth="468.0">
+                <children>
+                   <Label fx:id="txt_faltanDatos" maxWidth="600.0" prefWidth="600.0" textFill="#b50202" wrapText="true" />
+                </children>
+             </HBox>
             <HBox alignment="CENTER" prefHeight="25.0" prefWidth="312.0" />
 
                 <Separator prefWidth="200.0" />
@@ -140,5 +145,26 @@
 
             </children>
         </VBox>
+      <MenuBar layoutY="-2.0" prefHeight="25.0" prefWidth="1000.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="Ingresos">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#clicRegistrarFactura" text="Registrar factura" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicConsultarFacturas" text="Consultar facturas" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Items">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#clicRegistrarItem" text="Registrar item" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicConsultarItems" text="Consultar items" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Pedidos">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#clicConsultarBitacora" text="Consultar bitácora" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
     </children>
 </AnchorPane>
