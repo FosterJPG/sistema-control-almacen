@@ -131,7 +131,17 @@ public class SolicitudDAO {
                 ps.setInt(1, noSucursal);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    lista.add(mapearSolicitud(rs));
+                    Solicitud s = new Solicitud();
+
+                    s.setNoSolicitud(rs.getInt("no_solicitud"));
+                    s.setFechaSolicitud(rs.getDate("fecha"));
+                    s.setNoEmpleado(rs.getInt("no_empleado"));
+                    s.setNombreEmpleado(rs.getString("nombre"));
+                    s.setPaternoEmpleado(rs.getString("paterno"));
+                    s.setNoSucursal(rs.getInt("no_sucursal"));
+                    s.setDescripcionDepto(rs.getString("departamento"));
+
+                    lista.add(s);
                 }
             }
         }
@@ -152,7 +162,17 @@ public class SolicitudDAO {
                 ps.setString(2, "%" + partida + "%");
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    lista.add(mapearSolicitud(rs));
+                    Solicitud s = new Solicitud();
+
+                    s.setNoSolicitud(rs.getInt("no_solicitud"));
+                    s.setFechaSolicitud(rs.getDate("fecha"));
+                    s.setNoEmpleado(rs.getInt("no_empleado"));
+                    s.setNombreEmpleado(rs.getString("nombre"));
+                    s.setPaternoEmpleado(rs.getString("paterno"));
+                    s.setNoSucursal(rs.getInt("no_sucursal"));
+                    s.setDescripcionDepto(rs.getString("departamento"));
+
+                    lista.add(s);
                 }
             }
         }
@@ -173,7 +193,17 @@ public class SolicitudDAO {
                 ps.setDate(3, Date.valueOf(fin));
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    lista.add(mapearSolicitud(rs));
+                    Solicitud s = new Solicitud();
+
+                    s.setNoSolicitud(rs.getInt("no_solicitud"));
+                    s.setFechaSolicitud(rs.getDate("fecha"));
+                    s.setNoEmpleado(rs.getInt("no_empleado"));
+                    s.setNombreEmpleado(rs.getString("nombre"));
+                    s.setPaternoEmpleado(rs.getString("paterno"));
+                    s.setNoSucursal(rs.getInt("no_sucursal"));
+                    s.setDescripcionDepto(rs.getString("departamento"));
+
+                    lista.add(s);
                 }
             }
         }
@@ -197,7 +227,17 @@ public class SolicitudDAO {
                 ps.setDate(4, Date.valueOf(fin));
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
-                    lista.add(mapearSolicitud(rs));
+                    Solicitud s = new Solicitud();
+
+                    s.setNoSolicitud(rs.getInt("no_solicitud"));
+                    s.setFechaSolicitud(rs.getDate("fecha"));
+                    s.setNoEmpleado(rs.getInt("no_empleado"));
+                    s.setNombreEmpleado(rs.getString("nombre"));
+                    s.setPaternoEmpleado(rs.getString("paterno"));
+                    s.setNoSucursal(rs.getInt("no_sucursal"));
+                    s.setDescripcionDepto(rs.getString("departamento"));
+
+                    lista.add(s);
                 }
             }
         }
@@ -231,18 +271,6 @@ public class SolicitudDAO {
             }
         }
         return lista;
-    }
-
-    private Solicitud mapearSolicitud(ResultSet rs) throws SQLException {
-        Solicitud s = new Solicitud();
-        s.setNoSolicitud(rs.getInt("no_solicitud"));
-        s.setFechaSolicitud(rs.getDate("fecha"));
-        s.setNoEmpleado(rs.getInt("no_empleado"));
-        s.setNombreEmpleado(rs.getString("nombre"));
-        s.setPaternoEmpleado(rs.getString("paterno"));
-        s.setNoSucursal(rs.getInt("no_sucursal"));
-        try { s.setDescripcionDepto(rs.getString("departamento")); } catch (SQLException ignored) {}
-        return s;
     }
 
     public void aprobar(int noSolicitud) throws SQLException, IOException, ClassNotFoundException {
