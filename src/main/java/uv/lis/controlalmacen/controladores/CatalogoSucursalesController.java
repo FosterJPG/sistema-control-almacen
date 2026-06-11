@@ -2,14 +2,16 @@ package uv.lis.controlalmacen.controladores;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -17,123 +19,229 @@ import uv.lis.controlalmacen.logica.CargadorEscenas;
 import uv.lis.controlalmacen.modelo.dao.SucursalDAO;
 import uv.lis.controlalmacen.modelo.dto.Sesion;
 import uv.lis.controlalmacen.modelo.dto.Sucursal;
+import uv.lis.controlalmacen.utilidades.Constantes;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class CatalogoSucursalesController implements Initializable {
 
-    @FXML private TableView<Sucursal> tv_listado;
-    @FXML private TableColumn<Sucursal, Integer> col_noSucursal;
-    @FXML private TableColumn<Sucursal, String>  col_nombre;
-    @FXML private TableColumn<Sucursal, String>  col_direccion;
-    @FXML private TableColumn<Sucursal, String>  col_telefono;
-    @FXML private TextField txt_nombreSucursal;
+    @FXML
+    private TextField txt_nombreSucursal;
+    @FXML
+    private TableView<Sucursal> tv_listado;
+    @FXML
+    private TableColumn<Sucursal, String> col_nombre;
+    @FXML
+    private TableColumn<Sucursal, String> col_direccion;
+    @FXML
+    private TableColumn<Sucursal, String> col_telefono;
 
-    private final ObservableList<Sucursal> listaSucursales = FXCollections.observableArrayList();
-    private FilteredList<Sucursal> listaFiltrada;
-    private final SucursalDAO dao = new SucursalDAO();
+    private ObservableList<Sucursal> sucursales;
+    private final SucursalDAO sucursalDAO = new SucursalDAO();
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         configurarTabla();
-        cargarSucursales();
+        cargarInformacionSucursales();
     }
 
     private void configurarTabla() {
-        col_noSucursal.setCellValueFactory(new PropertyValueFactory<>("noSucursal"));
         col_nombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         col_direccion.setCellValueFactory(new PropertyValueFactory<>("direccion"));
         col_telefono.setCellValueFactory(new PropertyValueFactory<>("telefono"));
-        tv_listado.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
-
-        listaFiltrada = new FilteredList<>(listaSucursales, s -> true);
-        tv_listado.setItems(listaFiltrada);
-
-        txt_nombreSucursal.textProperty().addListener((obs, old, val) -> filtrar(val));
     }
 
-    private void cargarSucursales() {
+    private void cargarInformacionSucursales() {
         try {
-            List<Sucursal> sucursales = dao.buscarTodos();
-            listaSucursales.setAll(sucursales);
-        } catch (Exception e) {
-            UtilidadesFX.mostrarAlertaSimple("Error al cargar",
-                    "No se pudieron cargar las sucursales: " + e.getMessage(), Alert.AlertType.ERROR);
-        }
-    }
+            sucursales = FXCollections.observableArrayList();
 
-    private void filtrar(String texto) {
-        listaFiltrada.setPredicate(s -> {
-            if (texto == null || texto.isBlank()) return true;
-            return s.getNombre().toLowerCase().contains(texto.toLowerCase());
-        });
+            List<Sucursal> sucursalesBD = sucursalDAO.buscarTodos();
+            sucursales.addAll(sucursalesBD);
+
+            tv_listado.setItems(sucursales);
+
+        } catch (SQLException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al consultar",
+                    ex.getMessage(),
+                    Alert.AlertType.ERROR
+            );
+        } catch (NullPointerException | ClassNotFoundException | IOException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al cargar sucursales",
+                    Constantes.MSJ_ERROR_CARGA_DATOS,
+                    Alert.AlertType.WARNING
+            );
+        }
     }
 
     @FXML
     private void clicBuscar(ActionEvent event) {
-        filtrar(txt_nombreSucursal.getText());
+        String nombreSucursal = obtenerTextoBusqueda();
+
+        if (nombreSucursal.isEmpty()) {
+            cargarInformacionSucursales();
+            return;
+        }
+
+        buscarSucursalesPorNombre(nombreSucursal);
+    }
+
+    private void buscarSucursalesPorNombre(String nombreSucursal) {
+        try {
+            sucursales = FXCollections.observableArrayList();
+
+            List<Sucursal> sucursalesBD = sucursalDAO.buscarPorNombre(nombreSucursal);
+            sucursales.addAll(sucursalesBD);
+
+            tv_listado.setItems(sucursales);
+
+        } catch (SQLException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al consultar",
+                    ex.getMessage(),
+                    Alert.AlertType.ERROR
+            );
+        } catch (NullPointerException | ClassNotFoundException | IOException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al buscar sucursales",
+                    Constantes.MSJ_ERROR_CARGA_DATOS,
+                    Alert.AlertType.WARNING
+            );
+        }
+    }
+
+    @FXML
+    private void clicVerTodos(ActionEvent event) {
+        cargarInformacionSucursales();
+        txt_nombreSucursal.clear();
     }
 
     @FXML
     private void clicAgregar(ActionEvent event) {
-        abrirModal(null);
+        abrirFormularioSucursal(null, false);
     }
 
     @FXML
     private void clicModificar(ActionEvent event) {
-        Sucursal seleccionada = tv_listado.getSelectionModel().getSelectedItem();
-        if (seleccionada == null) {
-            UtilidadesFX.mostrarAlertaSimple("Sin selección",
-                    "Selecciona una sucursal de la tabla para modificarla.", Alert.AlertType.WARNING);
+        Sucursal sucursalSeleccionada = tv_listado.getSelectionModel().getSelectedItem();
+
+        if (sucursalSeleccionada == null) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Sin selección",
+                    "Seleccione una sucursal para modificar.",
+                    Alert.AlertType.WARNING
+            );
             return;
         }
-        abrirModal(seleccionada);
+
+        abrirFormularioSucursal(sucursalSeleccionada, true);
+    }
+
+    private void abrirFormularioSucursal(Sucursal sucursal, boolean esEdicion) {
+        try {
+            FXMLLoader loader = UtilidadesFX.cargarFXML("RegistroSucursal");
+            Parent vista = loader.load();
+
+            RegistroSucursalController controller = loader.getController();
+
+            if (esEdicion) {
+                controller.inicializarEdicion(sucursal);
+            } else {
+                controller.inicializarRegistro();
+            }
+
+            Scene escena = new Scene(vista);
+
+            Stage stage = new Stage();
+            stage.setTitle(esEdicion ? "Modificar Sucursal" : "Registrar Sucursal");
+            stage.setResizable(false);
+            stage.setScene(escena);
+            stage.centerOnScreen();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+            actualizarInformacion();
+
+        } catch (IOException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al abrir formulario",
+                    ex.getMessage(),
+                    Alert.AlertType.ERROR
+            );
+        }
     }
 
     @FXML
     private void clicEliminar(ActionEvent event) {
-        Sucursal seleccionada = tv_listado.getSelectionModel().getSelectedItem();
-        if (seleccionada == null) {
-            UtilidadesFX.mostrarAlertaSimple("Sin selección",
-                    "Selecciona una sucursal de la tabla para eliminarla.", Alert.AlertType.WARNING);
+        Sucursal sucursalSeleccionada = tv_listado.getSelectionModel().getSelectedItem();
+
+        if (sucursalSeleccionada == null) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Sin selección",
+                    "Seleccione una sucursal para eliminar.",
+                    Alert.AlertType.WARNING
+            );
             return;
         }
-        boolean confirmar = UtilidadesFX.mostrarAlertaConfirmacion("Eliminar sucursal",
-                "¿Eliminar la sucursal \"" + seleccionada.getNombre() + "\"?\nEsta acción no se puede deshacer.");
-        if (!confirmar) return;
+
+        boolean confirmacion = UtilidadesFX.mostrarAlertaConfirmacion(
+                "Confirmar eliminación",
+                "¿Está seguro de eliminar la sucursal \"" +
+                        sucursalSeleccionada.getNombre() + "\"?"
+        );
+
+        if (!confirmacion) {
+            return;
+        }
 
         try {
-            dao.eliminar(seleccionada);
-            listaSucursales.remove(seleccionada);
-        } catch (Exception e) {
-            UtilidadesFX.mostrarAlertaSimple("Error al eliminar",
-                    "No se pudo eliminar la sucursal:\n" + e.getMessage(), Alert.AlertType.ERROR);
+            if (sucursalDAO.eliminar(sucursalSeleccionada)) {
+                UtilidadesFX.mostrarAlertaSimple(
+                        "Eliminación exitosa",
+                        "La sucursal se eliminó correctamente.",
+                        Alert.AlertType.INFORMATION
+                );
+
+                actualizarInformacion();
+            }
+
+        } catch (SQLException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al eliminar",
+                    ex.getMessage(),
+                    Alert.AlertType.ERROR
+            );
+        } catch (NullPointerException | ClassNotFoundException | IOException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al eliminar sucursal",
+                    Constantes.MSJ_ERROR_CARGA_DATOS,
+                    Alert.AlertType.WARNING
+            );
         }
     }
 
-    private void abrirModal(Sucursal sucursal) {
-        try {
-            FXMLLoader loader = UtilidadesFX.cargarFXML("RegistroSucursal");
-            Parent vista = loader.load();
-            RegistroSucursalController controller = loader.getController();
-            if (sucursal != null) controller.setSucursal(sucursal);
+    private void actualizarInformacion() {
+        String nombreSucursal = obtenerTextoBusqueda();
 
-            Stage modal = new Stage();
-            modal.setTitle(sucursal == null ? "Nueva Sucursal" : "Modificar Sucursal");
-            modal.setScene(new Scene(vista));
-            modal.setResizable(false);
-            modal.initModality(Modality.APPLICATION_MODAL);
-            modal.initOwner(tv_listado.getScene().getWindow());
-            modal.showAndWait();
-
-            cargarSucursales();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (nombreSucursal.isEmpty()) {
+            cargarInformacionSucursales();
+        } else {
+            buscarSucursalesPorNombre(nombreSucursal);
         }
+    }
+
+    private String obtenerTextoBusqueda() {
+        if (txt_nombreSucursal.getText() == null) {
+            return "";
+        }
+
+        return txt_nombreSucursal.getText().trim();
     }
 
     @FXML
@@ -142,16 +250,19 @@ public class CatalogoSucursalesController implements Initializable {
             String rutaMenu = CargadorEscenas.cargarEscenarSegunRol(Sesion.getUsuarioActual().getRol());
             FXMLLoader loader = UtilidadesFX.cargarFXML(rutaMenu);
             Parent vista = loader.load();
+
             MenuController controller = loader.getController();
             controller.cargarDatos();
+
             Stage stage = (Stage) tv_listado.getScene().getWindow();
             stage.setTitle("Menú principal");
             stage.setResizable(false);
             stage.centerOnScreen();
             stage.setScene(new Scene(vista));
             stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
 }
