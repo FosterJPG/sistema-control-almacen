@@ -55,7 +55,12 @@ public class ConsultarSolicitudesController implements Initializable {
     private final ObservableList<String> partidas = FXCollections.observableArrayList();
     private FilteredList<String> partidasFiltradas;
     private boolean seleccionandoPartida = false;
+    private boolean desdesCatalogoSucursales = false;
     private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy");
+
+    public void setOrigenCatalogoSucursales(boolean valor) {
+        this.desdesCatalogoSucursales = valor;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -272,17 +277,28 @@ public class ConsultarSolicitudesController implements Initializable {
     @FXML
     public void clicRegresar(ActionEvent event) {
         try {
-            String fxmlMenu = CargadorEscenas.cargarEscenarSegunRol(Sesion.getUsuarioActual().getRol());
-            FXMLLoader loader = UtilidadesFX.cargarFXML(fxmlMenu);
-            Parent vista = loader.load();
-            MenuController controller = loader.getController();
-            controller.cargarDatos();
             Stage stage = (Stage) txt_buscar.getScene().getWindow();
-            stage.setTitle("Menú principal");
-            stage.setResizable(false);
-            stage.setScene(new Scene(vista));
-            stage.centerOnScreen();
-            stage.show();
+
+            if (desdesCatalogoSucursales) {
+                FXMLLoader loader = UtilidadesFX.cargarFXML("CatalogoSucursales");
+                Parent vista = loader.load();
+                stage.setTitle("Catálogo de Sucursales");
+                stage.setResizable(false);
+                stage.setScene(new Scene(vista));
+                stage.centerOnScreen();
+                stage.show();
+            } else {
+                String fxmlMenu = CargadorEscenas.cargarEscenarSegunRol(Sesion.getUsuarioActual().getRol());
+                FXMLLoader loader = UtilidadesFX.cargarFXML(fxmlMenu);
+                Parent vista = loader.load();
+                MenuController controller = loader.getController();
+                controller.cargarDatos();
+                stage.setTitle("Menú principal");
+                stage.setResizable(false);
+                stage.setScene(new Scene(vista));
+                stage.centerOnScreen();
+                stage.show();
+            }
         } catch (IOException ex) {
             ex.printStackTrace();
         }
