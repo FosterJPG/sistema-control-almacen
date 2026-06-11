@@ -6,6 +6,7 @@ package uv.lis.controlalmacen.modelo.dao;
 
 import uv.lis.controlalmacen.db.ConnectionFactory;
 import uv.lis.controlalmacen.modelo.dto.ItemAlmacenado;
+import uv.lis.controlalmacen.modelo.dto.ItemPedido;
 import uv.lis.controlalmacen.modelo.dto.Sesion;
 
 import java.io.IOException;
@@ -311,6 +312,48 @@ public class ItemAlmacenadoDAO implements OperacionesCatalogoDAO<ItemAlmacenado,
         }
 
         return lista;
+    }
+
+    public List<ItemPedido> buscarBitacoraPedidos(int noSucursal)
+            throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+
+        List<ItemPedido> lista = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) throw new SQLException(MSJ_SIN_CONEXION);
+
+            String consulta = "SELECT id_item, item AS descripcion, existencias, stock_min, fecha " +
+                    "FROM vista_stock_minimo WHERE no_sucursal = ? ORDER BY fecha DESC";
+
+            PreparedStatement sentencia = conn.prepareStatement(consulta);
+            sentencia.setInt(1, noSucursal);
+            ResultSet resultado = sentencia.executeQuery();
+
+            while (resultado.next()) {
+                ItemPedido item = new ItemPedido();
+                item.setIdItem(resultado.getString("id_item"));
+                item.setDescripcion(resultado.getString("descripcion"));
+                item.setExistencias(resultado.getInt("existencias"));
+                item.setStockMin(resultado.getInt("stock_min"));
+                item.setFecha(resultado.getDate("fecha"));
+                lista.add(item);
+            }
+        }
+
+        return lista;
+    }
+
+    public void eliminarBitacoraPedidos(int noSucursal)
+            throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) throw new SQLException(MSJ_SIN_CONEXION);
+
+            try (CallableStatement cs = conn.prepareCall("{CALL eliminar_bitacora_pedidos(?)}")) {
+                cs.setInt(1, noSucursal);
+                cs.execute();
+            }
+        }
     }
 
     public List<ItemAlmacenado> buscarPorPartida(Integer codigoPartida)
