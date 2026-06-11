@@ -8,7 +8,7 @@ package uv.lis.controlalmacen.modelo.dto;
  *
  * @author neptu
  */
-public class Provedor {
+public class Proveedor {
     private String rfc;
     private String razonSocial;
     private String domicilioFiscal;
