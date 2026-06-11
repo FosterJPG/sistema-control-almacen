@@ -1,8 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package uv.lis.controlalmacen.modelo.dao;
+
+import uv.lis.controlalmacen.db.ConnectionFactory;
+import uv.lis.controlalmacen.modelo.dto.PartidaPresupuestal;
+import uv.lis.controlalmacen.modelo.dto.Sesion;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,41 +12,43 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import uv.lis.controlalmacen.db.ConnectionFactory;
-import uv.lis.controlalmacen.modelo.dto.PartidaPresupuestal;
-import uv.lis.controlalmacen.modelo.dto.Sesion;
-
 import static uv.lis.controlalmacen.utilidades.Constantes.MSJ_SIN_CONEXION;
 
-/**
- *
- * @author macol
- */
-public class PartidaPresupuestalDAO implements OperacionesCatalogoDAO<PartidaPresupuestal,Integer> {
+public class PartidaPresupuestalDAO implements OperacionesCatalogoDAO<PartidaPresupuestal, Integer> {
+
     @Override
-    public boolean registrar(PartidaPresupuestal partidaPresupuestal) throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+    public boolean registrar(PartidaPresupuestal partidaPresupuestal)
+            throws SQLException, NullPointerException, IOException, ClassNotFoundException {
 
         try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
             if (conn == null) {
                 throw new SQLException(MSJ_SIN_CONEXION);
             }
 
-            String consulta = "INSERT INTO partida_presupuestal(codigo, descripcion_partida) VALUES (?, ?)";
+            if (existeDescripcion(conn, partidaPresupuestal.getDescripcionPartida(), null)) {
+                throw new SQLException("Ya existe una partida presupuestal con esa descripción.");
+            }
+
+            String consulta = "INSERT INTO partida_presupuestal(descripcion_partida) VALUES (?)";
 
             PreparedStatement sentencia = conn.prepareStatement(consulta);
-            sentencia.setInt(1, partidaPresupuestal.getCodigo());
-            sentencia.setString(2, partidaPresupuestal.getDescripcionPartida());
+            sentencia.setString(1, partidaPresupuestal.getDescripcionPartida());
 
             return sentencia.executeUpdate() > 0;
         }
     }
 
     @Override
-    public boolean eliminar(PartidaPresupuestal partidaPresupuestal) throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+    public boolean eliminar(PartidaPresupuestal partidaPresupuestal)
+            throws SQLException, NullPointerException, IOException, ClassNotFoundException {
 
         try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
             if (conn == null) {
                 throw new SQLException(MSJ_SIN_CONEXION);
+            }
+
+            if (tieneItemsAsociados(conn, partidaPresupuestal.getCodigo())) {
+                throw new SQLException("No se puede eliminar la partida porque tiene ítems asociados.");
             }
 
             String consulta = "DELETE FROM partida_presupuestal WHERE codigo = ?";
@@ -55,7 +57,6 @@ public class PartidaPresupuestalDAO implements OperacionesCatalogoDAO<PartidaPre
             sentencia.setInt(1, partidaPresupuestal.getCodigo());
 
             return sentencia.executeUpdate() > 0;
-
         }
     }
 
@@ -68,6 +69,10 @@ public class PartidaPresupuestalDAO implements OperacionesCatalogoDAO<PartidaPre
                 throw new SQLException(MSJ_SIN_CONEXION);
             }
 
+            if (existeDescripcion(conn, partidaPresupuestal.getDescripcionPartida(), partidaPresupuestal.getCodigo())) {
+                throw new SQLException("Ya existe otra partida presupuestal con esa descripción.");
+            }
+
             String consulta = "UPDATE partida_presupuestal SET descripcion_partida = ? WHERE codigo = ?";
 
             PreparedStatement sentencia = conn.prepareStatement(consulta);
@@ -75,7 +80,6 @@ public class PartidaPresupuestalDAO implements OperacionesCatalogoDAO<PartidaPre
             sentencia.setInt(2, partidaPresupuestal.getCodigo());
 
             return sentencia.executeUpdate() > 0;
-
         }
     }
 
@@ -90,7 +94,9 @@ public class PartidaPresupuestalDAO implements OperacionesCatalogoDAO<PartidaPre
                 throw new SQLException(MSJ_SIN_CONEXION);
             }
 
-            String consulta = "SELECT codigo, descripcion_partida FROM partida_presupuestal ORDER BY codigo";
+            String consulta = "SELECT codigo, descripcion_partida " +
+                    "FROM partida_presupuestal " +
+                    "ORDER BY codigo";
 
             PreparedStatement sentencia = conn.prepareStatement(consulta);
             ResultSet resultado = sentencia.executeQuery();
@@ -117,7 +123,9 @@ public class PartidaPresupuestalDAO implements OperacionesCatalogoDAO<PartidaPre
                 throw new SQLException(MSJ_SIN_CONEXION);
             }
 
-            String consulta = "SELECT codigo, descripcion_partida FROM partida_presupuestal WHERE codigo = ?";
+            String consulta = "SELECT codigo, descripcion_partida " +
+                    "FROM partida_presupuestal " +
+                    "WHERE codigo = ?";
 
             PreparedStatement sentencia = conn.prepareStatement(consulta);
             sentencia.setInt(1, codigo);
@@ -162,5 +170,56 @@ public class PartidaPresupuestalDAO implements OperacionesCatalogoDAO<PartidaPre
         }
 
         return partidasPresupuestales;
+    }
+
+    private boolean existeDescripcion(Connection conn, String descripcion, Integer codigoIgnorado)
+            throws SQLException {
+
+        String consulta;
+
+        if (codigoIgnorado == null) {
+            consulta = "SELECT COUNT(*) AS total " +
+                    "FROM partida_presupuestal " +
+                    "WHERE LOWER(descripcion_partida) = LOWER(?)";
+        } else {
+            consulta = "SELECT COUNT(*) AS total " +
+                    "FROM partida_presupuestal " +
+                    "WHERE LOWER(descripcion_partida) = LOWER(?) " +
+                    "AND codigo <> ?";
+        }
+
+        PreparedStatement sentencia = conn.prepareStatement(consulta);
+        sentencia.setString(1, descripcion);
+
+        if (codigoIgnorado != null) {
+            sentencia.setInt(2, codigoIgnorado);
+        }
+
+        ResultSet resultado = sentencia.executeQuery();
+
+        if (resultado.next()) {
+            return resultado.getInt("total") > 0;
+        }
+
+        return false;
+    }
+
+    private boolean tieneItemsAsociados(Connection conn, Integer codigoPartida)
+            throws SQLException {
+
+        String consulta = "SELECT COUNT(*) AS total " +
+                "FROM vista_items_catalogo " +
+                "WHERE codigo = ?";
+
+        PreparedStatement sentencia = conn.prepareStatement(consulta);
+        sentencia.setInt(1, codigoPartida);
+
+        ResultSet resultado = sentencia.executeQuery();
+
+        if (resultado.next()) {
+            return resultado.getInt("total") > 0;
+        }
+
+        return false;
     }
 }

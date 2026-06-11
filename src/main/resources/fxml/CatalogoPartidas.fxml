@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -16,11 +23,10 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.CatalogoPartidasController">
+<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.CatalogoPartidasController">
     <children>
 
-        <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;"
-              AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+        <VBox spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
             <effect>
                 <DropShadow color="#00000020" offsetX="0.0" offsetY="5.0" radius="15.0" />
             </effect>
@@ -38,17 +44,20 @@
 
                 <HBox alignment="CENTER_LEFT" spacing="15.0">
                     <children>
-                        <TextField fx:id="txtBuscar" prefHeight="30.0" prefWidth="250.0" promptText="Buscar por descripción..." />
-                        <Button mnemonicParsing="false" onAction="#clicBuscar" prefHeight="30.0" prefWidth="80.0"
-                                style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar">
+                        <TextField fx:id="txt_buscar" prefHeight="30.0" prefWidth="250.0" promptText="Buscar por descripción..." />
+                        <Button mnemonicParsing="false" onAction="#clicBuscar" prefHeight="25.0" prefWidth="30.0" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="🔍">
                             <effect><InnerShadow color="#ffffff40" offsetY="3.0" /></effect>
                         </Button>
+                  <Button mnemonicParsing="false" onAction="#clicVerTodos" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Ver todos">
+                     <effect>
+                        <InnerShadow color="#ffffff40" offsetY="3.0" />
+                     </effect>
+                  </Button>
                     </children>
                 </HBox>
 
                 <TableView fx:id="tv_listado" prefHeight="350.0" VBox.vgrow="ALWAYS">
                     <columns>
-                        <TableColumn fx:id="col_codigo"      prefWidth="120.0" text="Código" />
                         <TableColumn fx:id="col_descripcion" prefWidth="680.0" text="Descripción de la Partida" />
                     </columns>
                     <effect>
@@ -60,21 +69,17 @@
 
                 <HBox alignment="CENTER_LEFT" spacing="15.0">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#clicAgregar" prefHeight="30.0" prefWidth="100.0"
-                                style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Agregar">
+                        <Button mnemonicParsing="false" onAction="#clicAgregar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Agregar">
                             <effect><InnerShadow color="#ffffff40" offsetY="3.0" /></effect>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#clicModificar" prefHeight="30.0" prefWidth="100.0"
-                                style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Modificar">
+                        <Button mnemonicParsing="false" onAction="#clicModificar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Modificar">
                             <effect><InnerShadow color="#ffffff40" offsetY="3.0" /></effect>
                         </Button>
-                        <Button mnemonicParsing="false" onAction="#clicEliminar" prefHeight="30.0" prefWidth="100.0"
-                                style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Eliminar">
+                        <Button mnemonicParsing="false" onAction="#clicEliminar" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Eliminar">
                             <effect><InnerShadow color="#ffffff40" offsetY="3.0" /></effect>
                         </Button>
                         <Region HBox.hgrow="ALWAYS" />
-                        <Button mnemonicParsing="false" onAction="#clicRegresar" prefHeight="30.0" prefWidth="140.0"
-                                style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar al Menú">
+                        <Button mnemonicParsing="false" onAction="#clicRegresar" prefHeight="30.0" prefWidth="140.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar">
                             <effect><InnerShadow color="#ffffff40" offsetY="3.0" /></effect>
                         </Button>
                     </children>
