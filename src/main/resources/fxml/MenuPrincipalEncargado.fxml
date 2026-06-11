@@ -130,6 +130,11 @@
                         <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
                      </effect>
                   </Button>
+                  <Button mnemonicParsing="false" onAction="#clicBitacoraBajas" prefHeight="35.0" prefWidth="205.0" style="-fx-background-color: #dfe4e8; -fx-text-fill: #495057; -fx-background-radius: 5; -fx-border-color: #dee2e6; -fx-border-radius: 5;" text="Bitácora de bajas">
+                     <effect>
+                        <InnerShadow color="#00000021" height="11.17" offsetY="-8.0" radius="7.5425" />
+                     </effect>
+                  </Button>
                </children>
             </VBox>
 

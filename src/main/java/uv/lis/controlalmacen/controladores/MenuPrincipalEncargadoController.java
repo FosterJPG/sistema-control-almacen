@@ -186,4 +186,22 @@ public class MenuPrincipalEncargadoController implements Initializable, MenuCont
             e.printStackTrace();
         }
     }
+
+    @FXML
+    public void clicBitacoraBajas(ActionEvent event) {
+        try {
+            FXMLLoader loader = UtilidadesFX.cargarFXML("BitacoraBajas");
+            Parent vista = loader.load();
+            Scene escena = new Scene(vista);
+
+            Stage stage = (Stage) lb_nombreEmpleado.getScene().getWindow();
+            stage.setTitle("Bitácora de bajas");
+            stage.setResizable(false);
+            stage.setScene(escena);
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

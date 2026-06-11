@@ -4,25 +4,25 @@ import java.util.Date;
 
 public class ItemBaja {
     private String idItem;
+    private String descripcionItem;
     private Date fechaBaja;
     private String razon;
-    private Integer existenciasRestantes;
-    private Integer descripcionItem;
+    private Integer existencias;
 
-    public Integer getDescripcionItem() {
+    public String getIdItem() {
+        return idItem;
+    }
+
+    public void setIdItem(String idItem) {
+        this.idItem = idItem;
+    }
+
+    public String getDescripcionItem() {
         return descripcionItem;
     }
 
-    public void setDescripcionItem(Integer descripcionItem) {
+    public void setDescripcionItem(String descripcionItem) {
         this.descripcionItem = descripcionItem;
-    }
-
-    public Integer getExistenciasRestantes() {
-        return existenciasRestantes;
-    }
-
-    public void setExistenciasRestantes(Integer existenciasRestantes) {
-        this.existenciasRestantes = existenciasRestantes;
     }
 
     public Date getFechaBaja() {
@@ -39,5 +39,13 @@ public class ItemBaja {
 
     public void setRazon(String razon) {
         this.razon = razon;
+    }
+
+    public Integer getExistencias() {
+        return existencias;
+    }
+
+    public void setExistencias(Integer existencias) {
+        this.existencias = existencias;
     }
 }

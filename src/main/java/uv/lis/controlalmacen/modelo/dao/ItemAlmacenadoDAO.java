@@ -6,6 +6,7 @@ package uv.lis.controlalmacen.modelo.dao;
 
 import uv.lis.controlalmacen.db.ConnectionFactory;
 import uv.lis.controlalmacen.modelo.dto.ItemAlmacenado;
+import uv.lis.controlalmacen.modelo.dto.ItemBaja;
 import uv.lis.controlalmacen.modelo.dto.ItemPedido;
 import uv.lis.controlalmacen.modelo.dto.Sesion;
 
@@ -386,6 +387,35 @@ public class ItemAlmacenadoDAO implements OperacionesCatalogoDAO<ItemAlmacenado,
                 itemAlmacenado.setStockMax(resultado.getInt("stock_max"));
                 itemAlmacenado.setStockMin(resultado.getInt("stock_min"));
                 lista.add(itemAlmacenado);
+            }
+        }
+
+        return lista;
+    }
+
+    public List<ItemBaja> buscarBitacoraBajas(int noSucursal)
+            throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+
+        List<ItemBaja> lista = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) throw new SQLException(MSJ_SIN_CONEXION);
+
+            String consulta = "SELECT id_item, item AS descripcion, fecha_baja, razon, cantidad_dada_baja " +
+                    "FROM vista_bitacora_bajas WHERE no_sucursal = ? ORDER BY fecha_baja DESC";
+
+            PreparedStatement sentencia = conn.prepareStatement(consulta);
+            sentencia.setInt(1, noSucursal);
+            ResultSet resultado = sentencia.executeQuery();
+
+            while (resultado.next()) {
+                ItemBaja baja = new ItemBaja();
+                baja.setIdItem(resultado.getString("id_item"));
+                baja.setDescripcionItem(resultado.getString("descripcion"));
+                baja.setFechaBaja(resultado.getDate("fecha_baja"));
+                baja.setRazon(resultado.getString("razon"));
+                baja.setExistencias(resultado.getInt("cantidad_dada_baja"));
+                lista.add(baja);
             }
         }
 

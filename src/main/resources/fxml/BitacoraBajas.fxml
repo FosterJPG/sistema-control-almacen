@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="600.0" prefWidth="850.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uv.lis.controlalmacen.controladores.BitacoraBajasController">
+
+   <children>
+
+      <VBox layoutY="10.0" prefHeight="580.0" spacing="15.0" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #e0e0e0; -fx-border-radius: 10;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <effect>
+            <DropShadow color="#0000003c" height="31.0" offsetX="-3.0" offsetY="5.0" radius="15.0" width="31.0" />
+         </effect>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+         <children>
+
+            <Label styleClass="label-titulo" text="Bitácora de Bajas de Ítems">
+               <font>
+                  <Font name="System Bold" size="22.0" />
+               </font>
+            </Label>
+            <Label text="Registro histórico de ítems dados de baja en esta sucursal." textFill="#666666" />
+
+            <Separator prefWidth="200.0" />
+
+            <TableView fx:id="tv_bajas" prefHeight="450.0" VBox.vgrow="ALWAYS">
+              <columns>
+                <TableColumn fx:id="col_idItem" prefWidth="120.0" text="Código" />
+                <TableColumn fx:id="col_descripcion" prefWidth="270.0" text="Descripción" />
+                <TableColumn fx:id="col_fechaBaja" prefWidth="110.0" text="Fecha de Baja" />
+                <TableColumn fx:id="col_razon" prefWidth="230.0" text="Razón" />
+                <TableColumn fx:id="col_existencias" prefWidth="100.0" text="Existencias" />
+              </columns>
+               <effect>
+                  <DropShadow color="#0000002e" height="28.42" offsetX="-3.0" offsetY="3.0" radius="15.5625" width="35.83" />
+               </effect>
+            </TableView>
+
+            <HBox alignment="CENTER_RIGHT" spacing="15.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#clicRegresar" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Regresar" />
+               </children>
+               <effect>
+                  <DropShadow color="#00000039" height="40.83" offsetX="-3.0" offsetY="3.0" radius="21.5675" spread="0.19" width="47.44" />
+               </effect>
+            </HBox>
+
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
