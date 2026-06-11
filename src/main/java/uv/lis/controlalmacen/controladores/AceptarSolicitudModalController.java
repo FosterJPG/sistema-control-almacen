@@ -11,8 +11,10 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
+import uv.lis.controlalmacen.modelo.dao.ItemAlmacenadoDAO;
 import uv.lis.controlalmacen.modelo.dao.SolicitudDAO;
 import uv.lis.controlalmacen.modelo.dto.DetallesSolicitud;
+import uv.lis.controlalmacen.modelo.dto.ItemAlmacenado;
 import uv.lis.controlalmacen.modelo.dto.Solicitud;
 import uv.lis.controlalmacen.utilidades.ExportadorPDF;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
@@ -22,6 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -42,6 +45,7 @@ public class AceptarSolicitudModalController implements Initializable {
 
     private Solicitud solicitud;
     private final SolicitudDAO solicitudDAO = new SolicitudDAO();
+    private final ItemAlmacenadoDAO itemAlmacenadoDAO = new ItemAlmacenadoDAO();
     private final ObservableList<DetallesSolicitud> listaDetalles = FXCollections.observableArrayList();
     private static final SimpleDateFormat SDF = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -150,12 +154,8 @@ public class AceptarSolicitudModalController implements Initializable {
         try {
             solicitudDAO.aprobar(solicitud.getNoSolicitud(), listaDetalles);
 
-            UtilidadesFX.mostrarAlertaSimple(
-                    "Entrega registrada",
-                    "La solicitud #" + solicitud.getNoSolicitud()
-                            + " fue aprobada y las existencias fueron actualizadas.",
-                    Alert.AlertType.INFORMATION
-            );
+            verificarStockMinimo();
+
 
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Guardar formato de entrega-recepción");
@@ -199,14 +199,46 @@ public class AceptarSolicitudModalController implements Initializable {
         }
     }
 
+    private void verificarStockMinimo() {
+        List<String> alertas = new ArrayList<>();
+
+        for (DetallesSolicitud detalle : listaDetalles) {
+            try {
+                Integer cantidadEntregar = detalle.getCantidadEntregar();
+
+                if (cantidadEntregar == null || cantidadEntregar <= 0) {
+                    continue;
+                }
+
+                ItemAlmacenado item = itemAlmacenadoDAO.buscarUno(detalle.getIdItem());
+
+                if (item.getIdItem() != null
+                        && item.getExistencias() <= item.getStockMin()) {
+
+                    alertas.add("• " + item.getDescripcionItem()
+                            + " — existencias actuales: " + item.getExistencias()
+                            + ", stock mínimo: " + item.getStockMin());
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (!alertas.isEmpty()) {
+            UtilidadesFX.mostrarAlertaStock(
+                    "Alerta de stock",
+                    "Los siguientes ítems quedaron en stock mínimo o por debajo:",
+                    alertas
+            );
+        }
+    }
+
     private boolean validarCantidadesEntrega() {
         int totalEntregado = 0;
 
         for (DetallesSolicitud detalle : listaDetalles) {
             Integer cantidadEntregar = detalle.getCantidadEntregar();
-            System.out.println("VALIDANDO -> Item: " + detalle.getIdItem()
-                    + " | solicitada: " + detalle.getCantidad()
-                    + " | entregar: " + detalle.getCantidadEntregar());
 
             if (cantidadEntregar == null) {
                 UtilidadesFX.mostrarAlertaSimple(
