@@ -16,6 +16,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -24,11 +25,15 @@ import uv.lis.controlalmacen.modelo.dao.PartidaPresupuestalDAO;
 import uv.lis.controlalmacen.modelo.dto.ItemAlmacenado;
 import uv.lis.controlalmacen.modelo.dto.PartidaPresupuestal;
 import uv.lis.controlalmacen.utilidades.Constantes;
+import uv.lis.controlalmacen.utilidades.ExportadorPDF;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -711,5 +716,59 @@ public class ListadoItemsController implements Initializable {
 
     @FXML
     private void clicExportar(ActionEvent event) {
+        String filtroStock = cb_filtroStock.getValue();
+
+        if (filtroStock == null || filtroStock.isBlank()) {
+            filtroStock = "Mostrar Todos";
+            cb_filtroStock.setValue(filtroStock);
+        }
+
+        if (filtroStock.equals("Mostrar Todos")) {
+            cargarInformacionItems();
+        } else {
+            cargarItemsPorStock(filtroStock);
+        }
+
+        List<ItemAlmacenado> itemsTabla = new ArrayList<>(tv_inventario.getItems());
+
+        if (itemsTabla.isEmpty()) {
+            UtilidadesFX.mostrarAlertaSimple("Sin datos",
+                    "No hay items que exportar", Alert.AlertType.WARNING);
+            return;
+        }
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Guardar reporte de inventario");
+        fileChooser.setInitialFileName("reporte-inventario.pdf");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF", "*.pdf"));
+
+        Stage stageActual = (Stage) tv_inventario.getScene().getWindow();
+        File archivo = fileChooser.showSaveDialog(stageActual);
+
+        if (archivo == null) {
+            return;
+        }
+
+        try {
+            ExportadorPDF.generarReporteInventario(
+                    archivo.getAbsolutePath(),
+                    itemsTabla,
+                    filtroStock
+            );
+
+            UtilidadesFX.mostrarAlertaSimple("Exportación exitosa",
+                    "Reporte guardado en:\n" + archivo.getAbsolutePath(),
+                    Alert.AlertType.INFORMATION);
+
+        } catch (FileNotFoundException e) {
+            UtilidadesFX.mostrarAlertaSimple("Error al generar formato",
+                    "Lo sentimos, no pudimos generar el reporte de inventario por un problema con el archivo. " +
+                            "Intente nuevamente más tarde",
+                    Alert.AlertType.ERROR);
+        } catch (NullPointerException e) {
+            UtilidadesFX.mostrarAlertaSimple("Error al cargar",
+                    Constantes.MSJ_ERROR_CARGA_DATOS,
+                    Alert.AlertType.ERROR);
+        }
     }
 }
