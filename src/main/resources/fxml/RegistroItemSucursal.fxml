@@ -63,7 +63,7 @@
                   <HBox prefHeight="45.0" prefWidth="438.0" spacing="20.0" GridPane.columnIndex="1">
                      <children>
                         <TextField fx:id="txt_idItem" maxWidth="524.0" prefHeight="25.0" prefWidth="261.0" promptText="Ej: I001" />
-                        <Button mnemonicParsing="false" onAction="#clicBuscar" prefHeight="13.0" prefWidth="115.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar">
+                        <Button fx:id="btn_buscar" mnemonicParsing="false" onAction="#clicBuscar" prefHeight="13.0" prefWidth="115.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar">
                            <effect>
                               <InnerShadow offsetY="8.0">
                                  <color>
@@ -85,7 +85,7 @@
                 </GridPane>
             <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="txt_noEncontrado" wrapText="true" prefWidth="600.0" maxWidth="600.0" textFill="#bc1c1c" />
+                  <Label fx:id="txt_noEncontrado" maxWidth="600.0" prefWidth="600.0" textFill="#bc1c1c" wrapText="true" />
                </children>
             </HBox>
             <GridPane hgap="20.0" prefHeight="212.0" prefWidth="587.0" vgap="25.0">
@@ -114,11 +114,7 @@
             </GridPane>
             <HBox alignment="TOP_CENTER" minHeight="45.0" prefWidth="468.0">
                 <children>
-                   <Label fx:id="txt_faltanDatos"
-                          wrapText="true"
-                          maxWidth="600.0"
-                          prefWidth="600.0"
-                          textFill="#b50202" />
+                   <Label fx:id="txt_faltanDatos" maxWidth="600.0" prefWidth="600.0" textFill="#b50202" wrapText="true" />
                 </children>
              </HBox>
             <HBox alignment="CENTER" prefHeight="25.0" prefWidth="312.0" />

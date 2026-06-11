@@ -30,30 +30,41 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ListadoItemsController implements Initializable {
 
     @FXML
     private ComboBox<String> cb_filtroBusqueda;
+
     @FXML
     private TextField txt_buscarIdProducto;
+
     @FXML
     private ComboBox<String> cb_filtroStock;
+
     @FXML
     private ComboBox<PartidaPresupuestal> cb_partidaPresupuestal;
+
     @FXML
     private TableView<ItemAlmacenado> tv_inventario;
+
     @FXML
     private TableColumn<ItemAlmacenado, String> col_idItem;
+
     @FXML
     private TableColumn<ItemAlmacenado, String> col_partida;
+
     @FXML
     private TableColumn<ItemAlmacenado, String> col_descripcion;
+
     @FXML
     private TableColumn<ItemAlmacenado, Integer> col_existencias;
+
     @FXML
     private TableColumn<ItemAlmacenado, Integer> col_stockMin;
+
     @FXML
     private TableColumn<ItemAlmacenado, Integer> col_stockMax;
 
@@ -61,11 +72,13 @@ public class ListadoItemsController implements Initializable {
             "Código",
             "Descripción"
     );
+
     private final ObservableList<String> listaOpcionesStock = FXCollections.observableArrayList(
             "Sobre el máximo",
             "Menor que el mínimo",
             "Mostrar Todos"
     );
+
     private ObservableList<ItemAlmacenado> itemsAlmacenados;
     private ObservableList<PartidaPresupuestal> partidasPresupuestales;
     private FilteredList<PartidaPresupuestal> partidasFiltradas;
@@ -381,6 +394,10 @@ public class ListadoItemsController implements Initializable {
 
     @FXML
     private void clicBuscarItemAlmacenado(ActionEvent event) {
+        buscarItemAlmacenadoPorFiltro();
+    }
+
+    private void buscarItemAlmacenadoPorFiltro() {
         String filtroBusqueda = cb_filtroBusqueda.getValue();
         String campoBuscar = txt_buscarIdProducto.getText() == null
                 ? ""
@@ -434,6 +451,156 @@ public class ListadoItemsController implements Initializable {
                     Alert.AlertType.WARNING
             );
         }
+    }
+
+    @FXML
+    private void clicEditarItemSucursal(ActionEvent event) {
+        ItemAlmacenado itemSeleccionado = tv_inventario.getSelectionModel().getSelectedItem();
+
+        if (itemSeleccionado == null) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Sin selección",
+                    "Seleccione un ítem para editar sus límites de stock.",
+                    Alert.AlertType.WARNING
+            );
+            return;
+        }
+
+        try {
+            FXMLLoader loader = UtilidadesFX.cargarFXML("RegistroItemSucursal");
+            Parent vista = loader.load();
+
+            RegistroItemSucursalController controller = loader.getController();
+            controller.inicializarEdicion(itemSeleccionado);
+
+            Scene escena = new Scene(vista);
+
+            Stage stage = new Stage();
+            stage.setTitle("Editar Ítem de Sucursal");
+            stage.setResizable(false);
+            stage.setScene(escena);
+            stage.centerOnScreen();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+
+            actualizarInformacion();
+
+        } catch (IOException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al abrir edición",
+                    ex.getMessage(),
+                    Alert.AlertType.ERROR
+            );
+        }
+    }
+
+    @FXML
+    private void clicDarDeBaja(ActionEvent event) {
+        ItemAlmacenado itemSeleccionado = tv_inventario.getSelectionModel().getSelectedItem();
+
+        if (itemSeleccionado == null) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Sin selección",
+                    "Seleccione un ítem para darlo de baja.",
+                    Alert.AlertType.WARNING
+            );
+            return;
+        }
+
+        Optional<String> resultado = UtilidadesFX.mostrarAlertaEntradaTexto(
+                "Dar de baja ítem",
+                "Ingrese la razón de la baja del ítem " + itemSeleccionado.getIdItem() + ":",
+                "Razón de la baja"
+        );
+
+        if (!resultado.isPresent()) {
+            return;
+        }
+
+        String razon = resultado.get().trim();
+
+        if (razon.isEmpty()) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Dato requerido",
+                    "Debe ingresar la razón de la baja.",
+                    Alert.AlertType.WARNING
+            );
+            return;
+        }
+
+        if (razon.length() > 45) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Dato inválido",
+                    "La razón de la baja no puede superar los 45 caracteres.",
+                    Alert.AlertType.WARNING
+            );
+            return;
+        }
+
+        boolean confirmacion = UtilidadesFX.mostrarAlertaConfirmacion(
+                "Confirmar baja",
+                "¿Está seguro de dar de baja el ítem " + itemSeleccionado.getIdItem() + "?"
+        );
+
+        if (!confirmacion) {
+            return;
+        }
+
+        try {
+            if (itemAlmacenadoDAO.darDeBaja(itemSeleccionado, razon)) {
+                UtilidadesFX.mostrarAlertaSimple(
+                        "Baja registrada",
+                        "El ítem se dio de baja correctamente en la sucursal.",
+                        Alert.AlertType.INFORMATION
+                );
+
+                actualizarInformacion();
+            }
+
+        } catch (SQLException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al dar de baja",
+                    ex.getMessage(),
+                    Alert.AlertType.ERROR
+            );
+        } catch (NullPointerException | ClassNotFoundException | IOException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al dar de baja",
+                    Constantes.MSJ_ERROR_CARGA_DATOS,
+                    Alert.AlertType.WARNING
+            );
+        }
+    }
+
+    private void actualizarInformacion() {
+        String filtroStock = cb_filtroStock.getValue();
+        PartidaPresupuestal partidaSeleccionada = cb_partidaPresupuestal.getValue();
+        String filtroBusqueda = cb_filtroBusqueda.getValue();
+        String textoBusqueda = txt_buscarIdProducto.getText() == null
+                ? ""
+                : txt_buscarIdProducto.getText().trim();
+
+        if (filtroStock != null) {
+            if (filtroStock.equals("Mostrar Todos")) {
+                cargarInformacionItems();
+            } else {
+                cargarItemsPorStock(filtroStock);
+            }
+
+            return;
+        }
+
+        if (partidaSeleccionada != null) {
+            cargarItemsPorPartida(partidaSeleccionada);
+            return;
+        }
+
+        if (filtroBusqueda != null && !textoBusqueda.isEmpty()) {
+            buscarItemAlmacenadoPorFiltro();
+            return;
+        }
+
+        cargarInformacionItems();
     }
 
     private void limpiarBusquedaTexto() {

@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -51,10 +52,16 @@ public class RegistroItemSucursalController implements Initializable {
     @FXML
     private Label txt_faltanDatos;
 
+    @FXML
+    private Button btn_buscar;
+
     private final ItemDAO itemDAO = new ItemDAO();
     private final ItemAlmacenadoDAO itemAlmacenadoDAO = new ItemAlmacenadoDAO();
 
     private Item itemCatalogoSeleccionado;
+    private ItemAlmacenado itemAlmacenadoEdicion;
+
+    private boolean esEdicion = false;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -67,8 +74,39 @@ public class RegistroItemSucursalController implements Initializable {
         configurarCamposNumericos();
 
         txt_idItem.textProperty().addListener((observable, oldValue, newValue) -> {
-            limpiarDatosItemEncontrado();
+            if (!esEdicion) {
+                limpiarDatosItemEncontrado();
+            }
         });
+    }
+
+    public void inicializarEdicion(ItemAlmacenado itemAlmacenado) {
+        if (itemAlmacenado == null) {
+            return;
+        }
+
+        esEdicion = true;
+        itemAlmacenadoEdicion = itemAlmacenado;
+
+        txt_idItem.setText(itemAlmacenado.getIdItem());
+        txt_descripcion.setText(itemAlmacenado.getDescripcionItem());
+        txt_partidaPresupuestal.setText(itemAlmacenado.getDescripcionPartida());
+        txt_stockMinimo.setText(String.valueOf(itemAlmacenado.getStockMin()));
+        txt_stockMaximo.setText(String.valueOf(itemAlmacenado.getStockMax()));
+
+        txt_idItem.setEditable(false);
+        txt_idItem.setDisable(true);
+
+        txt_descripcion.setEditable(false);
+        txt_partidaPresupuestal.setEditable(false);
+
+        if (btn_buscar != null) {
+            btn_buscar.setVisible(false);
+            btn_buscar.setManaged(false);
+        }
+
+        txt_noEncontrado.setText("");
+        txt_faltanDatos.setText("");
     }
 
     private void configurarCamposNumericos() {
@@ -88,6 +126,10 @@ public class RegistroItemSucursalController implements Initializable {
 
     @FXML
     private void clicBuscar(ActionEvent event) {
+        if (esEdicion) {
+            return;
+        }
+
         String idItem = obtenerTexto(txt_idItem);
 
         txt_noEncontrado.setText("");
@@ -138,6 +180,14 @@ public class RegistroItemSucursalController implements Initializable {
 
     @FXML
     private void clicGuardar(ActionEvent event) {
+        if (esEdicion) {
+            guardarEdicion();
+        } else {
+            guardarRegistro();
+        }
+    }
+
+    private void guardarRegistro() {
         txt_noEncontrado.setText("");
         txt_faltanDatos.setText("");
 
@@ -182,10 +232,15 @@ public class RegistroItemSucursalController implements Initializable {
         }
 
         try {
-            ItemAlmacenado itemExistente = itemAlmacenadoDAO.buscarUno(idItem);
+            ItemAlmacenado itemExistente = itemAlmacenadoDAO.buscarUnoIncluyendoBajas(idItem);
 
             if (itemExistente.getIdItem() != null) {
-                txt_faltanDatos.setText("Este ítem ya está registrado en el almacén de la sucursal. Edítalo desde Consultar items.");
+                if (itemAlmacenadoDAO.estaDadoDeBaja(idItem)) {
+                    txt_faltanDatos.setText("Este ítem ya fue dado de baja en esta sucursal y no puede registrarse nuevamente.");
+                } else {
+                    txt_faltanDatos.setText("Este ítem ya está registrado en el almacén de la sucursal.");
+                }
+
                 return;
             }
 
@@ -217,6 +272,78 @@ public class RegistroItemSucursalController implements Initializable {
         } catch (NullPointerException | ClassNotFoundException | IOException ex) {
             UtilidadesFX.mostrarAlertaSimple(
                     "Error al registrar el ítem",
+                    Constantes.MSJ_ERROR_CARGA_DATOS,
+                    Alert.AlertType.WARNING
+            );
+        }
+    }
+
+    private void guardarEdicion() {
+        txt_noEncontrado.setText("");
+        txt_faltanDatos.setText("");
+
+        if (itemAlmacenadoEdicion == null) {
+            txt_faltanDatos.setText("No hay un ítem seleccionado para editar.");
+            return;
+        }
+
+        String idItem = obtenerTexto(txt_idItem);
+        String stockMinimoTexto = obtenerTexto(txt_stockMinimo);
+        String stockMaximoTexto = obtenerTexto(txt_stockMaximo);
+
+        String mensajeValidacion = validarDatos(idItem, stockMinimoTexto, stockMaximoTexto);
+
+        if (!mensajeValidacion.isEmpty()) {
+            txt_faltanDatos.setText(mensajeValidacion);
+            return;
+        }
+
+        Integer stockMinimo = convertirEntero(stockMinimoTexto, "stock mínimo");
+
+        if (stockMinimo == null) {
+            return;
+        }
+
+        Integer stockMaximo = convertirEntero(stockMaximoTexto, "stock máximo");
+
+        if (stockMaximo == null) {
+            return;
+        }
+
+        if (stockMaximo < stockMinimo) {
+            txt_faltanDatos.setText("El stock máximo no puede ser menor que el stock mínimo.");
+            return;
+        }
+
+        try {
+            ItemAlmacenado itemActualizado = new ItemAlmacenado();
+            itemActualizado.setIdItem(itemAlmacenadoEdicion.getIdItem());
+            itemActualizado.setDescripcionItem(itemAlmacenadoEdicion.getDescripcionItem());
+            itemActualizado.setCodigoPartidaPresupuestal(itemAlmacenadoEdicion.getCodigoPartidaPresupuestal());
+            itemActualizado.setDescripcionPartida(itemAlmacenadoEdicion.getDescripcionPartida());
+            itemActualizado.setExistencias(itemAlmacenadoEdicion.getExistencias());
+            itemActualizado.setStockMin(stockMinimo);
+            itemActualizado.setStockMax(stockMaximo);
+
+            if (itemAlmacenadoDAO.actualizar(itemActualizado)) {
+                UtilidadesFX.mostrarAlertaSimple(
+                        "Actualización exitosa",
+                        "Los límites de stock se actualizaron correctamente.",
+                        Alert.AlertType.INFORMATION
+                );
+
+                cerrarVentana();
+            }
+
+        } catch (SQLException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al actualizar",
+                    ex.getMessage(),
+                    Alert.AlertType.ERROR
+            );
+        } catch (NullPointerException | ClassNotFoundException | IOException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al actualizar el ítem",
                     Constantes.MSJ_ERROR_CARGA_DATOS,
                     Alert.AlertType.WARNING
             );
@@ -286,9 +413,18 @@ public class RegistroItemSucursalController implements Initializable {
         itemCatalogoSeleccionado = null;
     }
 
+    private void cerrarVentana() {
+        Stage stage = (Stage) txt_idItem.getScene().getWindow();
+        stage.close();
+    }
+
     @FXML
     public void clicCancelar(ActionEvent actionEvent) {
-        navegarA("MenuPrincipalEncargado", "Menú principal");
+        if (esEdicion) {
+            cerrarVentana();
+        } else {
+            navegarA("MenuPrincipalEncargado", "Menú principal");
+        }
     }
 
     @FXML
