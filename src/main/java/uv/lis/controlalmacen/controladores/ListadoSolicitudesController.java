@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import uv.lis.controlalmacen.logica.CargadorEscenas;
 import uv.lis.controlalmacen.modelo.dao.SolicitudDAO;
 import uv.lis.controlalmacen.modelo.dto.Sesion;
 import uv.lis.controlalmacen.modelo.dto.Solicitud;
@@ -116,15 +117,16 @@ public class ListadoSolicitudesController implements Initializable {
             AceptarSolicitudModalController controller = loader.getController();
             controller.cargarSolicitud(seleccionada);
 
-            Stage modal = new Stage();
-            modal.setTitle("Atender Solicitud #" + seleccionada.getNoSolicitud());
-            modal.setScene(new Scene(vista));
-            modal.setResizable(false);
-            modal.initModality(Modality.APPLICATION_MODAL);
-            modal.initOwner(tvSolicitudes.getScene().getWindow());
-            modal.showAndWait();
+            Stage ventana = new Stage();
+            ventana.setTitle("Atender Solicitud #" + seleccionada.getNoSolicitud());
+            ventana.setScene(new Scene(vista));
+            ventana.setResizable(false);
 
-            cargarSolicitudes();
+            ventana.setOnHidden(e -> {
+                cargarSolicitudes();
+            });
+
+            ventana.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -133,12 +135,13 @@ public class ListadoSolicitudesController implements Initializable {
     @FXML
     private void clicRegresar(ActionEvent event) {
         try {
-            FXMLLoader loader = UtilidadesFX.cargarFXML("MenuPrincipalSalidas");
+            String fxmlMenu = CargadorEscenas.cargarEscenarSegunRol(Sesion.getUsuarioActual().getRol());
+            FXMLLoader loader = UtilidadesFX.cargarFXML(fxmlMenu);
             Parent vista = loader.load();
             MenuController controller = loader.getController();
             controller.cargarDatos();
             Stage stage = (Stage) tvSolicitudes.getScene().getWindow();
-            stage.setTitle("Menu Principal - Salidas");
+            stage.setTitle("Menú principal");
             stage.setResizable(false);
             stage.setScene(new Scene(vista));
             stage.centerOnScreen();

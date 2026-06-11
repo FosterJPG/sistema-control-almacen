@@ -236,6 +236,54 @@ public class ExportadorPDF {
         documento.close();
     }
 
+    public static void generarFormatoEntregaRecepcion(String rutaPdf, Solicitud solicitud,
+                                                       List<DetallesSolicitud> detalles)
+            throws FileNotFoundException {
+
+        PdfDocument pdf = new PdfDocument(new PdfWriter(rutaPdf));
+        Document documento = new Document(pdf, PageSize.A4);
+        documento.setMargins(50, 50, 50, 50);
+
+        agregarLogoYTitulo(documento, "FORMATO DE ENTREGA-RECEPCIÓN");
+
+        documento.add(new Paragraph("Folio de solicitud: #" + solicitud.getNoSolicitud())
+                .setBold().setMarginBottom(3));
+        documento.add(new Paragraph("Fecha: " + FORMATO_FECHA.format(new Date()))
+                .setMarginBottom(3));
+        documento.add(new Paragraph("Solicitante: " + solicitud.getNombreCompleto())
+                .setMarginBottom(3));
+        documento.add(new Paragraph("No. Empleado: " + solicitud.getNoEmpleado())
+                .setMarginBottom(15));
+
+        Table tabla = new Table(new float[]{2, 5, 2, 4});
+        tabla.setWidth(UnitValue.createPercentValue(100));
+        tabla.addHeaderCell(crearHeaderTabla("Código"));
+        tabla.addHeaderCell(crearHeaderTabla("Descripción del artículo"));
+        tabla.addHeaderCell(crearHeaderTabla("Cantidad"));
+        tabla.addHeaderCell(crearHeaderTabla("Uso / Destino"));
+
+        for (DetallesSolicitud d : detalles) {
+            tabla.addCell(crearCelda(d.getIdItem() != null ? d.getIdItem() : ""));
+            tabla.addCell(crearCelda(d.getDescripcionItem() != null ? d.getDescripcionItem() : ""));
+            tabla.addCell(crearCeldaCentrada(String.valueOf(d.getCantidadEntregar())));
+            tabla.addCell(crearCelda(d.getUso() != null ? d.getUso() : ""));
+        }
+
+        documento.add(tabla);
+
+        documento.add(new Paragraph("\n\n\n"));
+
+        Table firmas = new Table(new float[]{1, 1});
+        firmas.setWidth(UnitValue.createPercentValue(100));
+        firmas.addCell(new Cell().add(new Paragraph("___________________________\nEntrega\n(Encargado de almacén)")
+                .setTextAlignment(TextAlignment.CENTER)).setBorder(null));
+        firmas.addCell(new Cell().add(new Paragraph("___________________________\nRecibe\n(Empleado solicitante)")
+                .setTextAlignment(TextAlignment.CENTER)).setBorder(null));
+
+        documento.add(firmas);
+        documento.close();
+    }
+
     private static Table crearTablaInventario() {
         Table tabla = new Table(new float[]{2, 7, 2, 2, 2});
         tabla.setWidth(UnitValue.createPercentValue(100));

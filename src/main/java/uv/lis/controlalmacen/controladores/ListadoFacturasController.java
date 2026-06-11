@@ -17,7 +17,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import uv.lis.controlalmacen.logica.CargadorEscenas;
 import uv.lis.controlalmacen.modelo.dao.FacturaDAO;
+import uv.lis.controlalmacen.modelo.dto.Sesion;
 import uv.lis.controlalmacen.modelo.dao.PartidaPresupuestalDAO;
 import uv.lis.controlalmacen.modelo.dto.Factura;
 import uv.lis.controlalmacen.modelo.dto.PartidaPresupuestal;
@@ -306,14 +308,15 @@ public class ListadoFacturasController implements Initializable {
     @FXML
     public void clicRegresar(ActionEvent actionEvent) {
         try {
-            FXMLLoader loader = UtilidadesFX.cargarFXML("MenuPrincipalEncargado");
+            String fxmlMenu = CargadorEscenas.cargarEscenarSegunRol(Sesion.getUsuarioActual().getRol());
+            FXMLLoader loader = UtilidadesFX.cargarFXML(fxmlMenu);
             Parent vista = loader.load();
             MenuController controller = loader.getController();
             controller.cargarDatos();
             Scene escena = new Scene(vista);
 
             Stage stage = (Stage) txt_buscar.getScene().getWindow();
-            stage.setTitle("Menu principal");
+            stage.setTitle("Menú principal");
             stage.setResizable(false);
 
             stage.setScene(escena);

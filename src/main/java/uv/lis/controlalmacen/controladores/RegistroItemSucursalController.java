@@ -100,6 +100,9 @@ public class RegistroItemSucursalController implements Initializable {
         txt_descripcion.setEditable(false);
         txt_partidaPresupuestal.setEditable(false);
 
+        txt_stockMinimo.setEditable(true);
+        txt_stockMaximo.setEditable(true);
+
         if (btn_buscar != null) {
             btn_buscar.setVisible(false);
             btn_buscar.setManaged(false);
