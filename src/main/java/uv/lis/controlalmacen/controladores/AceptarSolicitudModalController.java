@@ -8,13 +8,16 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import uv.lis.controlalmacen.modelo.dao.SolicitudDAO;
 import uv.lis.controlalmacen.modelo.dto.DetallesSolicitud;
 import uv.lis.controlalmacen.modelo.dto.Solicitud;
+import uv.lis.controlalmacen.utilidades.ExportadorPDF;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
@@ -153,6 +156,26 @@ public class AceptarSolicitudModalController implements Initializable {
                             + " fue aprobada y las existencias fueron actualizadas.",
                     Alert.AlertType.INFORMATION
             );
+
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Guardar formato de entrega-recepción");
+            fileChooser.setInitialFileName("entrega-recepcion-" + solicitud.getNoSolicitud() + ".pdf");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF", "*.pdf"));
+            File archivo = fileChooser.showSaveDialog(tvDetallesSolicitud.getScene().getWindow());
+
+            if (archivo != null) {
+                ExportadorPDF.generarFormatoEntregaRecepcion(
+                        archivo.getAbsolutePath(), solicitud, listaDetalles);
+                UtilidadesFX.mostrarAlertaSimple("Entrega registrada",
+                        "Solicitud #" + solicitud.getNoSolicitud()
+                                + " aprobada. Formato guardado en:\n" + archivo.getAbsolutePath(),
+                        Alert.AlertType.INFORMATION);
+            } else {
+                UtilidadesFX.mostrarAlertaSimple("Entrega registrada",
+                        "La solicitud #" + solicitud.getNoSolicitud()
+                                + " fue aprobada y las existencias fueron actualizadas.",
+                        Alert.AlertType.INFORMATION);
+            }
 
             cerrarVentana();
 
