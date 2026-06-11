@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class RegistroSolicitudController implements Initializable {
@@ -66,6 +67,9 @@ public class RegistroSolicitudController implements Initializable {
         if (empleado.getDepartamento() != null && empleado.getDepartamento().getSucursal() != null) {
             txt_sucursal.setText(empleado.getDepartamento().getSucursal().getNombre());
         }
+
+        dp_fecha.setValue(LocalDate.now());
+        dp_fecha.setDisable(true);
     }
 
     @FXML
