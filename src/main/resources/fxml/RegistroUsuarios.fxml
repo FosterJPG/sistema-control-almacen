@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
@@ -26,7 +27,7 @@
 
             <Separator />
 
-            <GridPane hgap="15.0" vgap="12.0">
+            <GridPane hgap="15.0" prefHeight="241.0" prefWidth="375.0" vgap="12.0">
                <columnConstraints>
                   <ColumnConstraints halignment="RIGHT" minWidth="140.0" prefWidth="140.0" />
                   <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" />
@@ -35,28 +36,44 @@
                   <Label text="Empleado:" GridPane.rowIndex="0">
                      <font><Font name="System Bold" size="13.0" /></font>
                   </Label>
-                  <ComboBox fx:id="cbEmpleado" prefHeight="30.0" prefWidth="270.0" promptText="Seleccionar empleado..." GridPane.columnIndex="1" GridPane.rowIndex="0" />
+                  <ComboBox fx:id="cb_empleado" editable="true" prefHeight="30.0" prefWidth="270.0" promptText="Seleccionar empleado..." GridPane.columnIndex="1" />
 
                   <Label text="Rol de usuario:" GridPane.rowIndex="1">
                      <font><Font name="System Bold" size="13.0" /></font>
                   </Label>
-                  <ComboBox fx:id="cbRol" prefHeight="30.0" prefWidth="270.0" promptText="Seleccionar rol..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <ComboBox fx:id="cb_rol" editable="true" prefHeight="30.0" prefWidth="270.0" promptText="Seleccionar rol..." GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                  <Label text="ID de usuario:" GridPane.rowIndex="2">
+                  <Label text="Usuario:" GridPane.rowIndex="3">
                      <font><Font name="System Bold" size="13.0" /></font>
                   </Label>
-                  <TextField fx:id="txtIdUsuario" prefHeight="30.0" prefWidth="270.0" promptText="Ej: JuanP22-7" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="txt_usuario" prefHeight="30.0" prefWidth="270.0" promptText="Ej: JuanP22-7" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-                  <Label text="Contraseña:" GridPane.rowIndex="3">
+                  <Label text="Contraseña:" GridPane.rowIndex="4">
                      <font><Font name="System Bold" size="13.0" /></font>
                   </Label>
-                  <PasswordField fx:id="pfPassword" prefHeight="30.0" prefWidth="270.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <PasswordField fx:id="pf_password" prefHeight="30.0" prefWidth="270.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-                  <Label text="Confirmar contraseña:" GridPane.rowIndex="4">
+                  <Label text="Confirmar contraseña:" GridPane.rowIndex="5">
                      <font><Font name="System Bold" size="13.0" /></font>
                   </Label>
-                  <PasswordField fx:id="pfConfirmar" prefHeight="30.0" prefWidth="270.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                  <PasswordField fx:id="pf_confirmar" prefHeight="30.0" prefWidth="270.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                  <Label text="Correo electrónico:" GridPane.rowIndex="2">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txt_correo" editable="false" prefHeight="30.0" prefWidth="270.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Label fx:id="lbl_mensajeError" textFill="#970000" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                </children>
+               <rowConstraints>
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
+               </rowConstraints>
             </GridPane>
 
             <HBox alignment="CENTER_RIGHT" spacing="10.0">
