@@ -17,6 +17,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import uv.lis.controlalmacen.logica.CargadorEscenas;
 import uv.lis.controlalmacen.modelo.dao.SucursalDAO;
+import uv.lis.controlalmacen.modelo.dto.Departamento;
 import uv.lis.controlalmacen.modelo.dto.Sesion;
 import uv.lis.controlalmacen.modelo.dto.Sucursal;
 import uv.lis.controlalmacen.utilidades.Constantes;
@@ -242,6 +243,54 @@ public class CatalogoSucursalesController implements Initializable {
         }
 
         return txt_nombreSucursal.getText().trim();
+    }
+
+    @FXML
+    private void clicFacturas(ActionEvent event) {
+        Sucursal sucursalSeleccionada = tv_listado.getSelectionModel().getSelectedItem();
+        if (sucursalSeleccionada == null) {
+            UtilidadesFX.mostrarAlertaSimple("Sin selección", "Seleccione una sucursal para ver sus facturas.", Alert.AlertType.WARNING);
+            return;
+        }
+        try {
+            Departamento departamento = new Departamento();
+            departamento.setSucursal(sucursalSeleccionada);
+            Sesion.getUsuarioActual().getEmpleado().setDepartamento(departamento);
+            FXMLLoader loader = UtilidadesFX.cargarFXML("ListadoFacturas");
+            Parent vista = loader.load();
+            Stage stage = (Stage) tv_listado.getScene().getWindow();
+            stage.setTitle("Listado de Facturas");
+            stage.setResizable(false);
+            stage.setScene(new Scene(vista));
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void clicSolicitudes(ActionEvent event) {
+        Sucursal sucursalSeleccionada = tv_listado.getSelectionModel().getSelectedItem();
+        if (sucursalSeleccionada == null) {
+            UtilidadesFX.mostrarAlertaSimple("Sin selección", "Seleccione una sucursal para ver sus solicitudes.", Alert.AlertType.WARNING);
+            return;
+        }
+        try {
+            Departamento departamento = new Departamento();
+            departamento.setSucursal(sucursalSeleccionada);
+            Sesion.getUsuarioActual().getEmpleado().setDepartamento(departamento);
+            FXMLLoader loader = UtilidadesFX.cargarFXML("ConsultarSolicitudes");
+            Parent vista = loader.load();
+            Stage stage = (Stage) tv_listado.getScene().getWindow();
+            stage.setTitle("Consultar Solicitudes");
+            stage.setResizable(false);
+            stage.setScene(new Scene(vista));
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @FXML
