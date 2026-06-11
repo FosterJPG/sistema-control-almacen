@@ -95,6 +95,7 @@ public class FacturaDAO implements OperacionesCatalogoDAO<Factura, String>{
     @Override
     public Factura buscarUno(String folio)
             throws SQLException, NullPointerException, IOException, ClassNotFoundException {
+
         Factura factura  = new Factura();
 
         try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {

@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-//import uv.lis.controlalmacen.logica.FacturaService;
 import uv.lis.controlalmacen.modelo.dto.DetallesFactura;
 import uv.lis.controlalmacen.modelo.dto.Factura;
 import uv.lis.controlalmacen.modelo.dto.Sesion;
@@ -42,31 +41,58 @@ public class RegistroFacturaController implements Initializable {
     private TextField txt_costoUnitario;
     @FXML
     private TextField txt_idItem;
+
     @FXML
-    private TableColumn col_idItem;
+    private TableView<DetallesFactura> tv_detallesFactura;
     @FXML
-    private TableColumn col_descripcion;
+    private TableColumn<DetallesFactura, String> col_idItem;
     @FXML
-    private TableColumn col_cantidad;
+    private TableColumn<DetallesFactura, String> col_descripcion;
     @FXML
-    private TableColumn col_costoUnitario;
+    private TableColumn<DetallesFactura, Integer> col_cantidad;
     @FXML
-    private TableColumn col_partidaPresupuestal;
+    private TableColumn<DetallesFactura, Double> col_costoUnitario;
+    @FXML
+    private TableColumn<DetallesFactura, String> col_partidaPresupuestal;
+
+    @FXML
+    private Button btn_buscarProveedor;
+    @FXML
+    private RadioButton rbtn_proveedorExistente;
+    @FXML
+    private RadioButton rbtn_proveedorNuevo;
+    @FXML
+    private ToggleGroup tg_seleccionProveedor;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        /*
+            @FXML
+    private TextField txt_domicilio;
+    @FXML
+    private TextField txt_telefono;
+    @FXML
+    private TextField txt_rfc;
+
+    @FXML
+    private Button btn_buscarProveedor;
+         */
+
         configurarTablaDetallesFactura();
     }
 
     private void configurarTablaDetallesFactura(){
-        col_idItem.setCellValueFactory(new PropertyValueFactory("idItem"));
-        col_descripcion.setCellValueFactory(new PropertyValueFactory("descripcion"));
-        col_cantidad.setCellValueFactory(new PropertyValueFactory("cantidad"));
-        col_costoUnitario.setCellValueFactory(new PropertyValueFactory("costoUnitario"));
-        col_partidaPresupuestal.setCellValueFactory(new PropertyValueFactory("descripcionPartida"));
+        col_idItem.setCellValueFactory(new PropertyValueFactory<>("idItem"));
+        col_descripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
+        col_cantidad.setCellValueFactory(new PropertyValueFactory<>("cantidad"));
+        col_costoUnitario.setCellValueFactory(new PropertyValueFactory<>("costoUnitario"));
+        col_partidaPresupuestal.setCellValueFactory(new PropertyValueFactory<>("descripcionPartida"));
 
     }
 
+    @FXML
+    private void clicBuscarProveedor(ActionEvent actionEvent) {
+    }
 
     @FXML
     private void clicEliminarItem(ActionEvent event) {
@@ -79,6 +105,8 @@ public class RegistroFacturaController implements Initializable {
     @FXML
     private void clicGuardarFactura(ActionEvent actionEvent) {
     }
+
+
 
     /*
     @FXML
@@ -255,4 +283,6 @@ public class RegistroFacturaController implements Initializable {
             ex.printStackTrace();
         }
     }
+
+
 }

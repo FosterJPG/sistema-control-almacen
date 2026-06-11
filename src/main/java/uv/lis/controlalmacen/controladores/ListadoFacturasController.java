@@ -38,6 +38,7 @@ import java.util.ResourceBundle;
 
 public class ListadoFacturasController implements Initializable {
 
+
     // Atributos de JavaFX
     @FXML
     private ComboBox<String> cb_partidaBusqueda;
@@ -59,6 +60,8 @@ public class ListadoFacturasController implements Initializable {
     private TableColumn<Factura, String> col_razonSocial;
     @FXML
     private TableColumn<Factura, String> col_telefono;
+    @FXML
+    private Label lb_error;
 
     // Atributos de configuración del controller
     private ObservableList<Factura> facturas;
@@ -229,11 +232,14 @@ public class ListadoFacturasController implements Initializable {
         cb_partidaBusqueda.setValue(null);
         cb_partidaBusqueda.getEditor().clear();
         txt_buscar.setText("");
+        lb_error.setText("");
         aplicarFiltros();
     }
 
     @FXML
     public void clicBuscarPorFolio(ActionEvent actionEvent) {
+        lb_error.setText("");
+
         String folioBuscar = txt_buscar.getText();
         if (folioBuscar == null || folioBuscar.isEmpty()) {
             return;
@@ -241,8 +247,13 @@ public class ListadoFacturasController implements Initializable {
         try {
             facturas = FXCollections.observableArrayList();
             Factura factura = facturaDAO.buscarUno(folioBuscar);
-            facturas.add(factura);
-            tv_facturas.setItems(facturas);
+            if ( factura.getFolio() == null || factura.getFolio().isEmpty()) {
+                tv_facturas.setItems(null);
+            } else {
+                facturas.add(factura);
+                tv_facturas.setItems(facturas);
+            }
+
         } catch (SQLException e) {
             UtilidadesFX.mostrarAlertaSimple("Error al consultar",
                     e.getMessage(),
@@ -256,6 +267,8 @@ public class ListadoFacturasController implements Initializable {
 
     private void aplicarFiltros() {
         try {
+            lb_error.setText("");
+
             String partidaBuscar = cb_partidaBusqueda.getEditor().getText();
 
             boolean hayPartida = partidaBuscar != null && !partidaBuscar.isBlank();
@@ -317,11 +330,11 @@ public class ListadoFacturasController implements Initializable {
             Factura facturaSeleccionada = tv_facturas.getSelectionModel().getSelectedItem();
 
             if (facturaSeleccionada == null) {
-                UtilidadesFX.mostrarAlertaSimple("Selección requerida",
-                        "Primero selecciona una factura para poder ver sus detalles.",
-                        Alert.AlertType.INFORMATION);
+                lb_error.setText("Sin factura seleccionada.");
                 return;
             }
+
+            lb_error.setText("");
 
             Factura facturaCompleta = new  Factura();
             if ( facturaSeleccionada.getDetallesFactura() == null

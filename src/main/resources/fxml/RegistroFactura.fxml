@@ -87,16 +87,31 @@
                                         <Label text="Proveedor:" textFill="#495057" GridPane.rowIndex="2"><font><Font name="System Bold" size="13.0" /></font></Label>
 
                                         <Label text="Razón Social:" textFill="#495057" GridPane.rowIndex="3"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                        <TextField fx:id="txt_razonSocial" editable="false" promptText="Autocompletado" style="-fx-background-color: #e9ecef;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                        <TextField fx:id="txt_razonSocial" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
                                         <Label text="Domicilio:" textFill="#495057" GridPane.rowIndex="4"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                        <TextField fx:id="txt_domicilio" editable="false" promptText="Autocompletado" style="-fx-background-color: #e9ecef;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                        <TextField fx:id="txt_domicilio" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
                                         <Label text="Teléfono:" textFill="#495057" GridPane.rowIndex="5"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                        <TextField fx:id="txt_telefono" editable="false" promptText="Autocompletado" style="-fx-background-color: #e9ecef;" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <TextField fx:id="txt_rfc" promptText="RFC" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <TextField fx:id="txt_telefono" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                              <HBox prefHeight="30.0" prefWidth="219.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <children>
+                                    <TextField fx:id="txt_rfc" />
+                                    <Button fx:id="btn_buscarProveedor" mnemonicParsing="false" onAction="#clicBuscarProveedor" prefHeight="31.0" prefWidth="45.0" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5;" text="🔍" />
+                                 </children>
+                              </HBox>
                                     </children>
                                 </GridPane>
+                        <HBox alignment="CENTER" prefHeight="57.0" prefWidth="319.0" spacing="15.0">
+                           <children>
+                              <RadioButton fx:id="rbtn_proveedorExistente" mnemonicParsing="false" selected="true" text="Proveedor existente">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="tg_seleccionProveedor" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="rbtn_proveedorNuevo" mnemonicParsing="false" text="Nuevo proveedor" toggleGroup="$tg_seleccionProveedor" />
+                           </children>
+                        </HBox>
                             </children>
                         </VBox>
 
@@ -111,10 +126,10 @@
 
                                 <GridPane hgap="15.0" vgap="10.0">
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="NEVER" minWidth="60.0" />
-                                        <ColumnConstraints hgrow="ALWAYS" />
-                                        <ColumnConstraints hgrow="NEVER" minWidth="60.0" />
-                                        <ColumnConstraints hgrow="ALWAYS" />
+                                        <ColumnConstraints hgrow="NEVER" maxWidth="111.0" minWidth="60.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="ALWAYS" maxWidth="230.0" minWidth="75.0" prefWidth="147.0" />
+                                        <ColumnConstraints hgrow="NEVER" maxWidth="238.0" minWidth="60.0" prefWidth="110.0" />
+                                        <ColumnConstraints hgrow="ALWAYS" maxWidth="170.0" minWidth="31.0" prefWidth="120.0" />
                                     </columnConstraints>
                                     <rowConstraints>
                                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -124,12 +139,12 @@
                                     <children>
                                         <Label text="Item:"><font><Font name="System Bold" size="13.0" /></font></Label>
 
-                                        <Label text="Cantidad:" GridPane.rowIndex="1"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                        <TextField fx:id="txt_cantidad" promptText="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Label text="Cantidad:" GridPane.rowIndex="2"><font><Font name="System Bold" size="13.0" /></font></Label>
+                                        <TextField fx:id="txt_cantidad" prefHeight="31.0" prefWidth="139.0" promptText="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                                        <Label prefHeight="19.0" prefWidth="116.0" text="Costo Unitario:" GridPane.rowIndex="2"><font><Font name="System Bold" size="13.0" /></font></Label>
-                                        <TextField fx:id="txt_costoUnitario" promptText="0.00" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                        <Button mnemonicParsing="false" onAction="#clicEliminarItem" prefHeight="25.0" prefWidth="62.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Quitar" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                        <Label prefHeight="19.0" prefWidth="116.0" text="Costo Unitario:" GridPane.columnIndex="2" GridPane.rowIndex="2"><font><Font name="System Bold" size="13.0" /></font></Label>
+                                        <TextField fx:id="txt_costoUnitario" promptText="0.00" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                        <Button mnemonicParsing="false" onAction="#clicEliminarItem" prefHeight="31.0" prefWidth="127.0" style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Quitar" GridPane.columnIndex="3">
                                  <effect>
                                     <InnerShadow offsetY="9.0">
                                        <color>
@@ -138,7 +153,7 @@
                                     </InnerShadow>
                                  </effect>
                               </Button>
-                                        <Button mnemonicParsing="false" onAction="#clicAgregarItem" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Agregar" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                        <Button mnemonicParsing="false" onAction="#clicAgregarItem" prefHeight="31.0" prefWidth="110.0" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Agregar" GridPane.columnIndex="2">
                                  <effect>
                                     <InnerShadow offsetY="9.0">
                                        <color>
@@ -146,7 +161,13 @@
                                        </color>
                                     </InnerShadow>
                                  </effect></Button>
-                              <TextField fx:id="txt_idItem" promptText="Código" GridPane.columnIndex="1" />
+                              <TextField fx:id="txt_idItem" prefHeight="31.0" prefWidth="156.0" promptText="Código" GridPane.columnIndex="1" />
+                              <Label text="Descripcion:" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font name="System Bold" size="13.0" />
+                                 </font>
+                              </Label>
+                              <TextField editable="false" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="1" />
                                     </children>
                                 </GridPane>
 
@@ -161,13 +182,13 @@
                                 </HBox>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0">
                            <children>
-                              <TableView prefHeight="252.0" prefWidth="522.0">
+                              <TableView fx:id="tv_detallesFactura" prefHeight="252.0" prefWidth="522.0">
                                 <columns>
                                   <TableColumn fx:id="col_idItem" prefWidth="75.0" text="Código" />
-                                  <TableColumn fx:id="col_partidaPresupuestal" prefWidth="131.0" text="Partida Presupuestal" />
-                                    <TableColumn fx:id="col_descripcion" prefWidth="175.0" text="Descripción" />
-                                    <TableColumn fx:id="col_cantidad" prefWidth="64.0" text="Cantidad" />
-                                    <TableColumn fx:id="col_costoUnitario" prefWidth="76.0" text="Costo Unitario" />
+                                  <TableColumn fx:id="col_partidaPresupuestal" prefWidth="155.0" text="Partida Presupuestal" />
+                                    <TableColumn fx:id="col_descripcion" prefWidth="138.0" text="Descripción" />
+                                    <TableColumn fx:id="col_cantidad" prefWidth="89.0" text="Cantidad" />
+                                    <TableColumn fx:id="col_costoUnitario" prefWidth="64.0" text="Costo" />
                                 </columns>
                               </TableView>
                            </children>

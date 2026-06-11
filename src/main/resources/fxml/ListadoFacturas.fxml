@@ -71,6 +71,11 @@
 
             <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
+                  <Label fx:id="lb_error" textFill="RED">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
                   <Button mnemonicParsing="false" onAction="#clicVerDetalles" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Ver Detalles de Factura">
                      <effect>
                         <InnerShadow color="#ffffff5c" offsetY="9.0" />
