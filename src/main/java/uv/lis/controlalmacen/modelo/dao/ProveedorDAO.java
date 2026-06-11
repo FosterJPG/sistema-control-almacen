@@ -7,6 +7,8 @@ import uv.lis.controlalmacen.utilidades.Constantes;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProveedorDAO {
 
@@ -81,5 +83,36 @@ public class ProveedorDAO {
         }
 
         return false;
+    }
+
+    public static List<Proveedor> buscarTodos()
+            throws SQLException, ClassNotFoundException, IOException, NullPointerException {
+
+        List<Proveedor> proveedores = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.crearParaRol(Sesion.getUsuarioActual().getRol())) {
+            if (conn == null) {
+                throw new SQLException(Constantes.MSJ_SIN_CONEXION);
+            }
+
+            String consulta = "SELECT rfc, razon_social, domicilio_fiscal, telefono " +
+                    "FROM proveedor " +
+                    "ORDER BY razon_social";
+
+            PreparedStatement ps = conn.prepareStatement(consulta);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Proveedor proveedor = new Proveedor();
+                proveedor.setRfc(rs.getString("rfc"));
+                proveedor.setRazonSocial(rs.getString("razon_social"));
+                proveedor.setDomicilioFiscal(rs.getString("domicilio_fiscal"));
+                proveedor.setTelefono(rs.getString("telefono"));
+
+                proveedores.add(proveedor);
+            }
+        }
+
+        return proveedores;
     }
 }

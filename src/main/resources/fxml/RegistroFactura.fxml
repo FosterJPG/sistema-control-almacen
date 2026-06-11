@@ -94,12 +94,13 @@
 
                                         <Label text="Teléfono:" textFill="#495057" GridPane.rowIndex="5"><font><Font name="System Bold" size="13.0" /></font></Label>
                                         <TextField fx:id="txt_telefono" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                              <HBox prefHeight="30.0" prefWidth="219.0" spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                                 <children>
-                                    <TextField fx:id="txt_rfc" />
-                                    <Button fx:id="btn_buscarProveedor" mnemonicParsing="false" onAction="#clicBuscarProveedor" prefWidth="45.0" style="-fx-background-color: #044C87; -fx-text-fill: white; -fx-font-weight: bold; -fx-border-radius: 5;" text="🔍" />
-                                 </children>
-                              </HBox>
+                                        <ComboBox fx:id="cb_proveedor"
+                                                  editable="true"
+                                                  prefHeight="30.0"
+                                                  prefWidth="300.0"
+                                                  promptText="RFC o razón social"
+                                                  GridPane.columnIndex="1"
+                                                  GridPane.rowIndex="2" />
                                     </children>
                                 </GridPane>
                         <HBox alignment="CENTER" prefHeight="57.0" prefWidth="319.0" spacing="15.0">

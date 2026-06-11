@@ -1,7 +1,9 @@
 package uv.lis.controlalmacen.controladores;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.StringConverter;
 import uv.lis.controlalmacen.modelo.dao.FacturaDAO;
 import uv.lis.controlalmacen.modelo.dao.ItemAlmacenadoDAO;
 import uv.lis.controlalmacen.modelo.dao.ProveedorDAO;
@@ -40,8 +43,6 @@ public class RegistroFacturaController implements Initializable {
     @FXML
     private TextField txt_telefono;
     @FXML
-    private TextField txt_rfc;
-    @FXML
     private TextField txt_cantidad;
     @FXML
     private TextField txt_costoUnitario;
@@ -70,13 +71,17 @@ public class RegistroFacturaController implements Initializable {
     private TableColumn<DetallesFactura, String> col_partidaPresupuestal;
 
     @FXML
-    private Button btn_buscarProveedor;
+    private ComboBox<Proveedor> cb_proveedor;
     @FXML
     private RadioButton rbtn_proveedorExistente;
     @FXML
     private RadioButton rbtn_proveedorNuevo;
     @FXML
     private ToggleGroup tg_seleccionProveedor;
+
+    private final ObservableList<Proveedor> proveedores = FXCollections.observableArrayList();
+    private FilteredList<Proveedor> proveedoresFiltrados;
+    private boolean seleccionandoProveedor = false;
 
     private boolean esProveedorNuevo = false;
     private Proveedor proveedorSeleccionado;
@@ -86,11 +91,206 @@ public class RegistroFacturaController implements Initializable {
 
     private ObservableList<DetallesFactura> listaDetallesFactura = FXCollections.observableArrayList();
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        configurarComboProveedor();
+        cargarProveedores();
         configurarSeleccionProveedor();
         configurarTablaDetallesFactura();
         tv_detallesFactura.setItems(listaDetallesFactura);
+    }
+
+    private void configurarComboProveedor() {
+
+        cb_proveedor.setEditable(true);
+
+        proveedoresFiltrados = new FilteredList<>(proveedores, proveedor -> true);
+        cb_proveedor.setItems(proveedoresFiltrados);
+
+        cb_proveedor.setConverter(new StringConverter<Proveedor>() {
+            @Override
+            public String toString(Proveedor proveedor) {
+                if (proveedor == null) {
+                    return "";
+                }
+                return proveedor.getRfc();
+            }
+
+            @Override
+            public Proveedor fromString(String texto) {
+                if (texto == null || texto.trim().isEmpty()) {
+                    return null;
+                }
+
+                String textoNormalizado = texto.trim();
+
+                for (Proveedor proveedor : proveedores) {
+                    if (proveedor.getRfc() != null
+                            && proveedor.getRfc().equalsIgnoreCase(textoNormalizado)) {
+                        return proveedor;
+                    }
+                }
+
+                return null;
+            }
+        });
+
+        cb_proveedor.setCellFactory(lista -> new ListCell<Proveedor>() {
+            @Override
+            protected void updateItem(Proveedor proveedor, boolean empty) {
+                super.updateItem(proveedor, empty);
+
+                if (empty || proveedor == null) {
+                    setText(null);
+                } else {
+                    setText(formatearProveedor(proveedor));
+                }
+            }
+        });
+
+        cb_proveedor.valueProperty().addListener((obs, anterior, nuevo) -> {
+
+            if (seleccionandoProveedor || esProveedorNuevo) {
+                return;
+            }
+
+            if (nuevo == null) {
+                proveedorSeleccionado = null;
+                return;
+            }
+
+            seleccionandoProveedor = true;
+
+            Platform.runLater(() -> {
+                llenarDatosProveedor(nuevo);
+                proveedoresFiltrados.setPredicate(proveedor -> true);
+
+                cb_proveedor.getEditor().setText(nuevo.getRfc());
+                cb_proveedor.getEditor().positionCaret(nuevo.getRfc().length());
+
+                seleccionandoProveedor = false;
+            });
+        });
+
+        cb_proveedor.getEditor().textProperty().addListener((obs, anterior, nuevo) -> {
+
+            if (seleccionandoProveedor) {
+                return;
+            }
+
+            if (esProveedorNuevo) {
+                proveedorSeleccionado = null;
+                return;
+            }
+
+            proveedorSeleccionado = null;
+            txt_razonSocial.clear();
+            txt_domicilio.clear();
+            txt_telefono.clear();
+
+            filtrarProveedores(nuevo);
+        });
+    }
+
+    private String formatearProveedor(Proveedor proveedor) {
+        return proveedor.getRfc() + " - " + proveedor.getRazonSocial();
+    }
+
+    private void filtrarProveedores(String textoBusqueda) {
+
+        String texto = textoBusqueda == null ? "" : textoBusqueda.trim().toLowerCase();
+
+        proveedoresFiltrados.setPredicate(proveedor -> {
+            if (texto.isEmpty()) {
+                return true;
+            }
+
+            return contieneTexto(proveedor.getRfc(), texto)
+                    || contieneTexto(proveedor.getRazonSocial(), texto);
+        });
+
+        if (cb_proveedor.isFocused() && !proveedoresFiltrados.isEmpty()) {
+            Platform.runLater(() -> {
+                if (!cb_proveedor.isShowing()) {
+                    cb_proveedor.show();
+                }
+            });
+        }
+    }
+
+    private boolean contieneTexto(String valor, String texto) {
+        return valor != null && valor.toLowerCase().contains(texto);
+    }
+
+    private void llenarDatosProveedor(Proveedor proveedor) {
+        proveedorSeleccionado = proveedor;
+
+        txt_razonSocial.setText(proveedor.getRazonSocial());
+        txt_telefono.setText(proveedor.getTelefono());
+        txt_domicilio.setText(proveedor.getDomicilioFiscal());
+    }
+
+    private void cargarProveedores() {
+        try {
+            proveedores.clear();
+            proveedores.addAll(ProveedorDAO.buscarTodos());
+
+        } catch (SQLException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al consultar",
+                    ex.getMessage(),
+                    Alert.AlertType.ERROR
+            );
+
+        } catch (IOException | ClassNotFoundException | NullPointerException ex) {
+            UtilidadesFX.mostrarAlertaSimple(
+                    "Error al cargar",
+                    "Lo sentimos, los proveedores no pueden ser cargados en este momento.",
+                    Alert.AlertType.WARNING
+            );
+        }
+    }
+
+    private String obtenerRfcProveedor() {
+
+        if (!esProveedorNuevo && proveedorSeleccionado != null) {
+            return proveedorSeleccionado.getRfc();
+        }
+
+        String texto = cb_proveedor.getEditor().getText();
+
+        if (texto == null) {
+            return "";
+        }
+
+        return texto.trim();
+    }
+
+    private void seleccionarProveedorSiCoincideConTexto() {
+
+        String rfc = obtenerRfcProveedor();
+
+        if (rfc.isEmpty()) {
+            return;
+        }
+
+        for (Proveedor proveedor : proveedores) {
+            if (proveedor.getRfc() != null
+                    && proveedor.getRfc().equalsIgnoreCase(rfc)) {
+
+                seleccionandoProveedor = true;
+
+                cb_proveedor.setValue(proveedor);
+                cb_proveedor.getEditor().setText(proveedor.getRfc());
+                cb_proveedor.getEditor().positionCaret(proveedor.getRfc().length());
+
+                llenarDatosProveedor(proveedor);
+
+                seleccionandoProveedor = false;
+                return;
+            }
+        }
     }
 
     private void configurarSeleccionProveedor() {
@@ -108,22 +308,42 @@ public class RegistroFacturaController implements Initializable {
         esProveedorNuevo = rbtn_proveedorNuevo.isSelected();
 
         if (esProveedorNuevo) {
-            btn_buscarProveedor.setVisible(false);
+            cb_proveedor.setPromptText("RFC del nuevo proveedor");
+
             txt_razonSocial.setDisable(false);
             txt_domicilio.setDisable(false);
             txt_telefono.setDisable(false);
+
+            if (proveedoresFiltrados != null) {
+                proveedoresFiltrados.setPredicate(proveedor -> false);
+            }
+
         } else {
-            btn_buscarProveedor.setVisible(true);
+            cb_proveedor.setPromptText("RFC o razón social");
+
             txt_razonSocial.setDisable(true);
             txt_domicilio.setDisable(true);
             txt_telefono.setDisable(true);
+
+            if (proveedoresFiltrados != null) {
+                proveedoresFiltrados.setPredicate(proveedor -> true);
+            }
         }
+
         limpiarDatosProveedor();
     }
 
     private void limpiarDatosProveedor() {
         proveedorSeleccionado = null;
-        txt_rfc.clear();
+
+        seleccionandoProveedor = true;
+
+        cb_proveedor.setValue(null);
+        cb_proveedor.getEditor().clear();
+        cb_proveedor.hide();
+
+        seleccionandoProveedor = false;
+
         txt_razonSocial.clear();
         txt_domicilio.clear();
         txt_telefono.clear();
@@ -136,38 +356,6 @@ public class RegistroFacturaController implements Initializable {
         col_costoUnitario.setCellValueFactory(new PropertyValueFactory<>("costoUnitario"));
         col_partidaPresupuestal.setCellValueFactory(new PropertyValueFactory<>("descripcionPartida"));
     }
-
-    @FXML
-    private void clicBuscarProveedor(ActionEvent actionEvent) {
-        String rfcBusqueda = txt_rfc.getText();
-        if (rfcBusqueda == null ||rfcBusqueda.trim().isEmpty()) {
-            return;
-        }
-
-        try {
-            Proveedor proveedor = ProveedorDAO.buscarUno(rfcBusqueda);
-
-            if (proveedor == null) {
-                return;
-            }
-
-            proveedorSeleccionado = proveedor;
-
-            txt_razonSocial.setText(proveedor.getRazonSocial());
-            txt_telefono.setText(proveedor.getTelefono());
-            txt_domicilio.setText(proveedor.getDomicilioFiscal());
-
-        } catch (SQLException e) {
-            UtilidadesFX.mostrarAlertaSimple("Error al consultar",
-                    e.getMessage(),
-                    Alert.AlertType.ERROR);
-        } catch (IOException | ClassNotFoundException | NullPointerException e) {
-            UtilidadesFX.mostrarAlertaSimple("Error al cargar",
-                    Constantes.MSJ_ERROR_CARGA_DATOS,
-                    Alert.AlertType.ERROR);
-        }
-    }
-
 
     @FXML
     private void clicGuardarFactura(ActionEvent actionEvent) {
@@ -190,7 +378,7 @@ public class RegistroFacturaController implements Initializable {
 
             if (esProveedorNuevo) {
 
-                String rfc = txt_rfc.getText().trim();
+                String rfc = obtenerRfcProveedor();
 
                 if (ProveedorDAO.existeRFC(rfc)) {
                     UtilidadesFX.mostrarAlertaSimple(
@@ -278,7 +466,9 @@ public class RegistroFacturaController implements Initializable {
             return false;
         }
 
-        if (txt_rfc.getText() == null || txt_rfc.getText().trim().isEmpty()) {
+        String rfcProveedor = obtenerRfcProveedor();
+
+        if (rfcProveedor == null || rfcProveedor.trim().isEmpty()) {
             lb_errorFactura.setText("Ingrese el RFC del proveedor.");
             return false;
         }
@@ -304,7 +494,11 @@ public class RegistroFacturaController implements Initializable {
         }
 
         if (!esProveedorNuevo && proveedorSeleccionado == null) {
-            lb_errorFactura.setText("Debe buscar un proveedor existente antes de guardar la factura.");
+            seleccionarProveedorSiCoincideConTexto();
+        }
+
+        if (!esProveedorNuevo && proveedorSeleccionado == null) {
+            lb_errorFactura.setText("Debe seleccionar un proveedor existente de la lista.");
             return false;
         }
 
@@ -315,7 +509,7 @@ public class RegistroFacturaController implements Initializable {
 
         Proveedor proveedor = new Proveedor();
 
-        proveedor.setRfc(txt_rfc.getText().trim());
+        proveedor.setRfc(obtenerRfcProveedor());
         proveedor.setRazonSocial(txt_razonSocial.getText().trim());
         proveedor.setDomicilioFiscal(txt_domicilio.getText().trim());
         proveedor.setTelefono(txt_telefono.getText().trim());
@@ -332,7 +526,7 @@ public class RegistroFacturaController implements Initializable {
 
         factura.setFolio(txt_folio.getText().trim());
         factura.setFecha(Date.valueOf(dp_fecha.getValue()));
-        factura.setRfc(txt_rfc.getText().trim());
+        factura.setRfc(obtenerRfcProveedor());
         factura.setRazonSocial(txt_razonSocial.getText().trim());
         factura.setTelefono(txt_telefono.getText().trim());
         factura.setDireccion(txt_domicilio.getText().trim());
