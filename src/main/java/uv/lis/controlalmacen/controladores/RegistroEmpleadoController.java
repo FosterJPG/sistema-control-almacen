@@ -67,7 +67,7 @@ public class RegistroEmpleadoController implements Initializable {
     private ComboBox<Departamento> cb_departamento;
     @FXML
     private Label lbl_mensajeError;
-    
+
     private final EmpleadoDAO empleadoDAO = new EmpleadoDAO();
 
     private final ObservableList<Puesto> puestosBase = FXCollections.observableArrayList();

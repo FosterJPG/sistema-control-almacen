@@ -14,10 +14,7 @@ import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
-import uv.lis.controlalmacen.modelo.dto.DetallesFactura;
-import uv.lis.controlalmacen.modelo.dto.DetallesSolicitud;
-import uv.lis.controlalmacen.modelo.dto.Factura;
-import uv.lis.controlalmacen.modelo.dto.Solicitud;
+import uv.lis.controlalmacen.modelo.dto.*;
 
 import java.io.FileNotFoundException;
 import java.text.DateFormat;
@@ -209,6 +206,67 @@ public class ExportadorPDF {
         documento.close();
     }
 
+    public static void generarReporteInventario(String rutaPdf, List<ItemAlmacenado> items, String filtroStock)
+            throws FileNotFoundException {
+
+        PdfDocument pdf = new PdfDocument(new PdfWriter(rutaPdf));
+        Document documento = new Document(pdf, PageSize.A4.rotate());
+        documento.setMargins(40, 40, 40, 40);
+
+        agregarLogoYTitulo(documento, "REPORTE DE INVENTARIO EN ALMACÉN");
+
+        documento.add(new Paragraph("Fecha de generación: " + FORMATO_FECHA.format(new Date()))
+                .setMarginBottom(5));
+
+        documento.add(new Paragraph("Nivel de stock: " + obtenerTextoFiltroStock(filtroStock))
+                .setMarginBottom(10));
+
+        Table tabla = crearTablaInventario();
+
+        for (ItemAlmacenado item : items) {
+            tabla.addCell(crearCelda(obtenerTextoSeguro(item.getIdItem())));
+            tabla.addCell(crearCelda(obtenerTextoSeguro(item.getDescripcionItem())));
+            tabla.addCell(crearCeldaCentrada(String.valueOf(item.getExistencias())));
+            tabla.addCell(crearCeldaCentrada(String.valueOf(item.getStockMin())));
+            tabla.addCell(crearCeldaCentrada(String.valueOf(item.getStockMax())));
+        }
+
+        documento.add(tabla);
+
+        documento.close();
+    }
+
+    private static Table crearTablaInventario() {
+        Table tabla = new Table(new float[]{2, 7, 2, 2, 2});
+        tabla.setWidth(UnitValue.createPercentValue(100));
+
+        tabla.addHeaderCell(crearHeaderTabla("Código"));
+        tabla.addHeaderCell(crearHeaderTabla("Descripción"));
+        tabla.addHeaderCell(crearHeaderTabla("Existencias"));
+        tabla.addHeaderCell(crearHeaderTabla("Stock mínimo"));
+        tabla.addHeaderCell(crearHeaderTabla("Stock máximo"));
+
+        return tabla;
+    }
+
+    private static Cell crearCeldaCentrada(String texto) {
+        return new Cell()
+                .add(new Paragraph(texto == null ? "" : texto))
+                .setTextAlignment(TextAlignment.CENTER);
+    }
+
+    private static String obtenerTextoSeguro(String texto) {
+        return texto == null ? "" : texto;
+    }
+
+    private static String obtenerTextoFiltroStock(String filtroStock) {
+        if (filtroStock == null || filtroStock.isBlank()) {
+            return "Mostrar Todos";
+        }
+
+        return filtroStock;
+    }
+
     private static void agregarDatosSolicitud(Document documento, Solicitud solicitud) {
         documento.add(new Paragraph("Solicitud #" + solicitud.getNoSolicitud()).setBold().setMarginBottom(2));
         documento.add(new Paragraph("Solicitante: " + solicitud.getNombreCompleto()).setMarginBottom(2));
@@ -261,7 +319,7 @@ public class ExportadorPDF {
     }
 
     private static void agregarTituloPartida(Document documento,Integer codigo, String descripcion) {
-        documento.add(new Paragraph("PARTIDA " + codigo + " - " + descripcion.toUpperCase()).setBold().setFontSize(14)
+        documento.add(new Paragraph("PARTIDA " + " - " + descripcion.toUpperCase()).setBold().setFontSize(14)
                 .setFontColor(COLOR_ENCABEZADO).setMarginTop(8).setMarginBottom(5));
     }
 
