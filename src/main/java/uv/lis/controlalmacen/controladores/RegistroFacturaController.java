@@ -237,6 +237,8 @@ public class RegistroFacturaController implements Initializable {
                         Alert.AlertType.INFORMATION
                 );
 
+                verificarStockMaximo();
+
                 limpiarFormularioFactura();
 
             } else {
@@ -339,6 +341,31 @@ public class RegistroFacturaController implements Initializable {
         factura.setDetallesFactura(listaDetallesFactura);
 
         return factura;
+    }
+
+    private void verificarStockMaximo() {
+        List<String> alertas = new ArrayList<>();
+
+        for (DetallesFactura detalle : listaDetallesFactura) {
+            try {
+                ItemAlmacenado item = itemAlmacenadoDAO.buscarUno(detalle.getIdItem());
+
+                if (item.getIdItem() != null && item.getExistencias() > item.getStockMax()) {
+                    alertas.add("• " + item.getDescripcionItem()
+                            + " — existencias actuales: " + item.getExistencias()
+                            + ", stock máximo: " + item.getStockMax());
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (!alertas.isEmpty()) {
+            UtilidadesFX.mostrarAlertaStock("Alerta de stock",
+                    "Los siguientes ítems quedaron por encima del stock maximo:",
+                    alertas);
+        }
     }
 
 
