@@ -14,8 +14,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import uv.lis.controlalmacen.logica.CargadorEscenas;
 import uv.lis.controlalmacen.modelo.dao.EmpleadoDAO;
 import uv.lis.controlalmacen.modelo.dto.Empleado;
+import uv.lis.controlalmacen.modelo.dto.Sesion;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
 import java.io.IOException;
@@ -137,7 +139,8 @@ public class CatalogoEmpleadosController implements Initializable {
     @FXML
     private void clicRegresar(ActionEvent event) {
         try {
-            FXMLLoader loader = UtilidadesFX.cargarFXML("MenuPrincipalCentral");
+            String fxmlMenu = CargadorEscenas.cargarEscenarSegunRol(Sesion.getUsuarioActual().getRol());
+            FXMLLoader loader = UtilidadesFX.cargarFXML(fxmlMenu);
             Parent vista = loader.load();
             MenuController controller = loader.getController();
             controller.cargarDatos();
