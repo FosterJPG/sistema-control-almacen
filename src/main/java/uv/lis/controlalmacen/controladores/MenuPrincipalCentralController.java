@@ -49,7 +49,7 @@ public class MenuPrincipalCentralController implements Initializable, MenuContro
     @FXML private void clicPartidas(ActionEvent e)   { navegarA("CatalogoPartidas",     "Partidas Presupuestales"); }
     @FXML private void clicFacturas(ActionEvent e)   { navegarA("ListadoFacturas",      "Listado de Facturas"); }
     @FXML private void clicSolicitudes(ActionEvent e){ navegarA("ListadoSolicitudes",   "Listado de Solicitudes"); }
-    @FXML private void clicEmpleados(ActionEvent e)  { navegarA("CatalogoEmpleados",    "Catálogo de Empleados"); }
+    @FXML private void clicDepartamentos(ActionEvent e) { navegarA("CatalogoDepartamentos", "Catálogo de Departamentos"); }
     @FXML private void clicUsuarios(ActionEvent e)   { navegarA("ConsultarUsuarios",    "Gestión de Usuarios"); }
 
     @FXML

@@ -136,10 +136,10 @@
                   </children>
                </HBox>
 
-               <!-- Fila 3: Empleados y Usuarios -->
+               <!-- Fila 3: Departamentos y Usuarios -->
                <HBox alignment="CENTER" spacing="20.0">
                   <children>
-                     <Button fx:id="btnEmpleados" mnemonicParsing="false" onAction="#clicEmpleados" prefHeight="135.0" prefWidth="145.0"
+                     <Button fx:id="btnDepartamentos" mnemonicParsing="false" onAction="#clicDepartamentos" prefHeight="135.0" prefWidth="145.0"
                              style="-fx-background-color: white; -fx-border-color: #dee2e6; -fx-border-radius: 10;">
                         <graphic>
                            <VBox alignment="CENTER" spacing="12.0">
@@ -147,7 +147,7 @@
                                  <ImageView fitHeight="55.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true">
                                     <image><Image url="@../imagenes/puestos.png" /></image>
                                  </ImageView>
-                                 <Label text="Empleados" textFill="#1a365d">
+                                 <Label text="Departamentos" textFill="#1a365d">
                                     <font><Font name="System Bold" size="14.0" /></font>
                                  </Label>
                               </children>

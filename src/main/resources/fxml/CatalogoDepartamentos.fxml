@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="620.0" prefWidth="800.0" style="-fx-background-color: #f8f9fa;"
+            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="uv.lis.controlalmacen.controladores.CatalogoDepartamentosController">
+    <children>
+
+        <Label text="Catálogo de Departamentos" textFill="#1a365d"
+               AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0">
+            <font><Font name="System Bold" size="22.0"/></font>
+        </Label>
+
+        <VBox spacing="15.0"
+              AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0"
+              AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="65.0">
+
+            <!-- Barra de búsqueda -->
+            <HBox spacing="10.0" alignment="CENTER_LEFT"
+                  style="-fx-background-color: white; -fx-background-radius: 8; -fx-border-color: #e0e0e0; -fx-border-radius: 8;">
+                <effect><DropShadow color="#00000015" offsetY="3.0" radius="8.0"/></effect>
+                <padding><Insets bottom="12.0" left="15.0" right="15.0" top="12.0"/></padding>
+                <TextField fx:id="txtBuscar" promptText="Buscar por descripción..."
+                           prefHeight="30.0" HBox.hgrow="ALWAYS"/>
+                <Button mnemonicParsing="false" onAction="#clicBuscar" prefHeight="30.0" prefWidth="90.0"
+                        style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                        text="Buscar"/>
+                <Button mnemonicParsing="false" onAction="#clicVerTodos" prefHeight="30.0" prefWidth="100.0"
+                        style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                        text="Ver todos"/>
+            </HBox>
+
+            <!-- Tabla -->
+            <TableView fx:id="tvDepartamentos" VBox.vgrow="ALWAYS"
+                       style="-fx-background-color: white; -fx-background-radius: 8; -fx-border-color: #e0e0e0; -fx-border-radius: 8;">
+                <effect><DropShadow color="#00000015" offsetY="3.0" radius="8.0"/></effect>
+                <columns>
+                    <TableColumn fx:id="colId" text="ID" prefWidth="60.0"/>
+                    <TableColumn fx:id="colDescripcion" text="Descripción" prefWidth="350.0"/>
+                    <TableColumn fx:id="colSucursal" text="Sucursal" prefWidth="250.0"/>
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS"/>
+                </columnResizePolicy>
+            </TableView>
+
+            <!-- Botones CRUD -->
+            <HBox spacing="10.0" alignment="CENTER_RIGHT">
+                <Button mnemonicParsing="false" onAction="#clicRegresar" prefHeight="33.0" prefWidth="100.0"
+                        style="-fx-background-color: transparent; -fx-text-fill: #495057; -fx-border-color: #6c757d; -fx-border-radius: 5;"
+                        text="Regresar"/>
+                <Button mnemonicParsing="false" onAction="#clicAgregar" prefHeight="33.0" prefWidth="100.0"
+                        style="-fx-background-color: #198754; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                        text="Agregar">
+                    <effect><InnerShadow color="#ffffff40" offsetY="2.0"/></effect>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#clicModificar" prefHeight="33.0" prefWidth="100.0"
+                        style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                        text="Modificar">
+                    <effect><InnerShadow color="#ffffff40" offsetY="2.0"/></effect>
+                </Button>
+                <Button mnemonicParsing="false" onAction="#clicEliminar" prefHeight="33.0" prefWidth="100.0"
+                        style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                        text="Eliminar">
+                    <effect><InnerShadow color="#ffffff40" offsetY="2.0"/></effect>
+                </Button>
+            </HBox>
+
+        </VBox>
+    </children>
+</AnchorPane>

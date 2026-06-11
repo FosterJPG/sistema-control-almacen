@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="240.0" prefWidth="440.0" style="-fx-background-color: transparent;"
+            xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="uv.lis.controlalmacen.controladores.RegistroDepartamentoController">
+    <children>
+        <VBox spacing="15.0"
+              style="-fx-background-color: white; -fx-background-radius: 12; -fx-border-color: #dee2e6; -fx-border-radius: 12;"
+              AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0"
+              AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+            <effect>
+                <DropShadow color="#00000026" offsetX="0.0" offsetY="5.0" radius="10.0"/>
+            </effect>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+            </padding>
+            <children>
+
+                <Label fx:id="lblTitulo" text="Registrar Departamento" textFill="#1a365d">
+                    <font><Font name="System Bold" size="16.0"/></font>
+                </Label>
+
+                <Separator/>
+
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <Label text="Descripción:" textFill="#495057" minWidth="100.0">
+                        <font><Font name="System Bold" size="13.0"/></font>
+                    </Label>
+                    <TextField fx:id="txtDescripcion" prefHeight="30.0"
+                               promptText="Ej. Recursos Humanos" HBox.hgrow="ALWAYS"/>
+                </HBox>
+
+                <HBox alignment="CENTER_LEFT" spacing="10.0">
+                    <Label text="Sucursal:" textFill="#495057" minWidth="100.0">
+                        <font><Font name="System Bold" size="13.0"/></font>
+                    </Label>
+                    <ComboBox fx:id="cbSucursal" prefHeight="30.0" promptText="Seleccionar sucursal..."
+                              HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                </HBox>
+
+                <Label fx:id="lblError" prefHeight="20.0" wrapText="true" textFill="#b50202"/>
+
+                <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                    <Button mnemonicParsing="false" onAction="#clicCancelar"
+                            prefHeight="30.0" prefWidth="100.0"
+                            style="-fx-background-color: #6c757d; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                            text="Cancelar"/>
+                    <Button mnemonicParsing="false" onAction="#clicGuardar"
+                            prefHeight="30.0" prefWidth="110.0"
+                            style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;"
+                            text="Guardar">
+                        <effect><InnerShadow color="#ffffff6d" offsetY="3.0"/></effect>
+                    </Button>
+                </HBox>
+
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
