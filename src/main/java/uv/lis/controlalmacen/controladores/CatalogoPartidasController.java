@@ -235,6 +235,7 @@ public class CatalogoPartidasController implements Initializable {
 
     @FXML
     private void clicVerTodos(ActionEvent event) {
+        txt_buscar.clear();
         cargarInformacionPartidas();
     }
 

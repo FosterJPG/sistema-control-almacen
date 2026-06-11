@@ -46,6 +46,7 @@
                   </Label>
                   <ComboBox fx:id="cbRol" prefHeight="30.0" prefWidth="200.0" promptText="Todos los roles..." />
                   <Region HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#clicVerTodos" style="-fx-background-color: #044c87; -fx-text-fill: white; -fx-font-weight: bold;" text="Ver todos" />
                   <TextField fx:id="txtBuscar" prefHeight="30.0" prefWidth="260.0" promptText="Buscar por nombre" />
                   <Button mnemonicParsing="false" onAction="#clicBuscar" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: #399ACE; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar">
                      <effect>

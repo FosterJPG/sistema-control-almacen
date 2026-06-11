@@ -370,4 +370,9 @@ public class ConsultarUsuariosController implements Initializable {
 
         return txtBuscar.getText().trim();
     }
+
+    public void clicVerTodos(ActionEvent actionEvent) {
+        txtBuscar.clear();
+        cargarInformacionUsuarios();
+    }
 }
