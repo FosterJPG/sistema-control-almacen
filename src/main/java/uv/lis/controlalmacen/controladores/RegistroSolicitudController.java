@@ -19,10 +19,15 @@ import uv.lis.controlalmacen.modelo.dto.ItemAlmacenado;
 import uv.lis.controlalmacen.modelo.dto.Sesion;
 import uv.lis.controlalmacen.utilidades.UtilidadesFX;
 
+import uv.lis.controlalmacen.modelo.dto.ItemAlmacenado;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class RegistroSolicitudController implements Initializable {
@@ -66,6 +71,9 @@ public class RegistroSolicitudController implements Initializable {
         if (empleado.getDepartamento() != null && empleado.getDepartamento().getSucursal() != null) {
             txt_sucursal.setText(empleado.getDepartamento().getSucursal().getNombre());
         }
+
+        dp_fecha.setValue(LocalDate.now());
+        dp_fecha.setDisable(true);
     }
 
     @FXML
@@ -169,6 +177,7 @@ public class RegistroSolicitudController implements Initializable {
             solicitudDAO.registrar(listaItems, fecha, noEmpleado, noSucursal);
             UtilidadesFX.mostrarAlertaSimple("Solicitud enviada",
                     "La solicitud fue registrada correctamente.", Alert.AlertType.INFORMATION);
+            verificarStockMinimo();
             regresarAlMenu();
         } catch (SQLException e) {
             UtilidadesFX.mostrarAlertaSimple("Error al guardar",
@@ -205,6 +214,21 @@ public class RegistroSolicitudController implements Initializable {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void verificarStockMinimo() {
+        List<String> alertas = new ArrayList<>();
+        for (DetallesSolicitud detalle : listaItems) {
+            try {
+                ItemAlmacenado item = itemAlmacenadoDAO.buscarUno(detalle.getIdItem());
+                if (item.getIdItem() != null && detalle.getCantidad() >= item.getExistencias()) {
+                    alertas.add("• " + item.getDescripcionItem() + " — existencias actuales: " + item.getExistencias() + " unidades");
+                }
+            } catch (Exception ignored) {}
+        }
+        if (!alertas.isEmpty()) {
+            UtilidadesFX.mostrarAlertaStockMinimo(alertas);
         }
     }
 

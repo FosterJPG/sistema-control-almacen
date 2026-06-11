@@ -19,4 +19,9 @@ public class Puesto {
     public void setPuesto(String puesto) {
         this.puesto = puesto;
     }
+
+    @Override
+    public String toString() {
+        return puesto != null ? puesto : "";
+    }
 }

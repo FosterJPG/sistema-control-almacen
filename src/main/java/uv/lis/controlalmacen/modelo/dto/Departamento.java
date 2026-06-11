@@ -28,4 +28,9 @@ public class Departamento {
     public void setSucursal(Sucursal sucursal) {
         this.sucursal = sucursal;
     }
+
+    @Override
+    public String toString() {
+        return descripcion != null ? descripcion : "";
+    }
 }
