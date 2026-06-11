@@ -114,7 +114,7 @@
                   </ImageView>
                   <Label text="Bitacora y reportes">
                      <font>
-                        <Font name="System Bold" size="20.0" />
+                        <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
                   <Separator prefWidth="150.0" />
