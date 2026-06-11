@@ -1,6 +1,7 @@
 package uv.lis.controlalmacen.controladores;
 
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -347,7 +348,9 @@ public class RegistroUsuariosController implements Initializable {
     private void mostrarAvisoUsuarioAsociadoConRetraso(Empleado empleado) {
         PauseTransition delay = new PauseTransition(Duration.millis(250));
 
-        delay.setOnFinished(event -> verificarUsuarioAsociado(empleado));
+        delay.setOnFinished(event -> {
+            Platform.runLater(() -> verificarUsuarioAsociado(empleado));
+        });
         delay.play();
     }
 
