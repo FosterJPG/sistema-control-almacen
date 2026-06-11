@@ -251,28 +251,45 @@ public class ItemAlmacenadoDAO implements OperacionesCatalogoDAO<ItemAlmacenado,
             String consulta;
 
             if ("Sobre el máximo".equals(stock)) {
-                consulta = "SELECT a.id_item, i.descripcion AS item, a.existencias, a.stock_min, a.stock_max " +
-                        "FROM almacena a JOIN item i ON a.id_item = i.id_item " +
-                        "WHERE a.no_sucursal = ? AND a.existencias > a.stock_max";
+                consulta = "SELECT id_item, item, codigo, partida_presupuestal AS descripcion_partida, " +
+                        "existencias, stock_min, stock_max " +
+                        "FROM vista_stock_maximo " +
+                        "WHERE no_sucursal = ? " +
+                        "ORDER BY descripcion_partida, item";
             } else {
-                consulta = "SELECT a.id_item, i.descripcion AS item, a.existencias, a.stock_min, a.stock_max " +
-                        "FROM almacena a JOIN item i ON a.id_item = i.id_item " +
-                        "WHERE a.no_sucursal = ? AND a.existencias < a.stock_min";
+                consulta = "SELECT id_item, item, codigo, partida_presupuestal AS descripcion_partida, " +
+                        "existencias, stock_min, stock_max " +
+                        "FROM vista_stock_minimo " +
+                        "WHERE no_sucursal = ? " +
+                        "ORDER BY descripcion_partida, item";
             }
 
-            PreparedStatement sentencia = conn.prepareStatement(consulta);
-            sentencia.setInt(1, Sesion.getUsuarioActual().getEmpleado().getDepartamento().getSucursal().getNoSucursal());
+            try (PreparedStatement sentencia = conn.prepareStatement(consulta)) {
+                sentencia.setInt(
+                        1,
+                        Sesion.getUsuarioActual()
+                                .getEmpleado()
+                                .getDepartamento()
+                                .getSucursal()
+                                .getNoSucursal()
+                );
 
-            ResultSet resultado = sentencia.executeQuery();
+                try (ResultSet resultado = sentencia.executeQuery()) {
+                    while (resultado.next()) {
+                        ItemAlmacenado itemAlmacenado = new ItemAlmacenado();
 
-            while (resultado.next()) {
-                ItemAlmacenado itemAlmacenado = new ItemAlmacenado();
-                itemAlmacenado.setIdItem(resultado.getString("id_item"));
-                itemAlmacenado.setDescripcionItem(resultado.getString("item"));
-                itemAlmacenado.setExistencias(resultado.getInt("existencias"));
-                itemAlmacenado.setStockMax(resultado.getInt("stock_max"));
-                itemAlmacenado.setStockMin(resultado.getInt("stock_min"));
-                lista.add(itemAlmacenado);
+                        itemAlmacenado.setIdItem(resultado.getString("id_item"));
+                        itemAlmacenado.setDescripcionItem(resultado.getString("item"));
+                        itemAlmacenado.setExistencias(resultado.getInt("existencias"));
+                        itemAlmacenado.setStockMax(resultado.getInt("stock_max"));
+                        itemAlmacenado.setStockMin(resultado.getInt("stock_min"));
+
+                        itemAlmacenado.setCodigoPartidaPresupuestal(resultado.getInt("codigo"));
+                        itemAlmacenado.setDescripcionPartida(resultado.getString("descripcion_partida"));
+
+                        lista.add(itemAlmacenado);
+                    }
+                }
             }
         }
 
