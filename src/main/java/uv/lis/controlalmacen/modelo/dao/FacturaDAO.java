@@ -202,9 +202,9 @@ public class FacturaDAO {
                 Factura factura = new Factura();
                 factura.setFolio(rs.getString("folio"));
                 factura.setFecha(rs.getDate("fecha_factura"));
-                factura.setRfc(rs.getString("p.rfc"));
-                factura.setRazonSocial(rs.getString("p.razon_social"));
-                factura.setTelefono(rs.getString("p.telefono"));
+                factura.setRfc(rs.getString("rfc"));
+                factura.setRazonSocial(rs.getString("razon_social"));
+                factura.setTelefono(rs.getString("telefono"));
                 factura.setNoSucursal(rs.getInt("no_sucursal"));
                 lista.add(factura);
             }
@@ -238,12 +238,12 @@ public class FacturaDAO {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Factura factura = new Factura();
-                factura.setFolio(rs.getString("f.folio"));
-                factura.setFecha(rs.getDate("f.fecha_factura"));
-                factura.setRfc(rs.getString("f.rfc"));
-                factura.setRazonSocial(rs.getString("f.razon_social"));
-                factura.setTelefono(rs.getString("f.telefono"));
-                factura.setNoSucursal(rs.getInt("f.no_sucursal"));
+                factura.setFolio(rs.getString("folio"));
+                factura.setFecha(rs.getDate("fecha_factura"));
+                factura.setRfc(rs.getString("rfc"));
+                factura.setRazonSocial(rs.getString("razon_social"));
+                factura.setTelefono(rs.getString("telefono"));
+                factura.setNoSucursal(rs.getInt("no_sucursal"));
                 lista.add(factura);
             }
         }
