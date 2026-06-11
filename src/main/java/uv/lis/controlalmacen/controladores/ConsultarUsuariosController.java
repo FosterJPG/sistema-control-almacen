@@ -29,6 +29,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.scene.control.Button;
 
 public class ConsultarUsuariosController implements Initializable {
 
@@ -60,6 +61,14 @@ public class ConsultarUsuariosController implements Initializable {
     private ObservableList<RolUsuario> roles;
 
     private final UsuarioDAO usuarioDAO = new UsuarioDAO();
+    @FXML
+    private Button btnAgregar;
+    @FXML
+    private Button btnModificar;
+    @FXML
+    private Button btnEliminar;
+    @FXML
+    private Button btnRegresar;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

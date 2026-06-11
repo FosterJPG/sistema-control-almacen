@@ -87,12 +87,12 @@
 
             </children>
         </VBox>
-      <MenuBar prefHeight="30.0" prefWidth="907.0">
+      <MenuBar prefHeight="25.0" prefWidth="900.0">
          <menus>
             <Menu mnemonicParsing="false" text="Ingresos">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#clicRegistrarFactura" text="Registrar factura" />
-                  <MenuItem mnemonicParsing="false" text="Consultar facturas" />
+                  <MenuItem mnemonicParsing="false" onAction="#clicConsultarFacturas" text="Consultar facturas" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Items">

@@ -324,6 +324,11 @@ public class CatalogoEmpleadosController implements Initializable {
         cargarEscena("BitacoraPedidos", "Bitácora de pedidos");
     }
 
+    @FXML
+    private void clicConsultarFacturas(ActionEvent event) {
+        cargarEscena("ListadoFacturas","Listado de facturas");
+    }
+
     private void cargarEscena(String nombreFXML, String titulo) {
         try {
             FXMLLoader loader = UtilidadesFX.cargarFXML(nombreFXML);
